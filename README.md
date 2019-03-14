@@ -1,2 +1,2 @@
-# dackel_cmdb
+# DackelCMDB
 Configuration Database
