@@ -36,7 +36,7 @@
         </ownedParameter>
       </ownedOperation>
     </packagedElement>
-    <packagedElement xmi:type="uml:Class" xmi:id="_YFF5kFDREemZZc8tmMgLxA" name="DEPCVAktivBase" visibility="public">
+    <packagedElement xmi:type="uml:Class" xmi:id="_YFF5kFDREemZZc8tmMgLxA" name="DEPCVActiveBase" visibility="public">
       <generalization xmi:type="uml:Generalization" xmi:id="_94aikFDWEemZZc8tmMgLxA" general="_ldMw4FDWEemZZc8tmMgLxA"/>
       <ownedAttribute xmi:type="uml:Property" xmi:id="_gtUowFDTEemZZc8tmMgLxA" name="createdByUser" visibility="private">
         <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
@@ -125,21 +125,39 @@
       <generalization xmi:type="uml:Generalization" xmi:id="_1U3iQFDYEemZZc8tmMgLxA" general="_YFF5kFDREemZZc8tmMgLxA"/>
       <ownedAttribute xmi:type="uml:Property" xmi:id="_k5KT4FDPEemZZc8tmMgLxA" name="dEntity" visibility="private" type="_YTBq0E8DEemZZc8tmMgLxA"/>
       <ownedAttribute xmi:type="uml:Property" xmi:id="_s5uRAFDPEemZZc8tmMgLxA" name="dProperty" visibility="private" type="_JrJKwFDMEemZZc8tmMgLxA"/>
-      <ownedAttribute xmi:type="uml:Property" xmi:id="__Yq4kFDPEemZZc8tmMgLxA" name="valueText" visibility="private">
+      <ownedAttribute xmi:type="uml:Property" xmi:id="__Yq4kFDPEemZZc8tmMgLxA" name="dText" visibility="private" type="_cnwjEFH7EemZZc8tmMgLxA"/>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_EgPjcFDdEemZZc8tmMgLxA" name="dEncrypted" visibility="private" type="_y9O60FH8EemZZc8tmMgLxA"/>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_Iiep0FDdEemZZc8tmMgLxA" name="dNumeric" visibility="private" type="_7Y3DUFH8EemZZc8tmMgLxA"/>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_O0gBgFDdEemZZc8tmMgLxA" name="dDate" visibility="private" type="__5c5oFH8EemZZc8tmMgLxA"/>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_WADCMFDdEemZZc8tmMgLxA" name="dConnector" visibility="private" type="_CyBCMFH9EemZZc8tmMgLxA"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_cnwjEFH7EemZZc8tmMgLxA" name="DTextValue" visibility="public">
+      <generalization xmi:type="uml:Generalization" xmi:id="_dbHAsFH9EemZZc8tmMgLxA" general="_YFF5kFDREemZZc8tmMgLxA"/>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_n4rLwFH9EemZZc8tmMgLxA" name="value" visibility="private">
         <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
       </ownedAttribute>
-      <ownedAttribute xmi:type="uml:Property" xmi:id="_EgPjcFDdEemZZc8tmMgLxA" name="valueEncrypted" visibility="private">
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_y9O60FH8EemZZc8tmMgLxA" name="DEncryptedValue" visibility="public">
+      <generalization xmi:type="uml:Generalization" xmi:id="_Gd5BkFH-EemZZc8tmMgLxA" general="_YFF5kFDREemZZc8tmMgLxA"/>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_JFmqsFH-EemZZc8tmMgLxA" name="value" visibility="private">
         <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
       </ownedAttribute>
-      <ownedAttribute xmi:type="uml:Property" xmi:id="_Iiep0FDdEemZZc8tmMgLxA" name="valueNumber" visibility="private">
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_7Y3DUFH8EemZZc8tmMgLxA" name="DNumericValue" visibility="public">
+      <generalization xmi:type="uml:Generalization" xmi:id="_cIoPsFH-EemZZc8tmMgLxA" general="_YFF5kFDREemZZc8tmMgLxA"/>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_UqnmAFH-EemZZc8tmMgLxA" name="value" visibility="private">
         <type xmi:type="uml:PrimitiveType" href="pathmap://PapyrusJava_LIBRARIES/JavaLibrary.uml#_KgG0cPaLEeW5KOK8aDMdgA"/>
       </ownedAttribute>
-      <ownedAttribute xmi:type="uml:Property" xmi:id="_O0gBgFDdEemZZc8tmMgLxA" name="valueDate" visibility="private">
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="__5c5oFH8EemZZc8tmMgLxA" name="DDateValue" visibility="public">
+      <generalization xmi:type="uml:Generalization" xmi:id="_GR1tIFH_EemZZc8tmMgLxA" general="_YFF5kFDREemZZc8tmMgLxA"/>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_KmdkAFH_EemZZc8tmMgLxA" name="value" visibility="private">
         <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/EcorePrimitiveTypes.library.uml#EDate"/>
       </ownedAttribute>
-      <ownedAttribute xmi:type="uml:Property" xmi:id="_WADCMFDdEemZZc8tmMgLxA" name="valueConnector" visibility="private">
-        <type xmi:type="uml:PrimitiveType" href="pathmap://PapyrusJava_LIBRARIES/JavaLibrary.uml#_8heigBydEduyofBvg4RL2w"/>
-      </ownedAttribute>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_CyBCMFH9EemZZc8tmMgLxA" name="DConnectorValue" visibility="public">
+      <generalization xmi:type="uml:Generalization" xmi:id="_TsXYkFH_EemZZc8tmMgLxA" general="_YFF5kFDREemZZc8tmMgLxA"/>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_ePfZEFH_EemZZc8tmMgLxA" name="value" visibility="private" type="_YTBq0E8DEemZZc8tmMgLxA"/>
     </packagedElement>
     <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_jOEmAEzoEemZZc8tmMgLxA">
       <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_jOF0IEzoEemZZc8tmMgLxA" source="http://www.eclipse.org/uml2/2.0.0/UML">
