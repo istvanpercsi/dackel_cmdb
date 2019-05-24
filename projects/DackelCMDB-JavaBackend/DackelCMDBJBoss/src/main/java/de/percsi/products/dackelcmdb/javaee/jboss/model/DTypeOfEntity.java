@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Set;
 
 import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -14,21 +14,11 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="typesOfEntity")
-public class DTypeOfEntity implements Serializable {
+public class DTypeOfEntity extends DAETPBase implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
-	//primary key
-	@Id
-	private long id;
-	
-	//System name of entity only alphanumeric characters and it must be unique
-	private String systemName;
-	
-	//Display name of type of entity
-	private String displayName;
-   
+	   
 	//Entities of type
-	@OneToMany(mappedBy = "typeOfEntity")
+	@OneToMany(mappedBy="typeOfEntity", fetch=FetchType.LAZY)
 	private Set<DAEntity> entity;
-	
 }
