@@ -29,6 +29,6 @@ public class DTypeOfEntity implements Serializable {
    
 	//Entities of type
 	@OneToMany(mappedBy = "typeOfEntity")
-	private Set<DEntity> entity;
+	private Set<DAEntity> entity;
 	
 }

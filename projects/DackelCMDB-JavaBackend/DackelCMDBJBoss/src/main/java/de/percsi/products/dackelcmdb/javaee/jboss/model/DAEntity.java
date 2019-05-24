@@ -4,9 +4,6 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -18,19 +15,15 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="entities")
-public class DEntity implements Serializable {
+public class DAEntity extends DABase implements Serializable {
 	private static final long serialVersionUID = 1L;
-	//primary key of Entity
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
 	
 	//sytem name of entity
-	@Column(unique=true, nullable=false)
+	@Column(unique=true, nullable=false, name="system_name")
 	private String systemName;
 	
 	//display name of entity
-	@Column(nullable=false)
+	@Column(nullable=false, name="display_name")
 	private String displayName;
 	
 	@ManyToOne
