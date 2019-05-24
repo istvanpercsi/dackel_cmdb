@@ -15,7 +15,6 @@ public class DAEntity extends DAETPBase implements Serializable {
 
 	@ManyToOne()
 	@JoinColumn(name="type_of_entity_id")
-	@Column(name="type_of_entity_id")
 	private DTypeOfEntity typeOfEntity;
 	
 	private static final long serialVersionUID = 1L;

@@ -20,5 +20,13 @@ public class DTypeOfEntity extends DAETPBase implements Serializable {
 	   
 	//Entities of type
 	@OneToMany(mappedBy="typeOfEntity", fetch=FetchType.LAZY)
-	private Set<DAEntity> entity;
+	private Set<DAEntity> entities;
+
+	public Set<DAEntity> getEntities() {
+		return entities;
+	}
+
+	public void setEntities(Set<DAEntity> entities) {
+		this.entities = entities;
+	}
 }
