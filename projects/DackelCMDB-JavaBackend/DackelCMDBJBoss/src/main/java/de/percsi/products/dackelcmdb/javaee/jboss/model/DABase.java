@@ -21,26 +21,23 @@ public class DABase implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="id", unique=true, nullable=false)
 	private long id;
 	
-	@Column(name="creation_date")
+	@Column(name="creation_date", nullable=false)
 	private Date creationDate;
 	
-	@Column(name="modification_date")
+	@Column(name="modification_date", nullable=false)
 	private Date modificationDate;
 	
-	@Column(name="creation_user")
+	@Column(name="creation_user", nullable=false)
 	private String creationUser;
 	
-	@Column(name="modification_user")
+	@Column(name="modification_user", nullable=false)
 	private String modificationUser;
 
 	public long getId() {
 		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
 	}
 
 	public Date getCreationDate() {
