@@ -3,9 +3,10 @@
  */
 package de.percsi.products.dackelcmdb.javaee.jboss.rest;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import javax.enterprise.context.RequestScoped;
+import javax.ejb.Stateless;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -24,7 +25,7 @@ import de.percsi.products.dackelcmdb.javaee.jboss.model.DTypeOfEntity;
  * @author istva
  *
  */
-@RequestScoped
+@Stateless
 @Path("/dtypeofentities")
 @Produces("application/json")
 @Consumes("application/json")
@@ -64,11 +65,14 @@ public class DTypeOfEntityEndpoint {
 	* @return
 	*/
 	@GET
-	public List<DTypeOfEntity> listAll(@QueryParam("start") final Integer startPosition,
+	@Path("/listAll")
+	public Response listAll(@QueryParam("start") final Integer startPosition,
 			@QueryParam("max") final Integer maxResult) {
 		//TODO: retrieve the dtypeofentities 
-		final List<DTypeOfEntity> dtypeofentities = null;
-		return dtypeofentities;
+		//final List<DTypeOfEntity> dtypeofentities = null;
+		List <DTypeOfEntity> dtypeofentities = new ArrayList<>();
+		dtypeofentities.add(new DTypeOfEntity());
+		return Response.ok(dtypeofentities).build();
 	}
 
 	/**
