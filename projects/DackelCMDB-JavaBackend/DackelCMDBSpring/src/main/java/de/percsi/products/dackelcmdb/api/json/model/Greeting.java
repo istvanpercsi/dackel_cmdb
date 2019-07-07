@@ -1,5 +1,6 @@
-package de.percsi.products.dackelcmdb.model;
+package de.percsi.products.dackelcmdb.api.json.model;
 
+import lombok.Builder;
 import lombok.Data;
 
 @Data

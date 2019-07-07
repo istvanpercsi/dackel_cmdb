@@ -1,6 +1,6 @@
-package de.percsi.products.dackelcmdb.controler;
+package de.percsi.products.dackelcmdb.api.json.controler;
 
-import de.percsi.products.dackelcmdb.model.Greeting;
+import de.percsi.products.dackelcmdb.api.json.model.Greeting;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -9,6 +9,7 @@ import java.util.concurrent.atomic.AtomicLong;
 
 
 @RestController
+@RequestMapping("/api/test")
 public class GreetingController{
 
     private static final String template = "Hello %s!";
