@@ -7,27 +7,32 @@ import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Entity
+@Table(name = "entity")
+@Builder
 @AllArgsConstructor(access = AccessLevel.PUBLIC)
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @Setter(value = AccessLevel.PUBLIC)
 @Getter
-@Builder
 public class EntityDBModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
     long id;
     @ManyToOne
-    @JoinColumn(name = "typeOfEntity", nullable = false)
+    @JoinColumn(name = "type_of_entity_id", nullable = false)
     TypeOfEntityDBModel typeOfEntity;
-    @NotNull
+    @Column(name = "name", nullable = false)
     private String name;
-    @NotNull
+    @Column(name = "system_name", nullable = false)
     private String systemName;
+    @Column(name = "create_date")
     private Date createDate;
+    @Column(name = "modification_date")
     private Date modificationDate;
+    @Column(name = "create_user")
     private String createUser;
+    @Column(name = "modification_user")
     private String modificationUser;
-
 
 }

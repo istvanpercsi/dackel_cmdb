@@ -8,11 +8,13 @@ import java.util.Date;
 import java.util.Set;
 
 @Entity
+@Table(name = "types_of_entity")
+
+@Builder
 @AllArgsConstructor(access = AccessLevel.PUBLIC)
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @Setter(value = AccessLevel.PUBLIC)
 @Getter
-@Builder
 public class TypeOfEntityDBModel {
 
     @Id
