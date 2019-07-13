@@ -10,7 +10,7 @@ import lombok.*;
 public class Message {
 
     long messageId;
-    MessageClass messageClass;
+    MessageClassesEnum messageClass;
     String messageText;
 
 }

@@ -1,7 +1,7 @@
 package de.percsi.products.dackelcmdb.api.json.controler;
 
 import de.percsi.products.dackelcmdb.api.json.messages.Message;
-import de.percsi.products.dackelcmdb.api.json.messages.MessageClass;
+import de.percsi.products.dackelcmdb.api.json.messages.MessageClassesEnum;
 import de.percsi.products.dackelcmdb.api.json.model.TypeOfEntityJsonModel;
 import de.percsi.products.dackelcmdb.persistence.model.TypeOfEntityDBModel;
 import de.percsi.products.dackelcmdb.persistence.repositories.TypeOfEntityRepository;
@@ -53,7 +53,7 @@ public class TypeOfEntityController {
             return new ResponseEntity(
                     Message.builder()
                     .messageId(999)
-                    .messageClass(MessageClass.INFO)
+                    .messageClass(MessageClassesEnum.INFO)
                     .messageText("Record saved").build(),
                     HttpStatus.OK
             );
@@ -61,7 +61,7 @@ public class TypeOfEntityController {
         return new ResponseEntity(
                 Message.builder()
                         .messageId(999)
-                        .messageClass(MessageClass.ERROR)
+                        .messageClass(MessageClassesEnum.ERROR)
                         .messageText("Record is already exists! To update please use HTTP PATCH method.").build(),
                 HttpStatus.CONFLICT);
     }
