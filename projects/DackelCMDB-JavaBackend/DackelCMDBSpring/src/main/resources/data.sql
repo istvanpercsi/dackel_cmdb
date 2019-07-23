@@ -9,7 +9,7 @@ VALUES
 
 
 -- Test data for table 'entities'
-INSERT INTO entites (`id`, `type_of_entity_id`, `name`,`system_name`,`create_date`,`modification_date`,`create_user`,`modification_user`)
+INSERT INTO entities (`id`, `type_of_entity_id`, `name`,`system_name`,`create_date`,`modification_date`,`create_user`,`modification_user`)
 VALUES
        ( 1, 1, 'N2452022', 'n2452022', '2019-04-11 11:34:11', '2019-05-22 21:11:49', 'Christina Maier', 'Christina Maier' ),
-       ( 2, 1, 'N2322022', 'n2322022', '2019-04-11 11:34:11', '2019-05-22 21:11:49', 'Christina Maier', 'Christina Maier' )
+       ( 2, 1, 'N2322022', 'n2322022', '2019-05-29 09:13:01', '2019-06-11 13:02:28', 'Robert Redford', 'Will Smith' )
