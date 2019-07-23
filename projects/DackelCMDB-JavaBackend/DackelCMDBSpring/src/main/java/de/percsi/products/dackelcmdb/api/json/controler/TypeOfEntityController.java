@@ -32,7 +32,6 @@ public class TypeOfEntityController {
             produces = "application/json"
     )
     public @ResponseBody List<TypeOfEntityModelJson> getAllTypeOfEntity() {
-
         return typeOfEntityService.getAllTypeOfEntity();
     }
 
