@@ -11,7 +11,7 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PACKAGE)
 @Setter(value = AccessLevel.PACKAGE)
 @Getter
-public class TypeOfEntityJsonModel {
+public class TypeOfEntityModelJson {
 
     private long id;
     private String name;

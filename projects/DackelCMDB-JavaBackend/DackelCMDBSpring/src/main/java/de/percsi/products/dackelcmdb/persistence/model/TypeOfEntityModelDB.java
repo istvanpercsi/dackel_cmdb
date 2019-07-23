@@ -3,7 +3,6 @@ package de.percsi.products.dackelcmdb.persistence.model;
 import lombok.*;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.Set;
 
@@ -15,7 +14,7 @@ import java.util.Set;
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @Setter(value = AccessLevel.PUBLIC)
 @Getter
-public class TypeOfEntityDBModel {
+public class TypeOfEntityModelDB {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -35,6 +34,6 @@ public class TypeOfEntityDBModel {
     private String modificationUser;
 
     @OneToMany(mappedBy = "typeOfEntity", fetch = FetchType.LAZY)
-    private Set<EntityDBModel> entities;
+    private Set<EntityModelDB> entities;
 
 }

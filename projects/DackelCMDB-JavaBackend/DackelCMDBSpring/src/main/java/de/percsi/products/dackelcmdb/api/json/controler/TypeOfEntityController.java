@@ -2,39 +2,38 @@ package de.percsi.products.dackelcmdb.api.json.controler;
 
 import de.percsi.products.dackelcmdb.api.json.messages.Message;
 import de.percsi.products.dackelcmdb.api.json.messages.MessageClassesEnum;
-import de.percsi.products.dackelcmdb.api.json.model.TypeOfEntityJsonModel;
-import de.percsi.products.dackelcmdb.persistence.model.TypeOfEntityDBModel;
+import de.percsi.products.dackelcmdb.api.json.model.TypeOfEntityModelJson;
+import de.percsi.products.dackelcmdb.persistence.model.TypeOfEntityModelDB;
 import de.percsi.products.dackelcmdb.persistence.repositories.TypeOfEntityRepository;
+import de.percsi.products.dackelcmdb.services.TypeOfEntityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
+import java.util.List;
 
 @RestController
 @RequestMapping(path = "/api/typesOfEntity")
 public class TypeOfEntityController {
 
     @Autowired
-    private TypeOfEntityRepository typeOfEntityRepository;
+    private TypeOfEntityService typeOfEntityService;
 
     @RequestMapping("/getTypeOfEntityById/{id}")
-    public TypeOfEntityJsonModel getTypeOfEntityById(@PathVariable(name = "id") int id) {
-        return TypeOfEntityJsonModel.builder()
-                .id(id)
-                .name("DatabaseConnection")
-                .build();
+    public TypeOfEntityModelJson getTypeOfEntityById(@PathVariable(name = "id") Long id) {
+        return typeOfEntityService.readTypeOfEntity(id);
     }
 
     @RequestMapping(
             method = RequestMethod.GET,
             path = "/getAllTypeOfEntity",
-            produces = "application/json",
-            consumes = "application/json"
+            produces = "application/json"
     )
-    public @ResponseBody Iterable<TypeOfEntityDBModel> getAllTypeOfEntity() {
-        return typeOfEntityRepository.findAll();
+    public @ResponseBody List<TypeOfEntityModelJson> getAllTypeOfEntity() {
+
+        return typeOfEntityService.getAllTypeOfEntity();
     }
 
     @RequestMapping(
@@ -43,27 +42,22 @@ public class TypeOfEntityController {
             consumes = "application/json",
             produces = "application/json"
     )
-    public ResponseEntity createTypeOfEntity(@RequestBody TypeOfEntityDBModel typeOfEntity) {
-        if (!typeOfEntityRepository.existsById(typeOfEntity.getId())) {
-            typeOfEntity.setCreateDate(new Date(System.currentTimeMillis()));
-            typeOfEntity.setModificationDate(new Date(System.currentTimeMillis()));
-            typeOfEntity.setCreateUser("Demo User");
-            typeOfEntity.setModificationUser("Demo User");
-            typeOfEntityRepository.save(typeOfEntity);
-            return new ResponseEntity(
-                    Message.builder()
+    public ResponseEntity createTypeOfEntity(@RequestBody TypeOfEntityModelJson typeOfEntityModelJson) {
+        try {
+            typeOfEntityService.createTypeOfEntity(typeOfEntityModelJson);
+            Message msg = Message.builder()
                     .messageId(999)
                     .messageClass(MessageClassesEnum.INFO)
-                    .messageText("Record saved").build(),
-                    HttpStatus.OK
-            );
+                    .messageText("Record saved").build();
+            return new ResponseEntity(msg,HttpStatus.OK);
         }
-        return new ResponseEntity(
-                Message.builder()
-                        .messageId(999)
-                        .messageClass(MessageClassesEnum.ERROR)
-                        .messageText("Record is already exists! To update please use HTTP PATCH method.").build(),
-                HttpStatus.CONFLICT);
+        catch (Exception e) {
+            Message msg = Message.builder()
+                    .messageId(999)
+                    .messageClass(MessageClassesEnum.ERROR)
+                    .messageText("Record is already exists! To update please use HTTP PATCH method.").build();
+            return new ResponseEntity(msg,HttpStatus.CONFLICT);
+        }
     }
 
 }
