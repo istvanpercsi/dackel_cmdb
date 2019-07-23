@@ -11,7 +11,7 @@ import org.mapstruct.factory.Mappers;
 public interface TypeOfEntityModelMapper  {
     TypeOfEntityModelMapper MAPPER=Mappers.getMapper(TypeOfEntityModelMapper.class);
 
-    TypeOfEntityModelDB mapJsonToDB(EntityModelJson entityModelJson);
+    TypeOfEntityModelDB mapJsonToDB(TypeOfEntityModelJson typeOfEntityModelJson);
 
-    TypeOfEntityModelJson mapDBToJson(EntityModelDB entityModelDB);
+    TypeOfEntityModelJson mapDBToJson(TypeOfEntityModelDB typeOfEntityModelDB);
 }
