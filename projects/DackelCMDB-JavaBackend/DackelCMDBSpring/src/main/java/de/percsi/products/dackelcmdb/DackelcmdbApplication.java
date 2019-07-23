@@ -5,7 +5,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@ComponentScan(basePackages = "de.percsi.products.dackelcmdb.api.json.controler")
+@ComponentScan(
+        basePackages = {
+            "de.percsi.products.dackelcmdb.services",
+            "de.percsi.products.dackelcmdb.api.json.controler"
+        })
 public class DackelcmdbApplication {
 
     public static void main(String[] args) {
