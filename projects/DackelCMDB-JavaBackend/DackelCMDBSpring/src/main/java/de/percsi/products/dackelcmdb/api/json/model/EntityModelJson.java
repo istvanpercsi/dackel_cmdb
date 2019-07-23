@@ -9,7 +9,7 @@ import java.util.Date;
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
 @Setter(value = AccessLevel.PACKAGE)
 @Getter
-public class EntityJsonModel {
+public class EntityModelJson {
 
     private long id;
     private String type;

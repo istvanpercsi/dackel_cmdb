@@ -3,17 +3,17 @@ package de.percsi.products.dackelcmdb.persistence.model;
 import lombok.*;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Entity
 @Table(name = "entities")
+
 @Builder
 @AllArgsConstructor(access = AccessLevel.PUBLIC)
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @Setter(value = AccessLevel.PUBLIC)
 @Getter
-public class EntityDBModel {
+public class EntityModelDB {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -21,7 +21,7 @@ public class EntityDBModel {
     long id;
     @ManyToOne
     @JoinColumn(name = "type_of_entity_id", nullable = false)
-    TypeOfEntityDBModel typeOfEntity;
+    TypeOfEntityModelDB typeOfEntity;
     @Column(name = "name", nullable = false)
     private String name;
     @Column(name = "system_name", nullable = false)
