@@ -2,6 +2,7 @@ package de.percsi.products.dackelcmdb.services;
 
 import de.percsi.products.dackelcmdb.api.json.model.TypeOfEntityModelJson;
 import de.percsi.products.dackelcmdb.mapper.TypeOfEntityModelMapper;
+import de.percsi.products.dackelcmdb.persistence.model.TypeOfEntityModelDB;
 import de.percsi.products.dackelcmdb.persistence.repositories.TypeOfEntityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,22 +19,25 @@ public class TypeOfEntityServiceImpl implements TypeOfEntityService {
 
     @Override
     public void createTypeOfEntity(TypeOfEntityModelJson typeOfEntityModelJson) {
-
+        typeOfEntityRepository.save(TypeOfEntityModelMapper.MAPPER.mapJsonToDB(typeOfEntityModelJson));
     }
 
     @Override
     public TypeOfEntityModelJson readTypeOfEntity(Long id) {
-        return null;
+        return TypeOfEntityModelMapper.MAPPER.mapDBToJson(typeOfEntityRepository.findById(id).orElse(new TypeOfEntityModelDB()));
     }
 
     @Override
     public void deleteTypeOfEntity(Long id) {
-
+        typeOfEntityRepository.findById(id).ifPresent(e -> {
+            e.setDeleted(true);
+            typeOfEntityRepository.save(e);
+        });
     }
 
     @Override
     public List<TypeOfEntityModelJson> getAllTypeOfEntity() {
-        return StreamSupport.stream(typeOfEntityRepository.findAll().spliterator(),false)
+        return StreamSupport.stream(typeOfEntityRepository.findAllNotDeleted().spliterator(),false)
                 .map(e -> TypeOfEntityModelMapper.MAPPER.mapDBToJson(e))
                 .collect(Collectors.toList());
     }

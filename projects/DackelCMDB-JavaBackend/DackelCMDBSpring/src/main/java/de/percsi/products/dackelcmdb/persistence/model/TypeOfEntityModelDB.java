@@ -3,6 +3,7 @@ package de.percsi.products.dackelcmdb.persistence.model;
 import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
 
@@ -14,12 +15,12 @@ import java.util.Set;
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @Setter(value = AccessLevel.PUBLIC)
 @Getter
-public class TypeOfEntityModelDB {
+public class TypeOfEntityModelDB implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
-    private long id;
+    private Long id;
     @Column(name="name", nullable = false)
     private String name;
     @Column(name="system_name", nullable = false)
@@ -32,6 +33,9 @@ public class TypeOfEntityModelDB {
     private String createUser;
     @Column(name = "modification_user")
     private String modificationUser;
+    @Column(name = "deleted")
+    @Builder.Default
+    private Boolean deleted = false;
 
     @OneToMany(mappedBy = "typeOfEntity", fetch = FetchType.LAZY)
     private Set<EntityModelDB> entities;
