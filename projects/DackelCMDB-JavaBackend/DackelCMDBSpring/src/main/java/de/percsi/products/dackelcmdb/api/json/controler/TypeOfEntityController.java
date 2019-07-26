@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.naming.OperationNotSupportedException;
 import java.util.Date;
 import java.util.List;
 
@@ -50,11 +51,11 @@ public class TypeOfEntityController {
                     .messageText("Record saved").build();
             return new ResponseEntity(msg,HttpStatus.OK);
         }
-        catch (Exception e) {
+        catch (OperationNotSupportedException e) {
             Message msg = Message.builder()
                     .messageId(999)
                     .messageClass(MessageClassesEnum.ERROR)
-                    .messageText("Record is already exists! To update please use HTTP PATCH method.").build();
+                    .messageText(e.getMessage()).build();
             return new ResponseEntity(msg,HttpStatus.CONFLICT);
         }
     }

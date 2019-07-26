@@ -7,6 +7,7 @@ import de.percsi.products.dackelcmdb.persistence.repositories.TypeOfEntityReposi
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.naming.OperationNotSupportedException;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -18,7 +19,10 @@ public class TypeOfEntityServiceImpl implements TypeOfEntityService {
     private TypeOfEntityRepository typeOfEntityRepository;
 
     @Override
-    public void createTypeOfEntity(TypeOfEntityModelJson typeOfEntityModelJson) {
+    public void createTypeOfEntity(TypeOfEntityModelJson typeOfEntityModelJson) throws OperationNotSupportedException{
+        if (typeOfEntityRepository.findById(typeOfEntityModelJson.getId()).orElse(null) != null) {
+            throw new OperationNotSupportedException("Record is already exists! To update please use HTTP PATCH method.");
+        };
         typeOfEntityRepository.save(TypeOfEntityModelMapper.MAPPER.mapJsonToDB(typeOfEntityModelJson));
     }
 
