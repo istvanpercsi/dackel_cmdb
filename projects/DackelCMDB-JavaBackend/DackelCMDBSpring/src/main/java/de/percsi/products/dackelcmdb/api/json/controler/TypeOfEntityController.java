@@ -6,6 +6,8 @@ import de.percsi.products.dackelcmdb.api.json.model.TypeOfEntityModelJson;
 import de.percsi.products.dackelcmdb.persistence.model.TypeOfEntityModelDB;
 import de.percsi.products.dackelcmdb.persistence.repositories.TypeOfEntityRepository;
 import de.percsi.products.dackelcmdb.services.TypeOfEntityService;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,15 +18,21 @@ import java.util.Date;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "/api/typesOfEntity")
+@RequestMapping(path = "/api/typeOfEntity")
 public class TypeOfEntityController {
 
     @Autowired
     private TypeOfEntityService typeOfEntityService;
 
+    @ApiResponses(
+            @ApiResponse(
+                    code = 200,
+                    message = "Retuns with a Type of Entity where the 'id' is passed"
+            )
+    )
     @RequestMapping(
             method = RequestMethod.GET,
-            path = "/getTypeOfEntityById/{id}",
+            path = "/{id}",
             produces = "application/json"
     )
     public TypeOfEntityModelJson getTypeOfEntityById(@PathVariable(name = "id") Long id) {
@@ -33,7 +41,7 @@ public class TypeOfEntityController {
 
     @RequestMapping(
             method = RequestMethod.GET,
-            path = "/getAllTypeOfEntity",
+            path = "/all",
             produces = "application/json"
     )
     public @ResponseBody List<TypeOfEntityModelJson> getAllTypeOfEntity() {
@@ -42,7 +50,6 @@ public class TypeOfEntityController {
 
     @RequestMapping(
             method = RequestMethod.POST,
-            path = "/createTypeOfEntity",
             consumes = "application/json",
             produces = "application/json"
     )
@@ -66,7 +73,6 @@ public class TypeOfEntityController {
 
     @RequestMapping (
             method = RequestMethod.PATCH,
-            path = "/updateTypeOfEntity",
             consumes = "application/json",
             produces = "application/json"
     )
