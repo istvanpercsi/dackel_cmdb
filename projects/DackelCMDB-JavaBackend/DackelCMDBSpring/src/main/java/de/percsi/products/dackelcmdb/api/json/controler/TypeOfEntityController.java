@@ -22,7 +22,11 @@ public class TypeOfEntityController {
     @Autowired
     private TypeOfEntityService typeOfEntityService;
 
-    @RequestMapping("/getTypeOfEntityById/{id}")
+    @RequestMapping(
+            method = RequestMethod.GET,
+            path = "/getTypeOfEntityById/{id}",
+            produces = "application/json"
+    )
     public TypeOfEntityModelJson getTypeOfEntityById(@PathVariable(name = "id") Long id) {
         return typeOfEntityService.readTypeOfEntity(id);
     }
@@ -57,6 +61,30 @@ public class TypeOfEntityController {
                     .messageClass(MessageClassesEnum.ERROR)
                     .messageText(e.getMessage()).build();
             return new ResponseEntity(msg,HttpStatus.CONFLICT);
+        }
+    }
+
+    @RequestMapping (
+            method = RequestMethod.PATCH,
+            path = "/updateTypeOfEntity",
+            consumes = "application/json",
+            produces = "application/json"
+    )
+    public ResponseEntity updateTypeOfEntity(@RequestBody TypeOfEntityModelJson typeOfEntityModelJson){
+        try {
+            typeOfEntityService.updateTypeOfEntity(typeOfEntityModelJson);
+            Message msg = Message.builder()
+                    .messageId(999)
+                    .messageClass(MessageClassesEnum.INFO)
+                    .messageText("Record saved").build();
+            return new ResponseEntity(msg,HttpStatus.OK);
+        } catch (OperationNotSupportedException e) {
+            Message msg = Message.builder()
+                    .messageId(999)
+                    .messageClass(MessageClassesEnum.ERROR)
+                    .messageText(e.getMessage()).build();
+            return new ResponseEntity(msg,HttpStatus.CONFLICT);
+
         }
     }
 

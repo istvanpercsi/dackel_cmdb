@@ -9,6 +9,8 @@ public interface TypeOfEntityService {
 
     public void createTypeOfEntity(TypeOfEntityModelJson typeOfEntityModelJson) throws OperationNotSupportedException;
 
+    public void updateTypeOfEntity(TypeOfEntityModelJson typeOfEntityModelJson) throws OperationNotSupportedException;
+
     public TypeOfEntityModelJson readTypeOfEntity(Long id);
 
     public void deleteTypeOfEntity(Long id);

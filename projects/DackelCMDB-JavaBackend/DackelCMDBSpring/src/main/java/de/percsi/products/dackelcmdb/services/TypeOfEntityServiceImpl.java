@@ -27,6 +27,15 @@ public class TypeOfEntityServiceImpl implements TypeOfEntityService {
     }
 
     @Override
+    public void updateTypeOfEntity(TypeOfEntityModelJson typeOfEntityModelJson) throws OperationNotSupportedException {
+        if (typeOfEntityRepository.findById(typeOfEntityModelJson.getId()).orElse(null) == null) {
+            throw  new OperationNotSupportedException("Record with id '" + typeOfEntityModelJson.getId().toString()
+                    + "' does not exists. To create please use HTTP POST method");
+        }
+        typeOfEntityRepository.save(TypeOfEntityModelMapper.MAPPER.mapJsonToDB(typeOfEntityModelJson));
+    }
+
+    @Override
     public TypeOfEntityModelJson readTypeOfEntity(Long id) {
         return TypeOfEntityModelMapper.MAPPER.mapDBToJson(typeOfEntityRepository.findById(id).orElse(new TypeOfEntityModelDB()));
     }
