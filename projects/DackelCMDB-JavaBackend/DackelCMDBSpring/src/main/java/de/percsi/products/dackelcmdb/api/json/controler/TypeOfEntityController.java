@@ -113,9 +113,31 @@ public class TypeOfEntityController {
                     .messageId(999)
                     .messageClass(MessageClassesEnum.ERROR)
                     .messageText(e.getMessage()).build();
-            return new ResponseEntity(msg,HttpStatus.NOT_FOUND);
+            return new ResponseEntity(msg,HttpStatus.CONFLICT);
 
         }
+    }
+
+    @ApiOperation(
+            value = "Delete type of entity.",
+            notes = "Delete a type of entity with 'id'."
+    )
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Record successfully deleted."),
+            @ApiResponse(code = 404, message = "Record not found.")
+    })
+    @RequestMapping(
+            method = RequestMethod.DELETE,
+            produces = "application/json"
+    )
+    public ResponseEntity<Message> deleteTypeOfEntity(Long id) {
+        typeOfEntityService.deleteTypeOfEntity(id);
+        Message msg = Message.builder()
+                .messageId(999)
+                .messageClass(MessageClassesEnum.INFO)
+                .messageText("Record deleted.")
+                .build();
+        return new ResponseEntity<Message>(msg, HttpStatus.OK);
     }
 
 }
