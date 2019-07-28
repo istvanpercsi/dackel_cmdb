@@ -25,11 +25,11 @@ public class TypeOfEntityModelDB implements Serializable {
     private String name;
     @Column(name="system_name", nullable = false)
     private String systemName;
-    @Column(name="create_date")
+    @Column(name="create_date", updatable = false)
     private Date createDate;
     @Column(name = "modification_date")
     private Date modificationDate;
-    @Column(name = "create_user")
+    @Column(name = "create_user", updatable = false)
     private String createUser;
     @Column(name = "modification_user")
     private String modificationUser;

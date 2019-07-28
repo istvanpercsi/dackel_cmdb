@@ -45,8 +45,6 @@ public class TypeOfEntityServiceImpl implements TypeOfEntityService {
         TypeOfEntityModelDB typeOfEntityModelDBSave = TypeOfEntityModelMapper.MAPPER.mapJsonCUToDB(typeOfEntityModelJsonCU);
         typeOfEntityModelDBSave.setModificationUser("Modification user");
         typeOfEntityModelDBSave.setModificationDate(new Date());
-        typeOfEntityModelDBSave.setCreateUser(typeOfEntityModelDBOrig.getCreateUser());
-        typeOfEntityModelDBSave.setCreateDate(typeOfEntityModelDBOrig.getCreateDate());
         typeOfEntityRepository.save(typeOfEntityModelDBSave);
     }
 
