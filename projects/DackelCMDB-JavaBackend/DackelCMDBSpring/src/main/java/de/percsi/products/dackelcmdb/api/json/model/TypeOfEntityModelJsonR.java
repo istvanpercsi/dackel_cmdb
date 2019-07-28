@@ -1,18 +1,22 @@
 package de.percsi.products.dackelcmdb.api.json.model;
 
-
 import lombok.*;
+
+import java.util.Date;
 
 @Builder
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
 @NoArgsConstructor(access = AccessLevel.PACKAGE)
 @Setter(value = AccessLevel.PACKAGE)
 @Getter
-public class TypeOfEntityModelJson {
+public class TypeOfEntityModelJsonR {
 
     private Long id;
     private String name;
     private String systemName;
-    //private List<> _links;
+    private Date createDate;
+    private Date modificationDate;
+    private String createUser;
+    private String modificationUser;
 
 }
