@@ -2,6 +2,7 @@ package de.percsi.products.dackelcmdb.services;
 
 import de.percsi.products.dackelcmdb.api.json.model.TypeOfEntityModelJsonCU;
 import de.percsi.products.dackelcmdb.api.json.model.TypeOfEntityModelJsonR;
+import de.percsi.products.dackelcmdb.exceptions.RecordNotFoundDBException;
 import de.percsi.products.dackelcmdb.mapper.TypeOfEntityModelMapper;
 import de.percsi.products.dackelcmdb.persistence.model.TypeOfEntityModelDB;
 import de.percsi.products.dackelcmdb.persistence.repositories.TypeOfEntityRepository;
@@ -37,9 +38,9 @@ public class TypeOfEntityServiceImpl implements TypeOfEntityService {
 
     @Override
     public void updateTypeOfEntity(TypeOfEntityModelJsonCU typeOfEntityModelJsonCU) throws OperationNotSupportedException {
-        TypeOfEntityModelDB typeOfEntityModelDBOrig = typeOfEntityRepository.findById(typeOfEntityModelJsonCU.getId()).orElse(null);
+        TypeOfEntityModelDB typeOfEntityModelDBOrig = typeOfEntityRepository.findById(typeOfEntityModelJsonCU.getId()).get();
         if (typeOfEntityModelDBOrig == null) {
-            throw  new OperationNotSupportedException("Record with id '" + typeOfEntityModelJsonCU.getId().toString()
+            throw  new RecordNotFoundDBException("Record with id '" + typeOfEntityModelJsonCU.getId().toString()
                     + "' does not exists. To create please use HTTP POST method");
         }
         TypeOfEntityModelDB typeOfEntityModelDBSave = TypeOfEntityModelMapper.MAPPER.mapJsonCUToDB(typeOfEntityModelJsonCU);
@@ -50,7 +51,12 @@ public class TypeOfEntityServiceImpl implements TypeOfEntityService {
 
     @Override
     public TypeOfEntityModelJsonR readTypeOfEntity(Long id) {
-        return TypeOfEntityModelMapper.MAPPER.mapDBToJsonR(typeOfEntityRepository.findById(id).orElse(new TypeOfEntityModelDB()));
+        TypeOfEntityModelJsonR typeOfEntityModelJsonR =  typeOfEntityRepository.findById(id)
+                .map(r ->TypeOfEntityModelMapper.MAPPER.mapDBToJsonR( r))
+                .orElse(null);
+        if (typeOfEntityModelJsonR == null)
+            throw new RecordNotFoundDBException("Type of entity  does not found with id '" + id.toString() + "'");
+        return typeOfEntityModelJsonR;
     }
 
     @Override
