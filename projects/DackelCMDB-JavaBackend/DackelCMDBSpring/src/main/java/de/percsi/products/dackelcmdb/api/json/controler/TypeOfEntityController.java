@@ -1,7 +1,8 @@
 package de.percsi.products.dackelcmdb.api.json.controler;
 
-import de.percsi.products.dackelcmdb.api.json.messages.Message;
-import de.percsi.products.dackelcmdb.api.json.messages.MessageClassesEnum;
+import de.percsi.products.dackelcmdb.api.json.messages.OperationalMessage;
+import de.percsi.products.dackelcmdb.api.json.messages.OperationalMessageTypesEnum;
+import de.percsi.products.dackelcmdb.api.json.messages.OperationalMessagesEnum;
 import de.percsi.products.dackelcmdb.api.json.model.TypeOfEntityModelJsonCU;
 import de.percsi.products.dackelcmdb.api.json.model.TypeOfEntityModelJsonR;
 import de.percsi.products.dackelcmdb.services.TypeOfEntityService;
@@ -70,21 +71,8 @@ public class TypeOfEntityController {
             produces = "application/json"
     )
     public ResponseEntity createTypeOfEntity(@RequestBody TypeOfEntityModelJsonCU typeOfEntityModelJsonCU) {
-        try {
-            typeOfEntityService.createTypeOfEntity(typeOfEntityModelJsonCU);
-            Message msg = Message.builder()
-                    .messageId(999)
-                    .messageClass(MessageClassesEnum.INFO)
-                    .messageText("Record saved").build();
-            return new ResponseEntity(msg,HttpStatus.OK);
-        }
-        catch (OperationNotSupportedException e) {
-            Message msg = Message.builder()
-                    .messageId(999)
-                    .messageClass(MessageClassesEnum.ERROR)
-                    .messageText(e.getMessage()).build();
-            return new ResponseEntity(msg,HttpStatus.CONFLICT);
-        }
+        typeOfEntityService.createTypeOfEntity(typeOfEntityModelJsonCU);
+        return new ResponseEntity<OperationalMessage>(OperationalMessagesEnum.RECORD_SAVED.getMessage(),HttpStatus.CREATED);
     }
 
     @ApiOperation(
@@ -100,22 +88,9 @@ public class TypeOfEntityController {
             consumes = "application/json",
             produces = "application/json"
     )
-    public ResponseEntity updateTypeOfEntity(@RequestBody TypeOfEntityModelJsonCU typeOfEntityModelJsonCU){
-        try {
-            typeOfEntityService.updateTypeOfEntity(typeOfEntityModelJsonCU);
-            Message msg = Message.builder()
-                    .messageId(999)
-                    .messageClass(MessageClassesEnum.INFO)
-                    .messageText("Record saved").build();
-            return new ResponseEntity(msg,HttpStatus.OK);
-        } catch (OperationNotSupportedException e) {
-            Message msg = Message.builder()
-                    .messageId(999)
-                    .messageClass(MessageClassesEnum.ERROR)
-                    .messageText(e.getMessage()).build();
-            return new ResponseEntity(msg,HttpStatus.CONFLICT);
-
-        }
+    public ResponseEntity updateTypeOfEntity(@RequestBody TypeOfEntityModelJsonCU typeOfEntityModelJsonCU) {
+        typeOfEntityService.updateTypeOfEntity(typeOfEntityModelJsonCU);
+        return new ResponseEntity<OperationalMessage>(OperationalMessagesEnum.RECORD_SAVED.getMessage(),HttpStatus.OK);
     }
 
     @ApiOperation(
@@ -130,14 +105,11 @@ public class TypeOfEntityController {
             method = RequestMethod.DELETE,
             produces = "application/json"
     )
-    public ResponseEntity<Message> deleteTypeOfEntity(Long id) {
+    public ResponseEntity<OperationalMessage> deleteTypeOfEntity(Long id) {
         typeOfEntityService.deleteTypeOfEntity(id);
-        Message msg = Message.builder()
-                .messageId(999)
-                .messageClass(MessageClassesEnum.INFO)
-                .messageText("Record deleted.")
-                .build();
-        return new ResponseEntity<Message>(msg, HttpStatus.OK);
+        return new ResponseEntity<OperationalMessage>(
+                OperationalMessagesEnum.RECORD_DELETED.getMessage(String.format("Type of entity has been deleted with id '%s'", id)),
+                HttpStatus.OK);
     }
 
 }

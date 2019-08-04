@@ -8,9 +8,9 @@ import java.util.List;
 
 public interface TypeOfEntityService {
 
-    public void createTypeOfEntity(TypeOfEntityModelJsonCU typeOfEntityModelJsonCU) throws OperationNotSupportedException;
+    public void createTypeOfEntity(TypeOfEntityModelJsonCU typeOfEntityModelJsonCU);
 
-    public void updateTypeOfEntity(TypeOfEntityModelJsonCU typeOfEntityModelJsonCU) throws OperationNotSupportedException;
+    public void updateTypeOfEntity(TypeOfEntityModelJsonCU typeOfEntityModelJsonCU);
 
     public TypeOfEntityModelJsonR readTypeOfEntity(Long id);
 

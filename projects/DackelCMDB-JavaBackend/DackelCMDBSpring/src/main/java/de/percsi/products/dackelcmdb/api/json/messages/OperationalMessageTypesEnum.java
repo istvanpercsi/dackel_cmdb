@@ -1,5 +1,5 @@
 package de.percsi.products.dackelcmdb.api.json.messages;
 
-public enum MessageClassesEnum {
+public enum OperationalMessageTypesEnum {
     INFO,WARN,ERROR
 }

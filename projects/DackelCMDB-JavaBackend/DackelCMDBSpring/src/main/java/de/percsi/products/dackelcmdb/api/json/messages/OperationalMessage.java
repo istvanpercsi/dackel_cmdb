@@ -7,10 +7,10 @@ import lombok.*;
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
 @Getter
 @Setter(value = AccessLevel.PACKAGE)
-public class Message {
+public class OperationalMessage {
 
     long messageId;
-    MessageClassesEnum messageClass;
+    OperationalMessageTypesEnum messageClass;
     String messageText;
 
 }
