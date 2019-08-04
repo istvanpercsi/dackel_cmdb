@@ -9,6 +9,8 @@ import de.percsi.products.dackelcmdb.mapper.TypeOfEntityModelMapper;
 import de.percsi.products.dackelcmdb.persistence.model.TypeOfEntityModelDB;
 import de.percsi.products.dackelcmdb.persistence.repositories.TypeOfEntityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
 
 import javax.naming.OperationNotSupportedException;
@@ -28,8 +30,12 @@ public class TypeOfEntityServiceImpl implements TypeOfEntityService {
     @Override
     public void createTypeOfEntity(TypeOfEntityModelJsonCU typeOfEntityModelJsonCU) {
         if (typeOfEntityRepository.findById(typeOfEntityModelJsonCU.getId()).orElse(null) != null) {
-            throw new RecordAlreadyExistsDBException(String.format(MessagesEnum.RECORD_ALREADY_EXISTS_TABLE_ID.getMessage(),TABLE_TYPE_OF_ENTITY,typeOfEntityModelJsonCU.getId()));
-        };
+            throw new RecordAlreadyExistsDBException(String.format(MessagesEnum.RECORD_ALREADY_EXISTS_TABLE_ID.getMessage(),
+                    TABLE_TYPE_OF_ENTITY,typeOfEntityModelJsonCU.getId()));
+        } else if (typeOfEntityRepository.findFirstBySystemName(typeOfEntityModelJsonCU.getSystemName()).orElse(null) != null) {
+            throw new RecordAlreadyExistsDBException(String.format(MessagesEnum.RECORD_ALREADY_EXISTS_TABLE_SYSTEM_NAME.getMessage(),
+                    TABLE_TYPE_OF_ENTITY,typeOfEntityModelJsonCU.getSystemName()));
+        }
         TypeOfEntityModelDB typeOfEntityModelDB = TypeOfEntityModelMapper.MAPPER.mapJsonCUToDB(typeOfEntityModelJsonCU);
         typeOfEntityModelDB.setCreateDate(new Date());
         typeOfEntityModelDB.setCreateUser("Test Create user");

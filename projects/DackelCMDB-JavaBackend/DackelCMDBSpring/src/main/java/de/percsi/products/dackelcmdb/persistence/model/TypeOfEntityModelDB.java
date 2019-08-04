@@ -23,7 +23,7 @@ public class TypeOfEntityModelDB implements Serializable {
     private Long id;
     @Column(name="name", nullable = false)
     private String name;
-    @Column(name="system_name", nullable = false)
+    @Column(name="system_name", nullable = false, unique = true)
     private String systemName;
     @Column(name="create_date", updatable = false)
     private Date createDate;
