@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -21,8 +22,12 @@ public class TypeOfEntityServiceImpl implements TypeOfEntityService {
 
     private static final String TABLE_TYPE_OF_ENTITY = "types_of_entity";
 
-    @Autowired
     private TypeOfEntityRepository typeOfEntityRepository;
+
+    @Autowired
+    public TypeOfEntityServiceImpl(TypeOfEntityRepository typeOfEntityRepository) {
+        this.typeOfEntityRepository = typeOfEntityRepository;
+    }
 
     @Override
     public void createTypeOfEntity(TypeOfEntityModelJsonCU typeOfEntityModelJsonCU) {
@@ -57,7 +62,7 @@ public class TypeOfEntityServiceImpl implements TypeOfEntityService {
     @Override
     public TypeOfEntityModelJsonR readTypeOfEntity(Long id) {
         TypeOfEntityModelJsonR typeOfEntityModelJsonR =  typeOfEntityRepository.findById(id)
-                .map(r ->TypeOfEntityModelMapper.MAPPER.mapDBToJsonR( r))
+                .map(TypeOfEntityModelMapper.MAPPER::mapDBToJsonR)
                 .orElse(null);
         if (typeOfEntityModelJsonR == null)
             throw new RecordNotFoundDBException(OperationalMessagesEnum.RECORD_NOT_FOUND_TABLE_ID.getMessage(TABLE_TYPE_OF_ENTITY,id.toString()));
@@ -66,19 +71,21 @@ public class TypeOfEntityServiceImpl implements TypeOfEntityService {
 
     @Override
     public void deleteTypeOfEntity(Long id) {
+        AtomicBoolean found = new AtomicBoolean(false);
         typeOfEntityRepository.findById(id).ifPresent(e -> {
             e.setDeleted(true);
             e.setModificationDate(new Date());
             typeOfEntityRepository.save(e);
-            return;
+            found.set(true);
         });
-        throw new RecordNotFoundDBException(OperationalMessagesEnum.RECORD_NOT_FOUND_TABLE_ID.getMessage(TABLE_TYPE_OF_ENTITY,id.toString()));
+        if (!found.get())
+            throw new RecordNotFoundDBException(OperationalMessagesEnum.RECORD_NOT_FOUND_TABLE_ID.getMessage(TABLE_TYPE_OF_ENTITY,id.toString()));
     }
 
     @Override
     public List<TypeOfEntityModelJsonR> getAllTypeOfEntity() {
         return StreamSupport.stream(typeOfEntityRepository.findAllNotDeleted().spliterator(),false)
-                .map(e -> TypeOfEntityModelMapper.MAPPER.mapDBToJsonR(e))
+                .map(TypeOfEntityModelMapper.MAPPER::mapDBToJsonR)
                 .collect(Collectors.toList());
     }
 }
