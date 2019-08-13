@@ -1,6 +1,6 @@
 package de.percsi.products.dackelcmdb.services;
 
-import de.percsi.products.dackelcmdb.api.json.messages.MessagesEnum;
+import de.percsi.products.dackelcmdb.api.json.messages.OperationalMessagesEnum;
 import de.percsi.products.dackelcmdb.api.json.model.TypeOfEntityModelJsonCU;
 import de.percsi.products.dackelcmdb.api.json.model.TypeOfEntityModelJsonR;
 import de.percsi.products.dackelcmdb.exceptions.RecordAlreadyExistsDBException;
@@ -9,11 +9,8 @@ import de.percsi.products.dackelcmdb.mapper.TypeOfEntityModelMapper;
 import de.percsi.products.dackelcmdb.persistence.model.TypeOfEntityModelDB;
 import de.percsi.products.dackelcmdb.persistence.repositories.TypeOfEntityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
 
-import javax.naming.OperationNotSupportedException;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -30,10 +27,10 @@ public class TypeOfEntityServiceImpl implements TypeOfEntityService {
     @Override
     public void createTypeOfEntity(TypeOfEntityModelJsonCU typeOfEntityModelJsonCU) {
         if (typeOfEntityRepository.findById(typeOfEntityModelJsonCU.getId()).orElse(null) != null) {
-            throw new RecordAlreadyExistsDBException(String.format(MessagesEnum.RECORD_ALREADY_EXISTS_TABLE_ID.getMessage(),
-                    TABLE_TYPE_OF_ENTITY,typeOfEntityModelJsonCU.getId()));
+            throw new RecordAlreadyExistsDBException(OperationalMessagesEnum.RECORD_ALREADY_EXISTS_TABLE_ID.getMessage(
+                    TABLE_TYPE_OF_ENTITY,typeOfEntityModelJsonCU.getId().toString()));
         } else if (typeOfEntityRepository.findFirstBySystemName(typeOfEntityModelJsonCU.getSystemName()).orElse(null) != null) {
-            throw new RecordAlreadyExistsDBException(String.format(MessagesEnum.RECORD_ALREADY_EXISTS_TABLE_SYSTEM_NAME.getMessage(),
+            throw new RecordAlreadyExistsDBException(OperationalMessagesEnum.RECORD_ALREADY_EXISTS_TABLE_SYSTEMNAME.getMessage(
                     TABLE_TYPE_OF_ENTITY,typeOfEntityModelJsonCU.getSystemName()));
         }
         TypeOfEntityModelDB typeOfEntityModelDB = TypeOfEntityModelMapper.MAPPER.mapJsonCUToDB(typeOfEntityModelJsonCU);
@@ -46,10 +43,10 @@ public class TypeOfEntityServiceImpl implements TypeOfEntityService {
 
     @Override
     public void updateTypeOfEntity(TypeOfEntityModelJsonCU typeOfEntityModelJsonCU) {
-        TypeOfEntityModelDB typeOfEntityModelDBOrig = typeOfEntityRepository.findById(typeOfEntityModelJsonCU.getId()).get();
+        TypeOfEntityModelDB typeOfEntityModelDBOrig = typeOfEntityRepository.findById(typeOfEntityModelJsonCU.getId()).orElse(null);
         if (typeOfEntityModelDBOrig == null) {
-            throw  new RecordNotFoundDBException(String.format(MessagesEnum.RECORD_NOT_FOUND_TABLE_ID.getMessage(),
-                    TABLE_TYPE_OF_ENTITY,typeOfEntityModelJsonCU.getId()));
+            throw  new RecordNotFoundDBException(OperationalMessagesEnum.RECORD_NOT_FOUND_TABLE_ID.getMessage(
+                    TABLE_TYPE_OF_ENTITY,typeOfEntityModelJsonCU.getId().toString()));
         }
         TypeOfEntityModelDB typeOfEntityModelDBSave = TypeOfEntityModelMapper.MAPPER.mapJsonCUToDB(typeOfEntityModelJsonCU);
         typeOfEntityModelDBSave.setModificationUser("Modification user");
@@ -63,7 +60,7 @@ public class TypeOfEntityServiceImpl implements TypeOfEntityService {
                 .map(r ->TypeOfEntityModelMapper.MAPPER.mapDBToJsonR( r))
                 .orElse(null);
         if (typeOfEntityModelJsonR == null)
-            throw new RecordNotFoundDBException(String.format(MessagesEnum.RECORD_NOT_FOUND_TABLE_ID.getMessage(),TABLE_TYPE_OF_ENTITY,id));
+            throw new RecordNotFoundDBException(OperationalMessagesEnum.RECORD_NOT_FOUND_TABLE_ID.getMessage(TABLE_TYPE_OF_ENTITY,id.toString()));
         return typeOfEntityModelJsonR;
     }
 
@@ -75,7 +72,7 @@ public class TypeOfEntityServiceImpl implements TypeOfEntityService {
             typeOfEntityRepository.save(e);
             return;
         });
-        throw new RecordNotFoundDBException(String.format(MessagesEnum.RECORD_NOT_FOUND_TABLE_ID.getMessage(),TABLE_TYPE_OF_ENTITY,id));
+        throw new RecordNotFoundDBException(OperationalMessagesEnum.RECORD_NOT_FOUND_TABLE_ID.getMessage(TABLE_TYPE_OF_ENTITY,id.toString()));
     }
 
     @Override

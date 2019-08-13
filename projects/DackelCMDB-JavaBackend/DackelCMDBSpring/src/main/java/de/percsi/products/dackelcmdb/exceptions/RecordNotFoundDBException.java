@@ -1,8 +1,10 @@
 package de.percsi.products.dackelcmdb.exceptions;
 
-public class RecordNotFoundDBException extends RuntimeException {
+import de.percsi.products.dackelcmdb.api.json.messages.OperationalMessage;
 
-    public RecordNotFoundDBException(String message) {
+public class RecordNotFoundDBException extends StructuredRuntimeException {
+
+    public RecordNotFoundDBException(OperationalMessage message) {
         super(message);
     }
 

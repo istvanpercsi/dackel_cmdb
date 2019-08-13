@@ -108,7 +108,7 @@ public class TypeOfEntityController {
     public ResponseEntity<OperationalMessage> deleteTypeOfEntity(Long id) {
         typeOfEntityService.deleteTypeOfEntity(id);
         return new ResponseEntity<OperationalMessage>(
-                OperationalMessagesEnum.RECORD_DELETED.getMessage(String.format("Type of entity has been deleted with id '%s'", id)),
+                OperationalMessagesEnum.RECORD_DELETED.getMessage(),
                 HttpStatus.OK);
     }
 

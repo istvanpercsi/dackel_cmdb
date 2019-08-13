@@ -1,8 +1,10 @@
 package de.percsi.products.dackelcmdb.exceptions;
 
-public class RecordAlreadyExistsDBException extends RuntimeException {
+import de.percsi.products.dackelcmdb.api.json.messages.OperationalMessage;
 
-    public RecordAlreadyExistsDBException(String message) {
+public class RecordAlreadyExistsDBException extends StructuredRuntimeException {
+
+    public RecordAlreadyExistsDBException(OperationalMessage message) {
         super(message);
     }
 

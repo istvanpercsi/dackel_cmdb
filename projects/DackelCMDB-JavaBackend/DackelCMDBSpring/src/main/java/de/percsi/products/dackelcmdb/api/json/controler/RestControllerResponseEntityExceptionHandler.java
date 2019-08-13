@@ -16,15 +16,13 @@ public class RestControllerResponseEntityExceptionHandler extends ResponseEntity
 
     @ExceptionHandler(value = {RecordNotFoundDBException.class})
     protected ResponseEntity<Object> handleRecordNotFoundDBException(RecordNotFoundDBException ex, WebRequest request) {
-        return handleExceptionInternal(ex,
-                OperationalMessagesEnum.RECORD_NOT_FOUND.getMessage(ex.getMessage()),
+        return handleExceptionInternal(ex,ex.getMessage(),
                 new HttpHeaders(), HttpStatus.NOT_FOUND, request);
     }
 
     @ExceptionHandler(value = {RecordAlreadyExistsDBException.class})
     protected ResponseEntity<Object> handleRecordAlreadyExistsDBException(RecordAlreadyExistsDBException ex, WebRequest request) {
-        return handleExceptionInternal(ex,
-                OperationalMessagesEnum.RECORD_ALREADY_EXISTS.getMessage(ex.getMessage()),
+        return handleExceptionInternal(ex,ex.getMessage(),
                 new HttpHeaders(), HttpStatus.CONFLICT, request);
     }
 
