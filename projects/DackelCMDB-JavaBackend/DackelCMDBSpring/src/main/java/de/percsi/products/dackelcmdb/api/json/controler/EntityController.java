@@ -9,15 +9,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/entities")
 public class EntityController {
 
-    @RequestMapping(value = "/getEntityById/{id}")
-    public EntityModelJson getEntityById(@PathVariable(name = "id") long id) {
-        EntityModelJson e = EntityModelJson.builder()
-                .id(id)
-                .type("DatabaseConnection")
-                .name("Test")
-                .systemName("test")
-                .build();
-        return e;
-    }
+//    @RequestMapping(value = "/getEntityById/{id}")
+//    public EntityModelJson getEntityById(@PathVariable(name = "id") long id) {
+//        EntityModelJson e = EntityModelJson.builder()
+//                .id(id)
+//                .type("DatabaseConnection")
+//                .name("Test")
+//                .systemName("test")
+//                .build();
+//        return e;
+//    }
 
 }

@@ -52,12 +52,11 @@ public enum OperationalMessagesEnum {
     }
 
     public OperationalMessage getMessage(String... args) {
-        OperationalMessage operationalMessage = OperationalMessage.builder()
+        return OperationalMessage.builder()
                 .messageId(this.OPERATIONAL_MESSAGE.getMessageId())
                 .messageClass(this.OPERATIONAL_MESSAGE.getMessageClass())
                 .messageText(String.format(this.OPERATIONAL_MESSAGE.getMessageText(),args))
                 .build();
-        return operationalMessage;
     }
 
 

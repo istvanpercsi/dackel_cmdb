@@ -1,8 +1,7 @@
 package de.percsi.products.dackelcmdb.services;
 
 import de.percsi.products.dackelcmdb.api.json.messages.OperationalMessagesEnum;
-import de.percsi.products.dackelcmdb.api.json.model.TypeOfEntityModelJsonCU;
-import de.percsi.products.dackelcmdb.api.json.model.TypeOfEntityModelJsonR;
+import de.percsi.products.dackelcmdb.api.json.model.TypeOfEntityModelJson;
 import de.percsi.products.dackelcmdb.exceptions.RecordAlreadyExistsDBException;
 import de.percsi.products.dackelcmdb.exceptions.RecordNotFoundDBException;
 import de.percsi.products.dackelcmdb.mapper.TypeOfEntityModelMapper;
@@ -30,15 +29,15 @@ public class TypeOfEntityServiceImpl implements TypeOfEntityService {
     }
 
     @Override
-    public void createTypeOfEntity(TypeOfEntityModelJsonCU typeOfEntityModelJsonCU) {
-        if (typeOfEntityRepository.findById(typeOfEntityModelJsonCU.getId()).orElse(null) != null) {
+    public void createTypeOfEntity(TypeOfEntityModelJson typeOfEntityModelJson) {
+        if (typeOfEntityRepository.findById(typeOfEntityModelJson.getId()).orElse(null) != null) {
             throw new RecordAlreadyExistsDBException(OperationalMessagesEnum.RECORD_ALREADY_EXISTS_TABLE_ID.getMessage(
-                    TABLE_TYPE_OF_ENTITY,typeOfEntityModelJsonCU.getId().toString()));
-        } else if (typeOfEntityRepository.findFirstBySystemName(typeOfEntityModelJsonCU.getSystemName()).orElse(null) != null) {
+                    TABLE_TYPE_OF_ENTITY, typeOfEntityModelJson.getId().toString()));
+        } else if (typeOfEntityRepository.findFirstBySystemName(typeOfEntityModelJson.getSystemName()).orElse(null) != null) {
             throw new RecordAlreadyExistsDBException(OperationalMessagesEnum.RECORD_ALREADY_EXISTS_TABLE_SYSTEMNAME.getMessage(
-                    TABLE_TYPE_OF_ENTITY,typeOfEntityModelJsonCU.getSystemName()));
+                    TABLE_TYPE_OF_ENTITY, typeOfEntityModelJson.getSystemName()));
         }
-        TypeOfEntityModelDB typeOfEntityModelDB = TypeOfEntityModelMapper.MAPPER.mapJsonCUToDB(typeOfEntityModelJsonCU);
+        TypeOfEntityModelDB typeOfEntityModelDB = TypeOfEntityModelMapper.MAPPER.mapJsonCUToDB(typeOfEntityModelJson);
         typeOfEntityModelDB.setCreateDate(new Date());
         typeOfEntityModelDB.setCreateUser("Test Create user");
         typeOfEntityModelDB.setModificationDate(new Date());
@@ -47,26 +46,26 @@ public class TypeOfEntityServiceImpl implements TypeOfEntityService {
     }
 
     @Override
-    public void updateTypeOfEntity(TypeOfEntityModelJsonCU typeOfEntityModelJsonCU) {
-        TypeOfEntityModelDB typeOfEntityModelDBOrig = typeOfEntityRepository.findById(typeOfEntityModelJsonCU.getId()).orElse(null);
+    public void updateTypeOfEntity(TypeOfEntityModelJson typeOfEntityModelJson) {
+        TypeOfEntityModelDB typeOfEntityModelDBOrig = typeOfEntityRepository.findById(typeOfEntityModelJson.getId()).orElse(null);
         if (typeOfEntityModelDBOrig == null) {
             throw  new RecordNotFoundDBException(OperationalMessagesEnum.RECORD_NOT_FOUND_TABLE_ID.getMessage(
-                    TABLE_TYPE_OF_ENTITY,typeOfEntityModelJsonCU.getId().toString()));
+                    TABLE_TYPE_OF_ENTITY, typeOfEntityModelJson.getId().toString()));
         }
-        TypeOfEntityModelDB typeOfEntityModelDBSave = TypeOfEntityModelMapper.MAPPER.mapJsonCUToDB(typeOfEntityModelJsonCU);
+        TypeOfEntityModelDB typeOfEntityModelDBSave = TypeOfEntityModelMapper.MAPPER.mapJsonCUToDB(typeOfEntityModelJson);
         typeOfEntityModelDBSave.setModificationUser("Modification user");
         typeOfEntityModelDBSave.setModificationDate(new Date());
         typeOfEntityRepository.save(typeOfEntityModelDBSave);
     }
 
     @Override
-    public TypeOfEntityModelJsonR readTypeOfEntity(Long id) {
-        TypeOfEntityModelJsonR typeOfEntityModelJsonR =  typeOfEntityRepository.findById(id)
-                .map(TypeOfEntityModelMapper.MAPPER::mapDBToJsonR)
+    public TypeOfEntityModelJson readTypeOfEntity(Long id) {
+        TypeOfEntityModelJson typeOfEntityModelJson =  typeOfEntityRepository.findById(id)
+                .map(TypeOfEntityModelMapper.MAPPER::mapDBToJson)
                 .orElse(null);
-        if (typeOfEntityModelJsonR == null)
+        if (typeOfEntityModelJson == null)
             throw new RecordNotFoundDBException(OperationalMessagesEnum.RECORD_NOT_FOUND_TABLE_ID.getMessage(TABLE_TYPE_OF_ENTITY,id.toString()));
-        return typeOfEntityModelJsonR;
+        return typeOfEntityModelJson;
     }
 
     @Override
@@ -83,9 +82,9 @@ public class TypeOfEntityServiceImpl implements TypeOfEntityService {
     }
 
     @Override
-    public List<TypeOfEntityModelJsonR> getAllTypeOfEntity() {
+    public List<TypeOfEntityModelJson> getAllTypeOfEntity() {
         return StreamSupport.stream(typeOfEntityRepository.findAllNotDeleted().spliterator(),false)
-                .map(TypeOfEntityModelMapper.MAPPER::mapDBToJsonR)
+                .map(TypeOfEntityModelMapper.MAPPER::mapDBToJson)
                 .collect(Collectors.toList());
     }
 }
