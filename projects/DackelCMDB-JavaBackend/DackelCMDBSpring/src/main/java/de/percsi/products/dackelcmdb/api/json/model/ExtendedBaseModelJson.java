@@ -2,6 +2,7 @@ package de.percsi.products.dackelcmdb.api.json.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyDescription;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -17,7 +18,10 @@ public class ExtendedBaseModelJson extends BaseModelJson {
             required = true,
             access = JsonProperty.Access.READ_WRITE
     )
-    @JsonPropertyDescription(value = "Name of record (Name of entity, name of type of entity, name of property")
+    @ApiModelProperty(
+            value = "Name of record (Name of entity, name of type of entity, name of property",
+            required = true
+    )
     private String name;
 
     @JsonProperty(
@@ -25,8 +29,11 @@ public class ExtendedBaseModelJson extends BaseModelJson {
             required = true,
             access = JsonProperty.Access.READ_WRITE
     )
-    @JsonPropertyDescription(value = "System name of record (System name of entity, system name of type of entity, system " +
-            "name of property")
+    @ApiModelProperty(
+            value = "System name of record (System name of entity, system name of type of entity, system " +
+            "name of property",
+            required = true
+    )
     private String systemName;
 
 }

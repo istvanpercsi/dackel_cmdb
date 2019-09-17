@@ -2,6 +2,8 @@ package de.percsi.products.dackelcmdb.api.json.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyDescription;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.springframework.hateoas.ResourceSupport;
@@ -21,7 +23,7 @@ public class BaseModelJson {
             value = "id",
             required = false
     )
-    @JsonPropertyDescription(value = "Id of record")
+    @ApiModelProperty(value = "Id of record")
     private Long id;
 
     @JsonProperty(
@@ -29,7 +31,10 @@ public class BaseModelJson {
             required = false,
             access = JsonProperty.Access.READ_ONLY
     )
-    @JsonPropertyDescription(value = "Create date of record")
+    @ApiModelProperty(
+            value = "Create date of record",
+            readOnly = true
+    )
     private Date createDate;
 
     @JsonProperty(
@@ -37,8 +42,12 @@ public class BaseModelJson {
             required = false,
             access = JsonProperty.Access.READ_ONLY
     )
-    @JsonPropertyDescription(value = "Modification date of record. If it is equal with createDate then the record has " +
-            "been created but not modified.")
+    @ApiModelProperty(
+            value = "Modification date of record. If it is equal with createDate then the record has " +
+            "been created but not modified.",
+            readOnly = true,
+            required = false
+    )
     private Date modificationDate;
 
     @JsonProperty(
@@ -46,7 +55,10 @@ public class BaseModelJson {
             required = false,
             access = JsonProperty.Access.READ_ONLY
     )
-    @JsonPropertyDescription(value = "Name of create user")
+    @ApiModelProperty(
+            value = "Name of create user",
+            readOnly = true
+    )
     private String createUser;
 
     @JsonProperty(
@@ -54,7 +66,10 @@ public class BaseModelJson {
             required = false,
             access = JsonProperty.Access.READ_ONLY
     )
-    @JsonPropertyDescription(value = "Name of modification user")
+    @ApiModelProperty(
+            value = "Name of modification user",
+            readOnly = true
+    )
     private String modificationUser;
 
     @JsonProperty(
@@ -62,7 +77,7 @@ public class BaseModelJson {
             required = true,
             access = JsonProperty.Access.READ_ONLY
     )
-
+    @ApiModelProperty(readOnly = true)
     @Builder.Default
     private Map<String, String> _links = new HashMap<>();
 }

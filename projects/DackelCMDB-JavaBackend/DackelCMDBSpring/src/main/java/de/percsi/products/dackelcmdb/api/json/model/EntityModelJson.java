@@ -1,5 +1,8 @@
 package de.percsi.products.dackelcmdb.api.json.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyDescription;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -12,6 +15,12 @@ import java.util.Date;
 @SuperBuilder
 public class EntityModelJson extends ExtendedBaseModelJson {
 
-    private String typeOfEntity;
+    @JsonProperty(
+            value = "typeOfEntity",
+            required = true,
+            access = JsonProperty.Access.READ_WRITE
+    )
+    @JsonPropertyDescription(value = "Type of entity.")
+    private TypeOfEntityModelJson typeOfEntity;
 
 }
