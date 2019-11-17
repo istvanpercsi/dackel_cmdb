@@ -37,7 +37,7 @@ public class TypeOfEntityController {
             produces = "application/json"
     )
     public ResponseEntity<List<TypeOfEntityModelJson>> getAllTypeOfEntity() {
-        return new ResponseEntity<>(typeOfEntityService.getAllTypeOfEntity(), HttpStatus.OK);
+        return new ResponseEntity<>(typeOfEntityService.readAllTypeOfEntity(), HttpStatus.OK);
     }
 
     @ApiOperation(

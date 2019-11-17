@@ -2,6 +2,7 @@ package de.percsi.products.dackelcmdb.services;
 
 import de.percsi.products.dackelcmdb.api.json.messages.OperationalMessagesEnum;
 import de.percsi.products.dackelcmdb.api.json.model.TypeOfEntityModelJson;
+import de.percsi.products.dackelcmdb.configurations.DackelConfig;
 import de.percsi.products.dackelcmdb.exceptions.RecordAlreadyExistsDBException;
 import de.percsi.products.dackelcmdb.exceptions.RecordNotFoundDBException;
 import de.percsi.products.dackelcmdb.mapper.TypeOfEntityModelMapper;
@@ -82,7 +83,7 @@ public class TypeOfEntityServiceImpl implements TypeOfEntityService {
     }
 
     @Override
-    public List<TypeOfEntityModelJson> getAllTypeOfEntity() {
+    public List<TypeOfEntityModelJson> readAllTypeOfEntity() {
         return StreamSupport.stream(typeOfEntityRepository.findAllNotDeleted().spliterator(),false)
                 .map(TypeOfEntityModelMapper.MAPPER::mapDBToJson)
                 .collect(Collectors.toList());

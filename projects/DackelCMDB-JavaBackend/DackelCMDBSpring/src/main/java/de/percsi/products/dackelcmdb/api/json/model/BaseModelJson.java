@@ -6,7 +6,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-import org.springframework.hateoas.ResourceSupport;
 
 import java.util.Date;
 import java.util.HashMap;

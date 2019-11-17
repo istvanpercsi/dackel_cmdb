@@ -14,5 +14,5 @@ public interface TypeOfEntityService {
 
     public void deleteTypeOfEntity(Long id);
 
-    public List<TypeOfEntityModelJson> getAllTypeOfEntity();
+    public List<TypeOfEntityModelJson> readAllTypeOfEntity();
 }
