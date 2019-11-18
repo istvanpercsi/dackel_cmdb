@@ -5,10 +5,11 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Set;
 
 
 @Entity
-@Table(name = "entities")
+@Table(name = Tables.ENTITIES)
 
 @AllArgsConstructor(access = AccessLevel.PUBLIC)
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
@@ -18,6 +19,9 @@ public class EntityModelDB extends BaseWithUserDateDeletedFlagAndNameModelDB imp
 
     @ManyToOne
     @JoinColumn(name = "type_of_entity_id", nullable = false)
-    TypeOfEntityModelDB typeOfEntity;
+    private TypeOfEntityModelDB typeOfEntity;
+
+    @OneToMany(mappedBy = "entity", fetch = FetchType.LAZY)
+    private Set<ConnectorOfEntityPropertyValue> connectorOfEntityPropertyValues;
 
 }
