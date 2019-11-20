@@ -29,4 +29,8 @@ public class ConnectorOfEntityPropertyValue extends BaseModelDB implements Seria
     @JoinColumn(name = "value_string_id", nullable = true)
     private ValueStringModelDB valueString;
 
+    @ManyToOne
+    @JoinColumn(name = "value_number_id", nullable = true)
+    private ValueNumberModelDB valueNumber;
+
 }

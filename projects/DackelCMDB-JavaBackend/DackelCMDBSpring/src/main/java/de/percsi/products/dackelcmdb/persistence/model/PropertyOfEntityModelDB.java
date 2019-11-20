@@ -9,7 +9,7 @@ import javax.persistence.Table;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "properties")
+@Table(name = Tables.PROPERTIES_OF_ENTITIES)
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor(access = AccessLevel.PUBLIC)
 @Getter(value = AccessLevel.PUBLIC)

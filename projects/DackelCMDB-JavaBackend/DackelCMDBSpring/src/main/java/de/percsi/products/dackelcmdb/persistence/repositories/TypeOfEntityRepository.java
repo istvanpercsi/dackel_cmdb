@@ -10,8 +10,8 @@ import java.util.Optional;
 public interface TypeOfEntityRepository extends JpaRepository<TypeOfEntityModelDB, Long> {
 
     @Query("SELECT toe FROM TypeOfEntityModelDB toe WHERE toe.deleted=false ")
-    public Iterable<TypeOfEntityModelDB> findAllNotDeleted();
+    Iterable<TypeOfEntityModelDB> findAllNotDeleted();
 
-    public Optional<TypeOfEntityModelDB> findFirstBySystemName(String systemName);
+    Optional<TypeOfEntityModelDB> findFirstBySystemName(String systemName);
 
 }
