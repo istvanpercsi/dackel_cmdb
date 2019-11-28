@@ -29,10 +29,10 @@ public class TypeOfEntityServiceImpl implements TypeOfEntityService {
 
     @Override
     public void createTypeOfEntity(TypeOfEntityModelJson typeOfEntityModelJson) {
-        if (typeOfEntityRepository.findById(typeOfEntityModelJson.getId()).orElse(null) != null) {
+        if (typeOfEntityRepository.findById(typeOfEntityModelJson.getId()).isPresent()) {
             throw new RecordAlreadyExistsDBException(OperationalMessagesEnum.RECORD_ALREADY_EXISTS_TABLE_ID.getMessage(
                     Tables.TYPES_OF_ENTITIES, typeOfEntityModelJson.getId().toString()));
-        } else if (typeOfEntityRepository.findFirstBySystemName(typeOfEntityModelJson.getSystemName()).orElse(null) != null) {
+        } else if (typeOfEntityRepository.findFirstBySystemName(typeOfEntityModelJson.getSystemName()).isPresent()) {
             throw new RecordAlreadyExistsDBException(OperationalMessagesEnum.RECORD_ALREADY_EXISTS_TABLE_SYSTEMNAME.getMessage(
                     Tables.TYPES_OF_ENTITIES, typeOfEntityModelJson.getSystemName()));
         }
