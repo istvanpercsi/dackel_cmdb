@@ -1,4 +1,4 @@
-package de.percsi.products.dackelcmdb.dackelcmdb.services;
+package de.percsi.products.dackelcmdb.services;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -7,6 +7,7 @@ import static org.junit.Assert.*;
 
 import de.percsi.products.dackelcmdb.api.json.model.TypeOfEntityModelJson;
 import de.percsi.products.dackelcmdb.exceptions.RecordAlreadyExistsDBException;
+import de.percsi.products.dackelcmdb.exceptions.RecordNotFoundDBException;
 import de.percsi.products.dackelcmdb.persistence.model.TypeOfEntityModelDB;
 import de.percsi.products.dackelcmdb.persistence.repositories.TypeOfEntityRepository;
 import de.percsi.products.dackelcmdb.services.TypeOfEntityServiceImpl;
@@ -76,5 +77,40 @@ public class TypeOfEntityServiceImplTest {
         assertEquals(typeOfEntityModelDBArgumentCaptor.getValue().getName(),typeOfEntityModelJson.getName());
         assertEquals(typeOfEntityModelDBArgumentCaptor.getValue().getSystemName(), typeOfEntityModelJson.getSystemName());
 
+    }
+
+    @Test(expected = RecordNotFoundDBException.class)
+    public void testUpdateTypeOfEntityIfEntityNotExists() {
+        //arrange
+        TypeOfEntityModelJson typeOfEntityModelJson = mock(TypeOfEntityModelJson.class);
+        TypeOfEntityModelDB typeOfEntityModelDB = mock(TypeOfEntityModelDB.class);
+
+        when(typeOfEntityRepository.findById(any())).thenAnswer(invocationOnMock -> Optional.empty());
+
+        //act
+        typeOfEntityService.updateTypeOfEntity(typeOfEntityModelJson);
+
+        //assert
+
+    }
+
+    @Test
+    public void testUpdateTypeOfEntityNoException() {
+        //arrange
+        TypeOfEntityModelJson typeOfEntityModelJson = TypeOfEntityModelJson.builder()
+                .id(1L)
+                .name("test-name")
+                .systemName("test-system-name")
+                .build();
+        TypeOfEntityModelDB typeOfEntityModelDB = mock(TypeOfEntityModelDB.class);
+        when(typeOfEntityRepository.findById(any())).thenReturn(Optional.of(typeOfEntityModelDB));
+        when(typeOfEntityRepository.save(typeOfEntityModelDBArgumentCaptor.capture())).thenReturn(typeOfEntityModelDB);
+        //act
+        typeOfEntityService.updateTypeOfEntity(typeOfEntityModelJson);
+
+        //assert
+        assertEquals(typeOfEntityModelJson.getName(),typeOfEntityModelDBArgumentCaptor.getValue().getName());
+        assertEquals(typeOfEntityModelJson.getSystemName(),typeOfEntityModelDBArgumentCaptor.getValue().getSystemName());
+        assertEquals(typeOfEntityModelJson.getId(), typeOfEntityModelDBArgumentCaptor.getValue().getId());
     }
 }

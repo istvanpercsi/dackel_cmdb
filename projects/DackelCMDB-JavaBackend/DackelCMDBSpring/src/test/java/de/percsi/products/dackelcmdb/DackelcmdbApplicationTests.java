@@ -1,4 +1,4 @@
-package de.percsi.products.dackelcmdb.dackelcmdb;
+package de.percsi.products.dackelcmdb;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

@@ -1,4 +1,4 @@
-package de.percsi.products.dackelcmdb.dackelcmdb.api.json.messages;
+package de.percsi.products.dackelcmdb.api.json.messages;
 
 import static org.junit.Assert.*;
 

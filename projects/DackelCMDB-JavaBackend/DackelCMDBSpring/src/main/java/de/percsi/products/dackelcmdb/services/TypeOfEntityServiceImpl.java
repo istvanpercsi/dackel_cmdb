@@ -46,9 +46,8 @@ public class TypeOfEntityServiceImpl implements TypeOfEntityService {
 
     @Override
     public void updateTypeOfEntity(TypeOfEntityModelJson typeOfEntityModelJson) {
-        TypeOfEntityModelDB typeOfEntityModelDBOrig = typeOfEntityRepository.findById(typeOfEntityModelJson.getId()).orElse(null);
-        if (typeOfEntityModelDBOrig == null) {
-            throw  new RecordNotFoundDBException(OperationalMessagesEnum.RECORD_NOT_FOUND_TABLE_ID.getMessage(
+        if (!typeOfEntityRepository.findById(typeOfEntityModelJson.getId()).isPresent()) {
+            throw new RecordNotFoundDBException(OperationalMessagesEnum.RECORD_NOT_FOUND_TABLE_ID.getMessage(
                     Tables.TYPES_OF_ENTITIES, typeOfEntityModelJson.getId().toString()));
         }
         TypeOfEntityModelDB typeOfEntityModelDBSave = TypeOfEntityModelMapper.MAPPER.mapJsonCUToDB(typeOfEntityModelJson);
