@@ -113,4 +113,33 @@ public class TypeOfEntityServiceImplTest {
         assertEquals(typeOfEntityModelJson.getSystemName(),typeOfEntityModelDBArgumentCaptor.getValue().getSystemName());
         assertEquals(typeOfEntityModelJson.getId(), typeOfEntityModelDBArgumentCaptor.getValue().getId());
     }
+
+    @Test
+    public void testReadTypeOfEntityRecordFound() {
+        //arrange
+        TypeOfEntityModelDB typeOfEntityModelDB = new TypeOfEntityModelDB();
+        typeOfEntityModelDB.setId(1L);
+        typeOfEntityModelDB.setName("test");
+        typeOfEntityModelDB.setSystemName("system-test");
+        when(typeOfEntityRepository.findById(any())).thenReturn(Optional.of(typeOfEntityModelDB));
+        //act
+        TypeOfEntityModelJson typeOfEntityModelJson = typeOfEntityService.readTypeOfEntity(1L);
+
+        //assert
+        assertEquals(typeOfEntityModelJson.getId(), typeOfEntityModelDB.getId());
+        assertEquals(typeOfEntityModelJson.getName(), typeOfEntityModelDB.getName());
+        assertEquals(typeOfEntityModelJson.getSystemName(), typeOfEntityModelDB.getSystemName());
+    }
+
+    @Test(expected = RecordNotFoundDBException.class)
+    public void testReadTypeOfEntityNotFound() {
+        //arrange
+        when(typeOfEntityRepository.findById(any())).thenReturn(Optional.empty());
+
+        //act
+        typeOfEntityService.readTypeOfEntity(1L);
+
+        //assert
+
+    }
 }
