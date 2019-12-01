@@ -69,15 +69,16 @@ public class TypeOfEntityServiceImpl implements TypeOfEntityService {
 
   @Override
   public void deleteTypeOfEntity(Long id) {
-    AtomicBoolean found = new AtomicBoolean(false);
-    typeOfEntityRepository.findById(id).ifPresent(e -> {
-      e.setDeleted(true);
-      e.setModificationDate(new Date());
-      typeOfEntityRepository.save(e);
-      found.set(true);
-    });
-    if (!found.get())
+    Optional<TypeOfEntityModelDB> optionalTypeOfEntityModelDB = typeOfEntityRepository.findById(id);
+    if (optionalTypeOfEntityModelDB.isPresent()) {
+      optionalTypeOfEntityModelDB.ifPresent(typeOfEntityModelDB -> {
+        typeOfEntityModelDB.setDeleted(true);
+        typeOfEntityModelDB.setModificationDate(new Date());
+        typeOfEntityRepository.save(typeOfEntityModelDB);
+      } );
+    } else {
       throw new RecordNotFoundDBException(OperationalMessagesEnum.RECORD_NOT_FOUND_TABLE_ID.getMessage(Tables.TYPES_OF_ENTITIES,id.toString()));
+    }
   }
 
   @Override

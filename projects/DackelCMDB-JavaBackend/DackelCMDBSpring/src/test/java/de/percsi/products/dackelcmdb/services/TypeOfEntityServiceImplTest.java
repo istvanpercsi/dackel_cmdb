@@ -26,120 +26,142 @@ import java.util.Optional;
 @RunWith(MockitoJUnitRunner.class)
 public class TypeOfEntityServiceImplTest {
 
-    @Mock
-    private TypeOfEntityRepository typeOfEntityRepository;
+  @Mock
+  private TypeOfEntityRepository typeOfEntityRepository;
 
-    @Mock
-    private TypeOfEntityModelJson typeOfEntityModelJson;
+  @Mock
+  private TypeOfEntityModelJson typeOfEntityModelJson;
 
-    @InjectMocks
-    private TypeOfEntityServiceImpl typeOfEntityService = new TypeOfEntityServiceImpl(typeOfEntityRepository);
+  @InjectMocks
+  private TypeOfEntityServiceImpl typeOfEntityService = new TypeOfEntityServiceImpl(typeOfEntityRepository);
 
-    ArgumentCaptor<TypeOfEntityModelDB> typeOfEntityModelDBArgumentCaptor = ArgumentCaptor.forClass(TypeOfEntityModelDB.class);
+  ArgumentCaptor<TypeOfEntityModelDB> typeOfEntityModelDBArgumentCaptor = ArgumentCaptor.forClass(TypeOfEntityModelDB.class);
 
-    @Test(expected = RecordAlreadyExistsDBException.class)
-    public void testCreateTypeOfEntityIfIdExists() {
-        //arrange
-        TypeOfEntityModelDB typeOfEntityModelDB = mock(TypeOfEntityModelDB.class);
-        when(typeOfEntityRepository.findById(any()))
-                .thenAnswer((Answer<Optional<TypeOfEntityModelDB>>) invocationOnMock -> Optional.of(typeOfEntityModelDB));
-        //act
-        typeOfEntityService.createTypeOfEntity(typeOfEntityModelJson);
-        //assert
-    }
+  @Test(expected = RecordAlreadyExistsDBException.class)
+  public void testCreateTypeOfEntityIfIdExists() {
+    //arrange
+    TypeOfEntityModelDB typeOfEntityModelDB = mock(TypeOfEntityModelDB.class);
+    when(typeOfEntityRepository.findById(any()))
+          .thenAnswer((Answer<Optional<TypeOfEntityModelDB>>) invocationOnMock -> Optional.of(typeOfEntityModelDB));
+    //act
+    typeOfEntityService.createTypeOfEntity(typeOfEntityModelJson);
+    //assert
+  }
 
-    @Test(expected = RecordAlreadyExistsDBException.class)
-    public void testCreateTypeOfEntityIfSystemNameExists() {
-        //arrange
-        TypeOfEntityModelDB typeOfEntityModelDB = mock(TypeOfEntityModelDB.class);
-        when(typeOfEntityRepository.findFirstBySystemName(any()))
-                .thenAnswer(invocationOnMock -> Optional.of(typeOfEntityModelDB));
-        //act
-        typeOfEntityService.createTypeOfEntity(typeOfEntityModelJson);
+  @Test(expected = RecordAlreadyExistsDBException.class)
+  public void testCreateTypeOfEntityIfSystemNameExists() {
+    //arrange
+    TypeOfEntityModelDB typeOfEntityModelDB = mock(TypeOfEntityModelDB.class);
+    when(typeOfEntityRepository.findFirstBySystemName(any()))
+          .thenAnswer(invocationOnMock -> Optional.of(typeOfEntityModelDB));
+    //act
+    typeOfEntityService.createTypeOfEntity(typeOfEntityModelJson);
 
-        //assert
-    }
+    //assert
+  }
 
-    @Test
-    public void testCreateTypeOfEntityNoException() {
-        //arrange
-        TypeOfEntityModelJson typeOfEntityModelJson = TypeOfEntityModelJson.builder()
-                .id(null)
-                .name("test-name")
-                .systemName("test-system-name")
-                .build();
-        doAnswer(invocationOnMock -> null).when(typeOfEntityRepository).save(typeOfEntityModelDBArgumentCaptor.capture());
+  @Test
+  public void testCreateTypeOfEntityNoException() {
+    //arrange
+    TypeOfEntityModelJson typeOfEntityModelJson = TypeOfEntityModelJson.builder()
+          .id(null)
+          .name("test-name")
+          .systemName("test-system-name")
+          .build();
+    doAnswer(invocationOnMock -> null).when(typeOfEntityRepository).save(typeOfEntityModelDBArgumentCaptor.capture());
 
-        //act
-        typeOfEntityService.createTypeOfEntity(typeOfEntityModelJson);
+    //act
+    typeOfEntityService.createTypeOfEntity(typeOfEntityModelJson);
 
-        //assert
-        assertEquals(typeOfEntityModelDBArgumentCaptor.getValue().getName(),typeOfEntityModelJson.getName());
-        assertEquals(typeOfEntityModelDBArgumentCaptor.getValue().getSystemName(), typeOfEntityModelJson.getSystemName());
+    //assert
+    assertEquals(typeOfEntityModelDBArgumentCaptor.getValue().getName(),typeOfEntityModelJson.getName());
+    assertEquals(typeOfEntityModelDBArgumentCaptor.getValue().getSystemName(), typeOfEntityModelJson.getSystemName());
 
-    }
+  }
 
-    @Test(expected = RecordNotFoundDBException.class)
-    public void testUpdateTypeOfEntityIfEntityNotExists() {
-        //arrange
-        TypeOfEntityModelJson typeOfEntityModelJson = mock(TypeOfEntityModelJson.class);
-        TypeOfEntityModelDB typeOfEntityModelDB = mock(TypeOfEntityModelDB.class);
+  @Test(expected = RecordNotFoundDBException.class)
+  public void testUpdateTypeOfEntityIfEntityNotExists() {
+    //arrange
+    TypeOfEntityModelJson typeOfEntityModelJson = mock(TypeOfEntityModelJson.class);
+    TypeOfEntityModelDB typeOfEntityModelDB = mock(TypeOfEntityModelDB.class);
 
-        when(typeOfEntityRepository.findById(any())).thenAnswer(invocationOnMock -> Optional.empty());
+    when(typeOfEntityRepository.findById(any())).thenAnswer(invocationOnMock -> Optional.empty());
 
-        //act
-        typeOfEntityService.updateTypeOfEntity(typeOfEntityModelJson);
+    //act
+    typeOfEntityService.updateTypeOfEntity(typeOfEntityModelJson);
 
-        //assert
+    //assert
 
-    }
+  }
 
-    @Test
-    public void testUpdateTypeOfEntityNoException() {
-        //arrange
-        TypeOfEntityModelJson typeOfEntityModelJson = TypeOfEntityModelJson.builder()
-                .id(1L)
-                .name("test-name")
-                .systemName("test-system-name")
-                .build();
-        TypeOfEntityModelDB typeOfEntityModelDB = mock(TypeOfEntityModelDB.class);
-        when(typeOfEntityRepository.findById(any())).thenReturn(Optional.of(typeOfEntityModelDB));
-        when(typeOfEntityRepository.save(typeOfEntityModelDBArgumentCaptor.capture())).thenReturn(typeOfEntityModelDB);
-        //act
-        typeOfEntityService.updateTypeOfEntity(typeOfEntityModelJson);
+  @Test
+  public void testUpdateTypeOfEntityNoException() {
+    //arrange
+    TypeOfEntityModelJson typeOfEntityModelJson = TypeOfEntityModelJson.builder()
+          .id(1L)
+          .name("test-name")
+          .systemName("test-system-name")
+          .build();
+    TypeOfEntityModelDB typeOfEntityModelDB = mock(TypeOfEntityModelDB.class);
+    when(typeOfEntityRepository.findById(any())).thenReturn(Optional.of(typeOfEntityModelDB));
+    when(typeOfEntityRepository.save(typeOfEntityModelDBArgumentCaptor.capture())).thenReturn(typeOfEntityModelDB);
+    //act
+    typeOfEntityService.updateTypeOfEntity(typeOfEntityModelJson);
 
-        //assert
-        assertEquals(typeOfEntityModelJson.getName(),typeOfEntityModelDBArgumentCaptor.getValue().getName());
-        assertEquals(typeOfEntityModelJson.getSystemName(),typeOfEntityModelDBArgumentCaptor.getValue().getSystemName());
-        assertEquals(typeOfEntityModelJson.getId(), typeOfEntityModelDBArgumentCaptor.getValue().getId());
-    }
+    //assert
+    assertEquals(typeOfEntityModelJson.getName(),typeOfEntityModelDBArgumentCaptor.getValue().getName());
+    assertEquals(typeOfEntityModelJson.getSystemName(),typeOfEntityModelDBArgumentCaptor.getValue().getSystemName());
+    assertEquals(typeOfEntityModelJson.getId(), typeOfEntityModelDBArgumentCaptor.getValue().getId());
+  }
 
-    @Test
-    public void testReadTypeOfEntityRecordFound() {
-        //arrange
-        TypeOfEntityModelDB typeOfEntityModelDB = new TypeOfEntityModelDB();
-        typeOfEntityModelDB.setId(1L);
-        typeOfEntityModelDB.setName("test");
-        typeOfEntityModelDB.setSystemName("system-test");
-        when(typeOfEntityRepository.findById(any())).thenReturn(Optional.of(typeOfEntityModelDB));
-        //act
-        TypeOfEntityModelJson typeOfEntityModelJson = typeOfEntityService.readTypeOfEntity(1L);
+  @Test
+  public void testReadTypeOfEntityRecordFound() {
+    //arrange
+    TypeOfEntityModelDB typeOfEntityModelDB = new TypeOfEntityModelDB();
+    typeOfEntityModelDB.setId(1L);
+    typeOfEntityModelDB.setName("test");
+    typeOfEntityModelDB.setSystemName("system-test");
+    when(typeOfEntityRepository.findById(any())).thenReturn(Optional.of(typeOfEntityModelDB));
+    //act
+    TypeOfEntityModelJson typeOfEntityModelJson = typeOfEntityService.readTypeOfEntity(1L);
 
-        //assert
-        assertEquals(typeOfEntityModelJson.getId(), typeOfEntityModelDB.getId());
-        assertEquals(typeOfEntityModelJson.getName(), typeOfEntityModelDB.getName());
-        assertEquals(typeOfEntityModelJson.getSystemName(), typeOfEntityModelDB.getSystemName());
-    }
+    //assert
+    assertEquals(typeOfEntityModelJson.getId(), typeOfEntityModelDB.getId());
+    assertEquals(typeOfEntityModelJson.getName(), typeOfEntityModelDB.getName());
+    assertEquals(typeOfEntityModelJson.getSystemName(), typeOfEntityModelDB.getSystemName());
+  }
 
-    @Test(expected = RecordNotFoundDBException.class)
-    public void testReadTypeOfEntityNotFound() {
-        //arrange
-        when(typeOfEntityRepository.findById(any())).thenReturn(Optional.empty());
+  @Test(expected = RecordNotFoundDBException.class)
+  public void testReadTypeOfEntityNotFound() {
+    //arrange
+    when(typeOfEntityRepository.findById(any())).thenReturn(Optional.empty());
 
-        //act
-        typeOfEntityService.readTypeOfEntity(1L);
+    //act
+    typeOfEntityService.readTypeOfEntity(1L);
 
-        //assert
+    //assert
 
-    }
+  }
+
+  @Test
+  public void testDeleteTypeOfEntityRecordDeleted() {
+    //arrange
+    TypeOfEntityModelDB typeOfEntityModelDB = new TypeOfEntityModelDB();
+    typeOfEntityModelDB.setId(1L);
+    typeOfEntityModelDB.setName("test");
+    typeOfEntityModelDB.setSystemName("system-test");
+    typeOfEntityModelDB.setDeleted(false);
+    when(typeOfEntityRepository.findById(any())).thenReturn(Optional.of(typeOfEntityModelDB));
+    when(typeOfEntityRepository.save(typeOfEntityModelDBArgumentCaptor.capture())).thenReturn(typeOfEntityModelDB);
+
+    //act
+    typeOfEntityService.deleteTypeOfEntity(1L);
+
+    //assert
+    assertEquals(typeOfEntityModelDBArgumentCaptor.getValue().getId(), typeOfEntityModelDB.getId());
+    assertEquals(typeOfEntityModelDBArgumentCaptor.getValue().getName(), typeOfEntityModelDB.getName());
+    assertEquals(typeOfEntityModelDBArgumentCaptor.getValue().getSystemName(), typeOfEntityModelDB.getSystemName());
+    assertEquals(typeOfEntityModelDBArgumentCaptor.getValue().getDeleted(),true);
+
+  }
 }
