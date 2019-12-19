@@ -8,20 +8,19 @@ import de.percsi.products.dackelcmdb.mapper.TypeOfEntityModelMapper;
 import de.percsi.products.dackelcmdb.persistence.model.Tables;
 import de.percsi.products.dackelcmdb.persistence.model.TypeOfEntityModelDB;
 import de.percsi.products.dackelcmdb.persistence.repositories.TypeOfEntityRepository;
+import io.vavr.collection.Stream;
+import io.vavr.control.Option;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 @Service
 public class TypeOfEntityServiceImpl implements TypeOfEntityService {
 
   private TypeOfEntityRepository typeOfEntityRepository;
+
 
   @Autowired
   public TypeOfEntityServiceImpl(TypeOfEntityRepository typeOfEntityRepository) {
@@ -30,13 +29,11 @@ public class TypeOfEntityServiceImpl implements TypeOfEntityService {
 
   @Override
   public void createTypeOfEntity(TypeOfEntityModelJson typeOfEntityModelJson) {
-    if (typeOfEntityRepository.findById(typeOfEntityModelJson.getId()).isPresent()) {
-      throw new RecordAlreadyExistsDBException(OperationalMessagesEnum.RECORD_ALREADY_EXISTS_TABLE_ID.getMessage(
-            Tables.TYPES_OF_ENTITIES, typeOfEntityModelJson.getId().toString()));
-    } else if (typeOfEntityRepository.findFirstBySystemName(typeOfEntityModelJson.getSystemName()).isPresent()) {
-      throw new RecordAlreadyExistsDBException(OperationalMessagesEnum.RECORD_ALREADY_EXISTS_TABLE_SYSTEMNAME.getMessage(
+    typeOfEntityRepository.findFirstByIdAndSystemName(typeOfEntityModelJson.getId(),typeOfEntityModelJson.getSystemName())
+          .ifPresent(typeOfEntityModelDB ->  {
+            throw new RecordAlreadyExistsDBException(OperationalMessagesEnum.RECORD_ALREADY_EXISTS_TABLE_SYSTEMNAME.getMessage(
             Tables.TYPES_OF_ENTITIES, typeOfEntityModelJson.getSystemName()));
-    }
+    });
     TypeOfEntityModelDB typeOfEntityModelDB = TypeOfEntityModelMapper.MAPPER.mapJsonCUToDB(typeOfEntityModelJson);
     typeOfEntityModelDB.setCreateDate(new Date());
     typeOfEntityModelDB.setCreateUser("Test Create user");
@@ -47,10 +44,9 @@ public class TypeOfEntityServiceImpl implements TypeOfEntityService {
 
   @Override
   public void updateTypeOfEntity(TypeOfEntityModelJson typeOfEntityModelJson) {
-    if (!typeOfEntityRepository.findById(typeOfEntityModelJson.getId()).isPresent()) {
-      throw new RecordNotFoundDBException(OperationalMessagesEnum.RECORD_NOT_FOUND_TABLE_ID.getMessage(
-            Tables.TYPES_OF_ENTITIES, typeOfEntityModelJson.getId().toString()));
-    }
+    Option.ofOptional(typeOfEntityRepository.findById(typeOfEntityModelJson.getId()))
+          .getOrElseThrow(() -> new RecordNotFoundDBException(OperationalMessagesEnum.RECORD_NOT_FOUND_TABLE_ID.getMessage(
+                Tables.TYPES_OF_ENTITIES, typeOfEntityModelJson.getId().toString())));
     TypeOfEntityModelDB typeOfEntityModelDBSave =
           TypeOfEntityModelMapper.MAPPER.mapJsonCUToDB(typeOfEntityModelJson);
     typeOfEntityModelDBSave.setModificationUser("Modification user");
@@ -60,31 +56,24 @@ public class TypeOfEntityServiceImpl implements TypeOfEntityService {
 
   @Override
   public TypeOfEntityModelJson readTypeOfEntity(Long id) {
-    Optional<TypeOfEntityModelDB> typeOfEntityModelDB = typeOfEntityRepository.findById(id);
-    if (!typeOfEntityModelDB.isPresent())
-      throw new RecordNotFoundDBException(
-            OperationalMessagesEnum.RECORD_NOT_FOUND_TABLE_ID.getMessage(Tables.TYPES_OF_ENTITIES,id.toString()));
-    return TypeOfEntityModelMapper.MAPPER.mapDBToJson(typeOfEntityModelDB.get());
+    return TypeOfEntityModelMapper.MAPPER.mapDBToJson(Option.ofOptional(typeOfEntityRepository.findById(id))
+                .getOrElseThrow(() -> new RecordNotFoundDBException(
+                      OperationalMessagesEnum.RECORD_NOT_FOUND_TABLE_ID.getMessage(Tables.TYPES_OF_ENTITIES,id.toString()))));
   }
 
   @Override
   public void deleteTypeOfEntity(Long id) {
-    Optional<TypeOfEntityModelDB> optionalTypeOfEntityModelDB = typeOfEntityRepository.findById(id);
-    if (optionalTypeOfEntityModelDB.isPresent()) {
-      optionalTypeOfEntityModelDB.ifPresent(typeOfEntityModelDB -> {
-        typeOfEntityModelDB.setDeleted(true);
-        typeOfEntityModelDB.setModificationDate(new Date());
-        typeOfEntityRepository.save(typeOfEntityModelDB);
-      } );
-    } else {
-      throw new RecordNotFoundDBException(OperationalMessagesEnum.RECORD_NOT_FOUND_TABLE_ID.getMessage(Tables.TYPES_OF_ENTITIES,id.toString()));
-    }
+    TypeOfEntityModelDB typeOfEntityModelDB = Option.ofOptional(typeOfEntityRepository.findById(id))
+          .getOrElseThrow(()-> new RecordNotFoundDBException(OperationalMessagesEnum.RECORD_NOT_FOUND_TABLE_ID.getMessage(Tables.TYPES_OF_ENTITIES,id.toString())));
+    typeOfEntityModelDB.setDeleted(true);
+    typeOfEntityModelDB.setModificationDate(new Date());
+    typeOfEntityModelDB.setModificationUser("Delete user");
+    typeOfEntityRepository.save(typeOfEntityModelDB);
   }
 
   @Override
   public List<TypeOfEntityModelJson> readAllTypeOfEntity() {
-    return StreamSupport.stream(typeOfEntityRepository.findAllNotDeleted().spliterator(),false)
-          .map(TypeOfEntityModelMapper.MAPPER::mapDBToJson)
-          .collect(Collectors.toList());
+    return Stream.ofAll(typeOfEntityRepository.findAllNotDeleted()).map(typeOfEntityModelDB -> TypeOfEntityModelMapper.MAPPER.mapDBToJson(typeOfEntityModelDB))
+          .toJavaList();
   }
 }

@@ -21,6 +21,8 @@ import org.mockito.junit.MockitoJUnitRunner;
 import org.mockito.stubbing.Answer;
 import sun.misc.JavaAWTAccess;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -163,5 +165,41 @@ public class TypeOfEntityServiceImplTest {
     assertEquals(typeOfEntityModelDBArgumentCaptor.getValue().getSystemName(), typeOfEntityModelDB.getSystemName());
     assertEquals(typeOfEntityModelDBArgumentCaptor.getValue().getDeleted(),true);
 
+  }
+
+  @Test(expected = RecordNotFoundDBException.class)
+  public void testDeleteTypeOfEntityRecordNotFound() {
+    //arrange
+    TypeOfEntityModelDB typeOfEntityModelDB = new TypeOfEntityModelDB();
+    typeOfEntityModelDB.setId(1L);
+    typeOfEntityModelDB.setName("test");
+    typeOfEntityModelDB.setSystemName("system-test");
+    typeOfEntityModelDB.setDeleted(false);
+    when(typeOfEntityRepository.findById(any())).thenReturn(Optional.empty());
+    when(typeOfEntityRepository.save(typeOfEntityModelDBArgumentCaptor.capture())).thenReturn(typeOfEntityModelDB);
+
+    //act
+    typeOfEntityService.deleteTypeOfEntity(1L);
+
+  }
+
+  @Test
+  public void testReadAllTypeOfEntity() {
+    //arrange
+    TypeOfEntityModelDB typeOfEntityModelDB = new TypeOfEntityModelDB();
+    typeOfEntityModelDB.setId(1L);
+    typeOfEntityModelDB.setName("test");
+    typeOfEntityModelDB.setSystemName("system-test");
+    typeOfEntityModelDB.setDeleted(false);
+    when(typeOfEntityRepository.findAllNotDeleted()).thenReturn(Arrays.asList(typeOfEntityModelDB));
+
+    //act
+    List<TypeOfEntityModelJson> typeOfEntityModelJsonList = typeOfEntityService.readAllTypeOfEntity();
+
+    assertEquals(1, typeOfEntityModelJsonList.size());
+    TypeOfEntityModelJson typeOfEntityModelJson = typeOfEntityModelJsonList.get(0);
+    assertEquals(typeOfEntityModelDB.getId(),typeOfEntityModelJson.getId());
+    assertEquals(typeOfEntityModelDB.getName(), typeOfEntityModelJson.getName());
+    assertEquals(typeOfEntityModelDB.getSystemName(), typeOfEntityModelJson.getSystemName());
   }
 }

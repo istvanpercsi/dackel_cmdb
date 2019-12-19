@@ -9,7 +9,8 @@ import org.springframework.context.annotation.ComponentScan;
         basePackages = {
             "de.percsi.products.dackelcmdb.configurations",
             "de.percsi.products.dackelcmdb.services",
-            "de.percsi.products.dackelcmdb.api.json.controler"
+            "de.percsi.products.dackelcmdb.api.json.controler",
+            "de.percsi.products.dackelcmdb.persistence.repositories"
         })
 public class DackelcmdbApplication {
 
