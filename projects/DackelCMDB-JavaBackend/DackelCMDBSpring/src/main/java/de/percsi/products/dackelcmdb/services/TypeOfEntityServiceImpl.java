@@ -29,11 +29,11 @@ public class TypeOfEntityServiceImpl implements TypeOfEntityService {
 
   @Override
   public void createTypeOfEntity(TypeOfEntityModelJson typeOfEntityModelJson) {
-    typeOfEntityRepository.findFirstByIdAndSystemName(typeOfEntityModelJson.getId(),typeOfEntityModelJson.getSystemName())
-          .ifPresent(typeOfEntityModelDB ->  {
+    Option.ofOptional(typeOfEntityRepository.findFirstByIdAndSystemName(typeOfEntityModelJson.getId(),typeOfEntityModelJson.getSystemName()))
+          .peek(typeOfEntityModelDB -> {
             throw new RecordAlreadyExistsDBException(OperationalMessagesEnum.RECORD_ALREADY_EXISTS_TABLE_SYSTEMNAME.getMessage(
-            Tables.TYPES_OF_ENTITIES, typeOfEntityModelJson.getSystemName()));
-    });
+            Tables.TYPES_OF_ENTITIES, typeOfEntityModelDB.getSystemName()));
+          });
     TypeOfEntityModelDB typeOfEntityModelDB = TypeOfEntityModelMapper.MAPPER.mapJsonCUToDB(typeOfEntityModelJson);
     typeOfEntityModelDB.setCreateDate(new Date());
     typeOfEntityModelDB.setCreateUser("Test Create user");
@@ -73,7 +73,7 @@ public class TypeOfEntityServiceImpl implements TypeOfEntityService {
 
   @Override
   public List<TypeOfEntityModelJson> readAllTypeOfEntity() {
-    return Stream.ofAll(typeOfEntityRepository.findAllNotDeleted()).map(typeOfEntityModelDB -> TypeOfEntityModelMapper.MAPPER.mapDBToJson(typeOfEntityModelDB))
+    return Stream.ofAll(typeOfEntityRepository.findAllNotDeleted()).map(TypeOfEntityModelMapper.MAPPER::mapDBToJson)
           .toJavaList();
   }
 }

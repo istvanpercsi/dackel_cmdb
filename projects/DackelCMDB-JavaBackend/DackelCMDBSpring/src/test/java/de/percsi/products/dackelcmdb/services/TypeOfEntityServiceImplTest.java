@@ -11,6 +11,7 @@ import de.percsi.products.dackelcmdb.exceptions.RecordNotFoundDBException;
 import de.percsi.products.dackelcmdb.persistence.model.TypeOfEntityModelDB;
 import de.percsi.products.dackelcmdb.persistence.repositories.TypeOfEntityRepository;
 import de.percsi.products.dackelcmdb.services.TypeOfEntityServiceImpl;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
@@ -31,19 +32,27 @@ public class TypeOfEntityServiceImplTest {
   @Mock
   private TypeOfEntityRepository typeOfEntityRepository;
 
-  @Mock
-  private TypeOfEntityModelJson typeOfEntityModelJson;
-
   @InjectMocks
   private TypeOfEntityServiceImpl typeOfEntityService = new TypeOfEntityServiceImpl(typeOfEntityRepository);
 
   ArgumentCaptor<TypeOfEntityModelDB> typeOfEntityModelDBArgumentCaptor = ArgumentCaptor.forClass(TypeOfEntityModelDB.class);
 
+  private TypeOfEntityModelJson typeOfEntityModelJson;
+
+  @Before
+  public void prepareTest() {
+    typeOfEntityModelJson = TypeOfEntityModelJson.builder()
+          .id(1L)
+          .systemName("system_name_test")
+          .name("name_test")
+          .build();
+  }
+
   @Test(expected = RecordAlreadyExistsDBException.class)
   public void testCreateTypeOfEntityIfIdExists() {
     //arrange
     TypeOfEntityModelDB typeOfEntityModelDB = mock(TypeOfEntityModelDB.class);
-    when(typeOfEntityRepository.findById(any()))
+    when(typeOfEntityRepository.findFirstByIdAndSystemName(anyLong(),anyString()))
           .thenAnswer((Answer<Optional<TypeOfEntityModelDB>>) invocationOnMock -> Optional.of(typeOfEntityModelDB));
     //act
     typeOfEntityService.createTypeOfEntity(typeOfEntityModelJson);
@@ -54,7 +63,7 @@ public class TypeOfEntityServiceImplTest {
   public void testCreateTypeOfEntityIfSystemNameExists() {
     //arrange
     TypeOfEntityModelDB typeOfEntityModelDB = mock(TypeOfEntityModelDB.class);
-    when(typeOfEntityRepository.findFirstBySystemName(any()))
+    when(typeOfEntityRepository.findFirstByIdAndSystemName(anyLong(),anyString()))
           .thenAnswer(invocationOnMock -> Optional.of(typeOfEntityModelDB));
     //act
     typeOfEntityService.createTypeOfEntity(typeOfEntityModelJson);

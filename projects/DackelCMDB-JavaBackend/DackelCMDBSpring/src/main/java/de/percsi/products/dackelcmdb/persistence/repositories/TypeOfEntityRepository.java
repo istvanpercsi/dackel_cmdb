@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-@Service
 public interface TypeOfEntityRepository extends JpaRepository<TypeOfEntityModelDB, Long> {
 
     @Query("SELECT toe FROM TypeOfEntityModelDB toe WHERE toe.deleted=false ")
