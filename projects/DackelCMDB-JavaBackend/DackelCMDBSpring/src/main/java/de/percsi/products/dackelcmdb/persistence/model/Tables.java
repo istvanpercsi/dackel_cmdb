@@ -7,4 +7,5 @@ public class Tables {
     public static final String CONNECTOR_OF_ENTITY_PROPERTY_VALUE = "connector_of_entity_property_value";
     public static final String STRING_VALUES = "string_values";
     public static final String NUMBER_VALUES = "number_values";
+    public static final String SECRET_VALUES = "secret_values";
 }

@@ -6,13 +6,13 @@ import java.util.List;
 
 public interface TypeOfEntityService {
 
-    public void createTypeOfEntity(TypeOfEntityModelJson typeOfEntityModelJson);
+  void createTypeOfEntity(TypeOfEntityModelJson typeOfEntityModelJson);
 
-    public void updateTypeOfEntity(TypeOfEntityModelJson typeOfEntityModelJson);
+  void updateTypeOfEntity(TypeOfEntityModelJson typeOfEntityModelJson);
 
-    public TypeOfEntityModelJson readTypeOfEntity(Long id);
+  TypeOfEntityModelJson readTypeOfEntity(Long id);
 
-    public void deleteTypeOfEntity(Long id);
+  void deleteTypeOfEntity(Long id);
 
-    public List<TypeOfEntityModelJson> readAllTypeOfEntity();
+  List<TypeOfEntityModelJson> readAllTypeOfEntity();
 }

@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyDescription;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
-import java.util.Date;
+import java.util.List;
 
 @NoArgsConstructor(access = AccessLevel.PACKAGE)
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
@@ -21,5 +21,13 @@ public class EntityModelJson extends ExtendedBaseModelJson {
     )
     @JsonPropertyDescription(value = "Type of entity.")
     private TypeOfEntityModelJson typeOfEntity;
+
+    @JsonProperty(
+        value = "propertiesOfEntity",
+        required = false,
+        access = JsonProperty.Access.READ_ONLY
+    )
+    @JsonPropertyDescription(value = "Properties of entity.")
+    private List<PropertyAndValueOfEntityModelJson> propertyAndValueOfEntityModelJson;
 
 }
