@@ -9,7 +9,7 @@ import org.mapstruct.factory.Mappers;
 public interface TypeOfEntityModelMapper  {
     TypeOfEntityModelMapper MAPPER=Mappers.getMapper(TypeOfEntityModelMapper.class);
 
-    TypeOfEntityModelDB mapJsonCUToDB(TypeOfEntityModelJson typeOfEntityModelJson);
+    TypeOfEntityModelDB mapJsonToDB(TypeOfEntityModelJson typeOfEntityModelJson);
 
     TypeOfEntityModelJson mapDBToJson(TypeOfEntityModelDB typeOfEntityModelDB);
 }

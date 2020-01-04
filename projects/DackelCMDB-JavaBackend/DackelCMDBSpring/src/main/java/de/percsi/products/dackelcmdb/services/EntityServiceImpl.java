@@ -4,6 +4,8 @@ import de.percsi.products.dackelcmdb.api.json.messages.OperationalMessage;
 import de.percsi.products.dackelcmdb.api.json.messages.OperationalMessagesEnum;
 import de.percsi.products.dackelcmdb.api.json.model.EntityModelJson;
 import de.percsi.products.dackelcmdb.exceptions.RecordNotFoundDBException;
+import de.percsi.products.dackelcmdb.mapper.EntityModelMapper;
+import de.percsi.products.dackelcmdb.mapper.TypeOfEntityModelMapper;
 import de.percsi.products.dackelcmdb.persistence.model.Tables;
 import de.percsi.products.dackelcmdb.persistence.repositories.ConnectorOfEntityPropertyValueRepository;
 import de.percsi.products.dackelcmdb.persistence.repositories.EntityRepository;
@@ -33,16 +35,7 @@ public class EntityServiceImpl implements EntityService {
   @Override
   public EntityModelJson readEntity(Long id) {
     return Option.ofOptional(entityRepository.findFirstById(id))
-        .map(entityModelDB -> EntityModelJson.builder()
-            .id(entityModelDB.getId())
-            .name(entityModelDB.getName())
-            .systemName(entityModelDB.getSystemName())
-            .createDate(entityModelDB.getCreateDate())
-            .createUser(entityModelDB.getCreateUser())
-            .modificationDate(entityModelDB.getModificationDate())
-            .modificationUser(entityModelDB.getModificationUser())
-            .propertyAndValueOfEntityModelJson(null)
-            .build())
+        .map(EntityModelMapper.MAPPER::mapDbToJson)
         .getOrElseThrow(() -> new RecordNotFoundDBException(
             OperationalMessagesEnum.RECORD_NOT_FOUND_TABLE_ID.getMessage(Tables.ENTITIES,id.toString())
     ));

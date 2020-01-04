@@ -34,7 +34,7 @@ public class TypeOfEntityServiceImpl implements TypeOfEntityService {
             throw new RecordAlreadyExistsDBException(OperationalMessagesEnum.RECORD_ALREADY_EXISTS_TABLE_SYSTEMNAME.getMessage(
             Tables.TYPES_OF_ENTITIES, typeOfEntityModelDB.getSystemName()));
           });
-    TypeOfEntityModelDB typeOfEntityModelDB = TypeOfEntityModelMapper.MAPPER.mapJsonCUToDB(typeOfEntityModelJson);
+    TypeOfEntityModelDB typeOfEntityModelDB = TypeOfEntityModelMapper.MAPPER.mapJsonToDB(typeOfEntityModelJson);
     typeOfEntityModelDB.setCreateDate(new Date());
     typeOfEntityModelDB.setCreateUser("Test Create user");
     typeOfEntityModelDB.setModificationDate(new Date());
@@ -48,7 +48,7 @@ public class TypeOfEntityServiceImpl implements TypeOfEntityService {
           .getOrElseThrow(() -> new RecordNotFoundDBException(OperationalMessagesEnum.RECORD_NOT_FOUND_TABLE_ID.getMessage(
                 Tables.TYPES_OF_ENTITIES, typeOfEntityModelJson.getId().toString())));
     TypeOfEntityModelDB typeOfEntityModelDBSave =
-          TypeOfEntityModelMapper.MAPPER.mapJsonCUToDB(typeOfEntityModelJson);
+          TypeOfEntityModelMapper.MAPPER.mapJsonToDB(typeOfEntityModelJson);
     typeOfEntityModelDBSave.setModificationUser("Modification user");
     typeOfEntityModelDBSave.setModificationDate(new Date());
     typeOfEntityRepository.save(typeOfEntityModelDBSave);
