@@ -22,6 +22,6 @@ public class EntityModelDB extends BaseWithUserDateDeletedFlagAndNameModelDB imp
     private TypeOfEntityModelDB typeOfEntity;
 
     @OneToMany(mappedBy = "entity", fetch = FetchType.LAZY)
-    private Set<ConnectorOfEntityPropertyValue> connectorOfEntityPropertyValues;
+    private Set<ConnectorOfEntityPropertyValueModelDB> connectorOfEntityPropertyValueModelDBS;
 
 }

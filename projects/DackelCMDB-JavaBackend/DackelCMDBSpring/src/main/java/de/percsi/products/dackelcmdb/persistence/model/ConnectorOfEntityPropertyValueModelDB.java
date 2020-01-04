@@ -10,12 +10,12 @@ import javax.persistence.Table;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "connector_of_entity_property_value")
+@Table(name = Tables.CONNECTOR_OF_ENTITY_PROPERTY_VALUE)
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor(access = AccessLevel.PUBLIC)
 @Getter(value = AccessLevel.PUBLIC)
 @Setter(value = AccessLevel.PUBLIC)
-public class ConnectorOfEntityPropertyValue extends BaseModelDB implements Serializable {
+public class ConnectorOfEntityPropertyValueModelDB extends BaseModelDB implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "entity_id")

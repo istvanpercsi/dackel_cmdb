@@ -2,7 +2,11 @@ package de.percsi.products.dackelcmdb.persistence.repositories;
 
 import de.percsi.products.dackelcmdb.persistence.model.EntityModelDB;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.repository.CrudRepository;
+
+import java.util.Optional;
 
 public interface EntityRepository extends JpaRepository<EntityModelDB, Long> {
+
+  Optional<EntityModelDB> findFirstById(Long id);
+
 }

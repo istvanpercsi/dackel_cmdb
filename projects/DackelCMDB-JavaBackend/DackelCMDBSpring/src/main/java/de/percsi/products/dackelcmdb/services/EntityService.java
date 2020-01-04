@@ -10,6 +10,8 @@ public interface EntityService {
 
   EntityModelJson readEntity(Long id);
 
+  EntityModelJson readEntityWithProperties(Long id);
+
   void updateEntity(EntityModelJson entityModelJson);
 
   void deleteEntity(Long id);
