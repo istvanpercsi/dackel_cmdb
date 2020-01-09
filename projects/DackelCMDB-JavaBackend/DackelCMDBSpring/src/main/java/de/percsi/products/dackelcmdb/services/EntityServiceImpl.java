@@ -18,9 +18,9 @@ import java.util.List;
 @Service
 public class EntityServiceImpl implements EntityService {
 
-  EntityRepository entityRepository;
+  private EntityRepository entityRepository;
 
-  ConnectorOfEntityPropertyValueRepository connectorOfEntityPropertyValueRepository;
+  private ConnectorOfEntityPropertyValueRepository connectorOfEntityPropertyValueRepository;
 
   @Autowired
   public EntityServiceImpl(EntityRepository entityRepository) {
@@ -43,7 +43,11 @@ public class EntityServiceImpl implements EntityService {
 
   @Override
   public EntityModelJson readEntityWithProperties(Long id) {
-    return null;
+    return Option.ofOptional(connectorOfEntityPropertyValueRepository.findFirstByEntityId(id))
+        .map(EntityModelMapper.MAPPER::mapDbToJson)
+        .getOrElseThrow(() -> new RecordNotFoundDBException(
+            OperationalMessagesEnum.RECORD_NOT_FOUND_TABLE_ID.getMessage(Tables.ENTITIES,id.toString())
+        ));
   }
 
   @Override
