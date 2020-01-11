@@ -5,7 +5,7 @@ import de.percsi.products.dackelcmdb.api.json.model.TypeOfEntityModelJson;
 import de.percsi.products.dackelcmdb.exceptions.RecordAlreadyExistsDBException;
 import de.percsi.products.dackelcmdb.exceptions.RecordNotFoundDBException;
 import de.percsi.products.dackelcmdb.mapper.TypeOfEntityModelMapper;
-import de.percsi.products.dackelcmdb.persistence.model.Tables;
+import de.percsi.products.dackelcmdb.persistence.model.base.TablesConst;
 import de.percsi.products.dackelcmdb.persistence.model.TypeOfEntityModelDB;
 import de.percsi.products.dackelcmdb.persistence.repositories.TypeOfEntityRepository;
 import io.vavr.collection.Stream;
@@ -32,7 +32,7 @@ public class TypeOfEntityServiceImpl implements TypeOfEntityService {
     Option.ofOptional(typeOfEntityRepository.findFirstByIdAndSystemName(typeOfEntityModelJson.getId(),typeOfEntityModelJson.getSystemName()))
           .peek(typeOfEntityModelDB -> {
             throw new RecordAlreadyExistsDBException(OperationalMessagesEnum.RECORD_ALREADY_EXISTS_TABLE_SYSTEMNAME.getMessage(
-            Tables.TYPES_OF_ENTITIES, typeOfEntityModelDB.getSystemName()));
+            TablesConst.TYPES_OF_ENTITIES, typeOfEntityModelDB.getSystemName()));
           });
     TypeOfEntityModelDB typeOfEntityModelDB = TypeOfEntityModelMapper.MAPPER.mapJsonToDB(typeOfEntityModelJson);
     typeOfEntityModelDB.setCreateDate(new Date());
@@ -46,7 +46,7 @@ public class TypeOfEntityServiceImpl implements TypeOfEntityService {
   public void updateTypeOfEntity(TypeOfEntityModelJson typeOfEntityModelJson) {
     Option.ofOptional(typeOfEntityRepository.findById(typeOfEntityModelJson.getId()))
           .getOrElseThrow(() -> new RecordNotFoundDBException(OperationalMessagesEnum.RECORD_NOT_FOUND_TABLE_ID.getMessage(
-                Tables.TYPES_OF_ENTITIES, typeOfEntityModelJson.getId().toString())));
+                TablesConst.TYPES_OF_ENTITIES, typeOfEntityModelJson.getId().toString())));
     TypeOfEntityModelDB typeOfEntityModelDBSave =
           TypeOfEntityModelMapper.MAPPER.mapJsonToDB(typeOfEntityModelJson);
     typeOfEntityModelDBSave.setModificationUser("Modification user");
@@ -58,13 +58,13 @@ public class TypeOfEntityServiceImpl implements TypeOfEntityService {
   public TypeOfEntityModelJson readTypeOfEntity(Long id) {
     return TypeOfEntityModelMapper.MAPPER.mapDBToJson(Option.ofOptional(typeOfEntityRepository.findById(id))
                 .getOrElseThrow(() -> new RecordNotFoundDBException(
-                      OperationalMessagesEnum.RECORD_NOT_FOUND_TABLE_ID.getMessage(Tables.TYPES_OF_ENTITIES,id.toString()))));
+                      OperationalMessagesEnum.RECORD_NOT_FOUND_TABLE_ID.getMessage(TablesConst.TYPES_OF_ENTITIES,id.toString()))));
   }
 
   @Override
   public void deleteTypeOfEntity(Long id) {
     TypeOfEntityModelDB typeOfEntityModelDB = Option.ofOptional(typeOfEntityRepository.findById(id))
-          .getOrElseThrow(()-> new RecordNotFoundDBException(OperationalMessagesEnum.RECORD_NOT_FOUND_TABLE_ID.getMessage(Tables.TYPES_OF_ENTITIES,id.toString())));
+          .getOrElseThrow(()-> new RecordNotFoundDBException(OperationalMessagesEnum.RECORD_NOT_FOUND_TABLE_ID.getMessage(TablesConst.TYPES_OF_ENTITIES,id.toString())));
     typeOfEntityModelDB.setDeleted(true);
     typeOfEntityModelDB.setModificationDate(new Date());
     typeOfEntityModelDB.setModificationUser("Delete user");

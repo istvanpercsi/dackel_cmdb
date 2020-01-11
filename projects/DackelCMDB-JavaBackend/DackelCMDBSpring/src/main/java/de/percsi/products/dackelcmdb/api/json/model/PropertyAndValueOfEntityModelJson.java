@@ -2,7 +2,12 @@ package de.percsi.products.dackelcmdb.api.json.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyDescription;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Value;
 
+@Value
+@Builder
 public class PropertyAndValueOfEntityModelJson {
 
   @JsonProperty(

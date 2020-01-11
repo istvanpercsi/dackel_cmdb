@@ -1,6 +1,7 @@
 package de.percsi.products.dackelcmdb.persistence.model;
 
 import de.percsi.products.dackelcmdb.persistence.model.base.BaseWithUserDateDeletedFlagAndNameModelDB;
+import de.percsi.products.dackelcmdb.persistence.model.base.TablesConst;
 import lombok.*;
 
 import javax.persistence.*;
@@ -9,7 +10,7 @@ import java.util.Set;
 
 
 @Entity
-@Table(name = Tables.ENTITIES)
+@Table(name = TablesConst.ENTITIES)
 
 @AllArgsConstructor(access = AccessLevel.PUBLIC)
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
@@ -22,6 +23,6 @@ public class EntityModelDB extends BaseWithUserDateDeletedFlagAndNameModelDB imp
     private TypeOfEntityModelDB typeOfEntity;
 
     @OneToMany(mappedBy = "entity", fetch = FetchType.LAZY)
-    private Set<ConnectorOfEntityPropertyValueModelDB> connectorOfEntityPropertyValueModelDBS;
+    private Set<ValueOfPropertyOfEntityModelDB> valueOfPropertyOfEntityModelDBS;
 
 }

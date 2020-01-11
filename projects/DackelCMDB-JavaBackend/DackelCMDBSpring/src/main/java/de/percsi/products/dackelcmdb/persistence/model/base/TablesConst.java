@@ -1,6 +1,6 @@
-package de.percsi.products.dackelcmdb.persistence.model;
+package de.percsi.products.dackelcmdb.persistence.model.base;
 
-public class Tables {
+public class TablesConst {
     public static final String ENTITIES = "entities";
     public static final String TYPES_OF_ENTITIES = "types_of_entities";
     public static final String PROPERTIES_OF_ENTITIES = "properties_of_entities";

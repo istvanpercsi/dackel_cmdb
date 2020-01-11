@@ -13,4 +13,7 @@ INSERT INTO entities (`id`, `type_of_entity_id`, `name`,`system_name`,`create_da
 VALUES
        ( 1001, 1001, 'N2452022', 'n2452022', '2019-04-11 11:34:11', '2019-05-22 21:11:49', 'Christina Maier', 'Christina Maier' ),
        ( 1002, 1001, 'N2322022', 'n2322022', '2019-05-29 09:13:01', '2019-06-11 13:02:28', 'Robert Redford', 'Will Smith' ),
-       ( 1003, 1002, 'Windows 7', 'windows_7', '2019-04-15 08:45:23', '2019-04-15 08:45:23', 'Samatha Ewning', 'Samantha Ewning')
+       ( 1003, 1002, 'Windows 7', 'windows_7', '2019-04-15 08:45:23', '2019-04-15 08:45:23', 'Samatha Ewning', 'Samantha Ewning');
+
+-- Test data for table 'typeOfPropertyOfEntity'
+INSERT INTO
