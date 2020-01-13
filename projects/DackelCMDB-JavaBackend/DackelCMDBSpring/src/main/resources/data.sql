@@ -16,4 +16,14 @@ VALUES
        ( 1003, 1002, 'Windows 7', 'windows_7', '2019-04-15 08:45:23', '2019-04-15 08:45:23', 'Samatha Ewning', 'Samantha Ewning');
 
 -- Test data for table 'typeOfPropertyOfEntity'
-INSERT INTO
+INSERT INTO properties_of_entities (`id`, `type`, `name`, `system_name`, `create_date`, `modification_date`, `create_user`, `modification_user`, `deleted`)
+VALUES
+       ( 1001, 0, 'IP_ADDRESS', 'ip_address', '2020-01-11 23:33:34', '2020-01-11 23:33:56', 'Will Smith', 'Robert Redford', false),
+       ( 1002, 0, 'NET_MASK', 'net_mask', '2020-01-11 23:33:54', '2020-01-11 23:35:00', 'Will Smith', 'Robert Redford', false);
+
+-- Test data for value of property of entity
+INSERT INTO values_of_property_of_entity (`id`, `create_date`, `modification_date`, `create_user`, `modification_user`, `deleted`,
+                                         `entity_id`, `property_id`, `value_str`, `value_num`, `value_sec`, `value_dat`, `value_ent`)
+VALUES
+       ( 1001, '2020-01-13 20:46:22', '2020-01-13 20:46:33', 'Will Smith', 'Robert Redford', false, 1001, 1001, '192.168.1.1', null, null, null, null),
+       ( 1002, '2020-01-13 20:48:24', '2020-01-13 20:49:22', 'Robert Redford', 'Maria Carry', false, 1001, 1002, '255.255.255.0', null, null, null, null);

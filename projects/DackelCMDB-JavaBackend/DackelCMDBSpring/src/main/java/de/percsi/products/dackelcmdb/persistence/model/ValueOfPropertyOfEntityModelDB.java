@@ -1,6 +1,7 @@
 package de.percsi.products.dackelcmdb.persistence.model;
 
 import de.percsi.products.dackelcmdb.persistence.model.base.BaseModelDB;
+import de.percsi.products.dackelcmdb.persistence.model.base.BaseWithUserDateAndDeletedFlagModelDB;
 import de.percsi.products.dackelcmdb.persistence.model.base.ColumnNameOfTypeOfPropertyOfEntityConst;
 import de.percsi.products.dackelcmdb.persistence.model.base.TablesConst;
 import lombok.*;
@@ -10,12 +11,12 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-@Table(name = TablesConst.CONNECTOR_OF_ENTITY_PROPERTY_VALUE)
+@Table(name = TablesConst.VALUE_OF_PROPERTY_OF_ENTITY)
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor(access = AccessLevel.PUBLIC)
 @Getter(value = AccessLevel.PUBLIC)
 @Setter(value = AccessLevel.PUBLIC)
-public class ValueOfPropertyOfEntityModelDB extends BaseModelDB implements Serializable {
+public class ValueOfPropertyOfEntityModelDB extends BaseWithUserDateAndDeletedFlagModelDB implements Serializable {
 
   @ManyToOne
   @JoinColumn(name = "entity_id")

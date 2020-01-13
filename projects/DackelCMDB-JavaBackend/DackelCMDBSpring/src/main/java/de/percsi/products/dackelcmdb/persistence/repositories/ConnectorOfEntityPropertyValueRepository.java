@@ -9,11 +9,11 @@ import java.util.Optional;
 
 public interface ConnectorOfEntityPropertyValueRepository extends JpaRepository<ValueOfPropertyOfEntityModelDB, Long> {
 
-  @Query("SELECT c FROM ValueOfPropertyOfEntityModelDB c " +
-      "JOIN FETCH c.entity e " +
-      "JOIN FETCH c.property p " +
-      "JOIN FETCH c.valueNumber vn " +
-      "JOIN FETCH c.valueString vs " +
-      "WHERE e.id = :id")
-  Optional<ValueOfPropertyOfEntityModelDB> findFirstByEntityId(@Param("id") Long id);
+//  @Query("SELECT c FROM ValueOfPropertyOfEntityModelDB c " +
+//      "JOIN FETCH c.entity e " +
+//      "JOIN FETCH c.property p " +
+//      "JOIN FETCH c.valueNumber vn " +
+//      "JOIN FETCH c.valueString vs " +
+//      "WHERE e.id = :id")
+//  Optional<ValueOfPropertyOfEntityModelDB> findFirstByEntityId(@Param("id") Long id);
 }

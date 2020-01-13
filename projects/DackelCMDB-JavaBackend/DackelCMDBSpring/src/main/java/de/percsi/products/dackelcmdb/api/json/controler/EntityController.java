@@ -21,11 +21,7 @@ public class EntityController {
 
   @RequestMapping(value = "/{id}", method = RequestMethod.GET)
   public EntityModelJson getEntityById(@PathVariable(name = "id") long id) {
-    EntityModelJson e = EntityModelJson.builder()
-        .id(id)
-        .name("Test")
-        .systemName("test")
-        .build();
+    EntityModelJson e = entityService.readEntityWithProperties(id);
     return e;
   }
 

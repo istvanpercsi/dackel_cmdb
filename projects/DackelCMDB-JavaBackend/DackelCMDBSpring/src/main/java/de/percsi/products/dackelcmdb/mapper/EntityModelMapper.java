@@ -32,7 +32,7 @@ public interface EntityModelMapper {
   EntityModelJson mapDbToJsonWithoutProperties(EntityModelDB entityModelDB);
 
   @Mappings({
-      @Mapping(source = "entityModelDB.getValueOfPropertyOfEntityModelDBS", target = "propertyAndValueOfEntityModelJson", qualifiedByName = "propertyValueGenerator")
+      @Mapping(source = "entityModelDB.valueOfPropertyOfEntityModelDBS", target = "propertyAndValueOfEntityModelJson", qualifiedByName = "propertyValueGenerator")
   })
   EntityModelJson mapDbToJsonWithProperties(EntityModelDB entityModelDB);
 
