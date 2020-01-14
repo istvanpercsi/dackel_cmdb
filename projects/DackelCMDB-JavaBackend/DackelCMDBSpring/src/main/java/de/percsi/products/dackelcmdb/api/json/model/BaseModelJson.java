@@ -9,6 +9,7 @@ import lombok.experimental.SuperBuilder;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @AllArgsConstructor(access = AccessLevel.PUBLIC)
@@ -77,6 +78,5 @@ public class BaseModelJson {
             access = JsonProperty.Access.READ_ONLY
     )
     @ApiModelProperty(readOnly = true)
-    @Builder.Default
-    private Map<String, String> _links = new HashMap<>();
+    private List<LinksModelJson> _links;
 }

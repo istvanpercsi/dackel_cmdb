@@ -38,12 +38,9 @@ public interface EntityModelMapper {
 
   @Named("propertyValueGenerator")
   default List<PropertyAndValueOfEntityModelJson> propertyValueGenerator(Set<ValueOfPropertyOfEntityModelDB> valueOfPropertyOfEntityModelDBS) {
+    //TODO - mapper for Property and for value
     return HashSet.ofAll(valueOfPropertyOfEntityModelDBS).map(e-> PropertyAndValueOfEntityModelJson.builder()
-        .propertyOfEntityModelJson(PropertyOfEntityModelJson.builder()
-            .id(e.getProperty().getId())
-            .name(e.getProperty().getName())
-            .systemName(e.getProperty().getSystemName())
-            .build())
+        .propertyOfEntityModelJson(PropertyOfEntityMapper.MAPPER.mapDbToJson(e.getProperty()))
         .valueOfPropertyOfEntityModelJson(ValueOfPropertyOfEntityModelJson.builder()
             .id(e.getId())
             .value(getValue(e.getProperty().getType(), e))
