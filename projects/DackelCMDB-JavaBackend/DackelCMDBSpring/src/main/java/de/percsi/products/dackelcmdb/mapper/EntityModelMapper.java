@@ -41,21 +41,11 @@ public interface EntityModelMapper {
     //TODO - mapper for Property and for value
     return HashSet.ofAll(valueOfPropertyOfEntityModelDBS).map(e-> PropertyAndValueOfEntityModelJson.builder()
         .propertyOfEntityModelJson(PropertyOfEntityMapper.MAPPER.mapDbToJson(e.getProperty()))
-        .valueOfPropertyOfEntityModelJson(ValueOfPropertyOfEntityModelJson.builder()
-            .id(e.getId())
-            .value(getValue(e.getProperty().getType(), e))
-            .build())
+        .valueOfPropertyOfEntityModelJson(ValueOfPropertyOfEntityMapper.MAPPER.mapDbToJson(e,e.getProperty().getType()))
         .build()).toJavaList();
   }
 
-  default String getValue(TypeOfPropertyOfEntityEnum type, ValueOfPropertyOfEntityModelDB valueOfPropertyOfEntityModelDB) {
-    switch (type) {
-      case STRING:
-        return valueOfPropertyOfEntityModelDB.getValueSTR();
-      default:
-        throw new NotImplementedException();
-    }
-  }
+
 
 
 }
