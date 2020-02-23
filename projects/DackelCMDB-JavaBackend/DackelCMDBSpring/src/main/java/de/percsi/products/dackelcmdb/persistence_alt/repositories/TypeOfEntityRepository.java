@@ -1,6 +1,6 @@
-package de.percsi.products.dackelcmdb.persistence.repositories;
+package de.percsi.products.dackelcmdb.persistence_alt.repositories;
 
-import de.percsi.products.dackelcmdb.persistence.model.TypeOfEntityModelDB;
+import de.percsi.products.dackelcmdb.persistence_alt.model.TypeOfEntityModelDB;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

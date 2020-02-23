@@ -35,7 +35,7 @@ public class BaseModelJson {
             value = "Create date of record",
             readOnly = true
     )
-    private Date createDate;
+    private String createDate;
 
     @JsonProperty(
             value = "modificationDate",
@@ -48,7 +48,7 @@ public class BaseModelJson {
             readOnly = true,
             required = false
     )
-    private Date modificationDate;
+    private String modificationDate;
 
     @JsonProperty(
             value = "createUser",

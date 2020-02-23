@@ -1,4 +1,4 @@
-package de.percsi.products.dackelcmdb.persistence.model.base;
+package de.percsi.products.dackelcmdb.persistence_alt.model.base;
 
 public class TablesConst {
   public static final String ENTITIES = "entities";

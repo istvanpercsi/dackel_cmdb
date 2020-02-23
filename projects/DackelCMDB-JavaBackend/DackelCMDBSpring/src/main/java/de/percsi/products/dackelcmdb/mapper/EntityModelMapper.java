@@ -2,18 +2,14 @@ package de.percsi.products.dackelcmdb.mapper;
 
 import de.percsi.products.dackelcmdb.api.json.model.EntityModelJson;
 import de.percsi.products.dackelcmdb.api.json.model.PropertyAndValueOfEntityModelJson;
-import de.percsi.products.dackelcmdb.api.json.model.PropertyOfEntityModelJson;
-import de.percsi.products.dackelcmdb.api.json.model.ValueOfPropertyOfEntityModelJson;
-import de.percsi.products.dackelcmdb.persistence.model.ValueOfPropertyOfEntityModelDB;
-import de.percsi.products.dackelcmdb.persistence.model.EntityModelDB;
-import de.percsi.products.dackelcmdb.persistence.model.base.TypeOfPropertyOfEntityEnum;
+import de.percsi.products.dackelcmdb.persistence_alt.model.ValueOfPropertyOfEntityModelDB;
+import de.percsi.products.dackelcmdb.persistence_alt.model.EntityModelDB;
 import io.vavr.collection.HashSet;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 import org.mapstruct.Named;
 import org.mapstruct.factory.Mappers;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.List;
 import java.util.Set;

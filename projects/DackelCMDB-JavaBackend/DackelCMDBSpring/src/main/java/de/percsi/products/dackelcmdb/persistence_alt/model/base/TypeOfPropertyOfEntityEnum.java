@@ -1,4 +1,6 @@
-package de.percsi.products.dackelcmdb.persistence.model.base;
+package de.percsi.products.dackelcmdb.persistence_alt.model.base;
+
+import org.hibernate.mapping.Any;
 
 public enum TypeOfPropertyOfEntityEnum {
   STRING(ColumnNameOfTypeOfPropertyOfEntityConst.STRING),
@@ -14,8 +16,11 @@ public enum TypeOfPropertyOfEntityEnum {
   }
 
   public String getColumn() {
+
     return this.column;
   }
+
+  public Any getColumn(String s){return null;}
 
 
 }

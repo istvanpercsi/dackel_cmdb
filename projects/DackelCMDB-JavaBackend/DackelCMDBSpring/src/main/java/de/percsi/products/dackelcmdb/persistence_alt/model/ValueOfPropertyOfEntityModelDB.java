@@ -1,9 +1,8 @@
-package de.percsi.products.dackelcmdb.persistence.model;
+package de.percsi.products.dackelcmdb.persistence_alt.model;
 
-import de.percsi.products.dackelcmdb.persistence.model.base.BaseModelDB;
-import de.percsi.products.dackelcmdb.persistence.model.base.BaseWithUserDateAndDeletedFlagModelDB;
-import de.percsi.products.dackelcmdb.persistence.model.base.ColumnNameOfTypeOfPropertyOfEntityConst;
-import de.percsi.products.dackelcmdb.persistence.model.base.TablesConst;
+import de.percsi.products.dackelcmdb.persistence_alt.model.base.BaseWithUserDateAndDeletedFlagModelDB;
+import de.percsi.products.dackelcmdb.persistence_alt.model.base.ColumnNameOfTypeOfPropertyOfEntityConst;
+import de.percsi.products.dackelcmdb.persistence_alt.model.base.TablesConst;
 import lombok.*;
 
 import javax.persistence.*;

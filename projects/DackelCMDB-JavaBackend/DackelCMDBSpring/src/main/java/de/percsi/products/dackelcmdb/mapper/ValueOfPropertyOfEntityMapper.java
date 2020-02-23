@@ -1,13 +1,11 @@
 package de.percsi.products.dackelcmdb.mapper;
 
 import de.percsi.products.dackelcmdb.api.json.model.ValueOfPropertyOfEntityModelJson;
-import de.percsi.products.dackelcmdb.persistence.model.ValueOfPropertyOfEntityModelDB;
-import de.percsi.products.dackelcmdb.persistence.model.base.TypeOfPropertyOfEntityEnum;
+import de.percsi.products.dackelcmdb.persistence_alt.model.ValueOfPropertyOfEntityModelDB;
+import de.percsi.products.dackelcmdb.persistence_alt.model.base.TypeOfPropertyOfEntityEnum;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
-import java.time.LocalDate;
 
 @Mapper
 public interface ValueOfPropertyOfEntityMapper {

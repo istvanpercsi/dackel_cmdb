@@ -1,6 +1,8 @@
 logging:
   level:
     root: info
+    org.hibernate: debug
+    
 
 dackelcmdb:
   test: almafa
