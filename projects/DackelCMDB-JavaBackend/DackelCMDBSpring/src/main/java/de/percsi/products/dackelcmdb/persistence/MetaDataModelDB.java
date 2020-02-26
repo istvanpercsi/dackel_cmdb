@@ -6,8 +6,8 @@ import javax.persistence.*;
 import java.sql.Date;
 
 
-@Entity(name = "MetaData")
-@Table(name = "meta_data")
+@Entity(name = Tables.METADATA)
+@Table(name = Tables.METADATA)
 @Data
 class MetaDataModelDB {
 

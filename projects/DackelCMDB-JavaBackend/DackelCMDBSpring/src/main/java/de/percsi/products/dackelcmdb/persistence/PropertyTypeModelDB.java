@@ -1,10 +1,13 @@
 package de.percsi.products.dackelcmdb.persistence;
 
+import lombok.Data;
+
 import javax.persistence.*;
 
-@Entity
-@Table(name = Tables.PROPERTYTYPE)
-public class PropertyTypeModelDB {
+@Entity(name = Tables.PROPERTY_TYPE)
+@Table(name = Tables.PROPERTY_TYPE)
+@Data
+class PropertyTypeModelDB {
 
   @Id
   @Column(name = "id")
