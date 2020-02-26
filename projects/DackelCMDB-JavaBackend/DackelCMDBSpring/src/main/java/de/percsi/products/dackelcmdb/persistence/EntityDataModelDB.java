@@ -6,10 +6,10 @@ import lombok.Data;
 
 import javax.persistence.*;
 
-@Entity(name = "EntityBase")
-@Table(name = "entity_base")
+@Entity(name = Tables.ENTITY_DATA)
+@Table(name = Tables.ENTITY_DATA)
 @Data
-class EntityBaseModelDB {
+class EntityDataModelDB {
   
   @Id
   @Column(name = "id")
@@ -26,6 +26,9 @@ class EntityBaseModelDB {
   @Column(name = "system_name")
   private String systemName;
 
+  @Column(name = "type")
+  @Enumerated(EnumType.STRING)
+  private EntityDataType type;
 
 
 }
