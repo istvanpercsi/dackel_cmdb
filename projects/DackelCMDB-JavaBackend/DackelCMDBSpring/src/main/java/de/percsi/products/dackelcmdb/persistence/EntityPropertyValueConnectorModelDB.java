@@ -10,6 +10,8 @@ import javax.persistence.*;
 public class EntityPropertyValueConnectorModelDB {
 
   @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  @Column(name = "id", nullable = false)
   Long id;
 
   @ManyToOne

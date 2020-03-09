@@ -28,4 +28,7 @@ class MetaDataModelDB {
   @Column(name = "modify_date")
   private Date modifyDate;
 
+  @Column(name = "deleted")
+  private Boolean deleted;
+
 }

@@ -5,6 +5,7 @@ public enum  PropertyType {
   TEXT("str"),
   NUMBER("num"),
   SECRET("sec"),
+  DATETIME("dti"),
   ENTITY("ent");
 
   private String type;
