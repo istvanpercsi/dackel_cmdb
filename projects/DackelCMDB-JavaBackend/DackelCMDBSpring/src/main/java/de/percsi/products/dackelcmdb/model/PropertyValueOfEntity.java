@@ -1,19 +1,15 @@
 package de.percsi.products.dackelcmdb.model;
 
+import de.percsi.products.dackelcmdb.model.literal.ValueType;
 import lombok.Builder;
 import lombok.Value;
 
 @Value
 @Builder
-public class PropertyValueOfEntity {
+public class PropertyValueOfEntity<T extends ValueType> {
 
   PropertyOfEntity property;
 
-  ValueOfPropertyOfEntity value;
-
-  public String getValue() {
-    return "";
-  }
-
+  ValueOfPropertyOfEntity<T> value;
 
 }

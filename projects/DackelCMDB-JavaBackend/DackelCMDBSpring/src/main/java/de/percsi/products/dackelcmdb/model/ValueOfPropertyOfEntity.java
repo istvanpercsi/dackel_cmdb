@@ -1,21 +1,13 @@
 package de.percsi.products.dackelcmdb.model;
 
-import io.vavr.control.Option;
+import de.percsi.products.dackelcmdb.model.literal.*;
 import lombok.Builder;
 import lombok.Value;
 
 @Value
 @Builder
-public class ValueOfPropertyOfEntity {
+public class ValueOfPropertyOfEntity<T extends ValueType> {
 
-  private Option<Double> number = Option.none();
-
-  private Option<String> text = Option.none();
-
-  //TODO: define secret class
-  private Option<String> secret = Option.none();
-
-  private Option<Entity> entity = Option.none();
-
+  private T value;
 
 }
