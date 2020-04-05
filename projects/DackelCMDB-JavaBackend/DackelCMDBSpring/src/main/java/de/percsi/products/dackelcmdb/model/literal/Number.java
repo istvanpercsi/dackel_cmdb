@@ -1,5 +1,6 @@
 package de.percsi.products.dackelcmdb.model.literal;
 
+
 public class Number extends ValueType<Double>{
 
   private Number(Double value) {

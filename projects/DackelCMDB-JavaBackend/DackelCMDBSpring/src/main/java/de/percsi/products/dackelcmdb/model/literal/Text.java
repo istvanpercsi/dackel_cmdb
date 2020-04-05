@@ -1,7 +1,12 @@
 package de.percsi.products.dackelcmdb.model.literal;
 
-import lombok.Data;
 
-@Data
-public class Text extends ValueType{
+
+public class Text extends ValueType<String>{
+
+  String text;
+
+  protected Text(String value) {
+    super(value);
+  }
 }

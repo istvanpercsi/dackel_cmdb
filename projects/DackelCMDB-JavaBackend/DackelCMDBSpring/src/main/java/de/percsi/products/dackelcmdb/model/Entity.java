@@ -1,6 +1,7 @@
 package de.percsi.products.dackelcmdb.model;
 
 import io.vavr.collection.Set;
+import io.vavr.control.Option;
 import lombok.Builder;
 import lombok.Value;
 
@@ -12,7 +13,7 @@ import java.util.Date;
 @Builder
 public class Entity {
 
-  Long id;
+  Option<Long> id;
 
   String name;
 

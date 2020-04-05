@@ -2,6 +2,6 @@ package de.percsi.products.dackelcmdb.persistence;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-interface MetaDataRepositroy extends JpaRepository<MetaDataRepositroy, Long> {
+interface MetaDataRepository extends JpaRepository<MetaDataModelDB, Long> {
 
 }

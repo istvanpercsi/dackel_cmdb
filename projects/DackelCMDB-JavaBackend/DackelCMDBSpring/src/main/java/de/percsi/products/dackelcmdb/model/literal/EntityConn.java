@@ -1,7 +1,11 @@
 package de.percsi.products.dackelcmdb.model.literal;
 
-public class EntityConn extends ValueType {
-  EntityConn(Object value) {
+import de.percsi.products.dackelcmdb.model.Entity;
+
+public class EntityConn extends ValueType<Entity> {
+
+  EntityConn(Entity value) {
     super(value);
   }
+
 }
