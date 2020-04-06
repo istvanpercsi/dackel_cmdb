@@ -2,22 +2,24 @@ package de.percsi.products.dackelcmdb.persistence;
 
 
 
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity(name = Tables.ENTITY_DATA)
 @Table(name = Tables.ENTITY_DATA)
-@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 class EntityDataModelDB {
   
   @Id
   @Column(name = "id")
   Long id;
 
-  @OneToOne(fetch = FetchType.LAZY)
+  @OneToOne
   @MapsId
-  @JoinColumn(name = "id", nullable = false)
   private MetaDataModelDB metaData;
 
   @Column(name = "display_name")

@@ -1,19 +1,22 @@
 package de.percsi.products.dackelcmdb.persistence;
 
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.util.Date;
 
 
 @Entity(name = Tables.METADATA)
 @Table(name = Tables.METADATA)
-@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 class MetaDataModelDB {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  @Column(name = "id", nullable = false)
+  @Column(name = "id")
   private Long id;
 
   @Column(name = "create_user")

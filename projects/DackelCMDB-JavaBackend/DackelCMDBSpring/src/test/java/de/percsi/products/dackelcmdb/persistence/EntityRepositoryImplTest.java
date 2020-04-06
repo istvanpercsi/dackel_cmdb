@@ -28,6 +28,11 @@ public class EntityRepositoryImplTest {
     Option<Entity> result = entityRepository.createEntity(entity);
     //assert
     assertTrue(result.isDefined());
-    assertEquals(result.get().getName(),entity.getName());
+    assertTrue(result.get().getId().isDefined());
+    assertEquals(entity.getName(),result.get().getName());
+    assertEquals(entity.getSystemName(),result.get().getSystemName());
+    assertNotNull(result.get().getCreateDateTime());
+    assertNotNull(result.get().getModifyDateTime());
+
   }
 }
