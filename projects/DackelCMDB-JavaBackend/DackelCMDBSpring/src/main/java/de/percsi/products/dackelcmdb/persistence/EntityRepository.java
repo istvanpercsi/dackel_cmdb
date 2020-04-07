@@ -18,7 +18,7 @@ public interface EntityRepository {
 
   Option<Entity> updateTypeOfEntity(TypeOfEntity typeOfEntity);
 
-  void deleteEntity();
+  void deleteEntity(Entity entity);
 
 
 

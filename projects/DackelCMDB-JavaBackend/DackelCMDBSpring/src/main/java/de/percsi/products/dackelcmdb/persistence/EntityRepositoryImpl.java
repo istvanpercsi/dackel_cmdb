@@ -5,12 +5,12 @@ import de.percsi.products.dackelcmdb.model.TypeOfEntity;
 import io.vavr.collection.Set;
 import io.vavr.control.Option;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.time.ZoneId;
 import java.util.Date;
 
-@Component
+@Repository
 public class EntityRepositoryImpl implements EntityRepository {
 
   private MetaDataRepository metaDataRepository;
@@ -27,19 +27,23 @@ public class EntityRepositoryImpl implements EntityRepository {
 
   @Override
   public Option<Entity> createEntity(Entity entity) {
-    try {
-      MetaDataModelDB metaDataModelDB = new MetaDataModelDB();
-      metaDataModelDB.setCreateUser("test");
-      metaDataModelDB.setCreateDate(new Date());
-      metaDataModelDB.setModifyUser("test");
-      metaDataModelDB.setModifyDate(new Date());
-      metaDataModelDB.setDeleted(false);
 
-      EntityDataModelDB entityDataModelDB = new EntityDataModelDB();
-      entityDataModelDB.setDisplayName(entity.getName());
-      entityDataModelDB.setSystemName(entity.getSystemName());
-      entityDataModelDB.setType(EntityDataType.ENTITY);
-      entityDataModelDB.setMetaData(metaDataModelDB);
+      MetaDataModelDB metaDataModelDB = MetaDataModelDB.builder()
+          .createUser("test")
+          .createDate(new Date())
+          .modifyUser("test")
+          .modifyDate(new Date())
+          .deleted(false)
+          .build();
+
+      EntityDataModelDB entityDataModelDB = EntityDataModelDB.builder()
+          .displayName(entity.getName())
+          .systemName(entity.getSystemName())
+          .type(EntityDataType.ENTITY)
+          .metaData(metaDataModelDB)
+          .build();
+
+    try {
       entityDataModelDB = this.entityDataRepository.save(entityDataModelDB);
 
       return Option.of(Entity.builder().id(Option.of(entityDataModelDB.getId()))
@@ -76,7 +80,9 @@ public class EntityRepositoryImpl implements EntityRepository {
   }
 
   @Override
-  public void deleteEntity() {
-
+  public void deleteEntity(Entity entity) {
+    if (entity.getId().isDefined()) {
+      entityDataRepository.deleteById(entity.getId().get());
+    }
   }
 }

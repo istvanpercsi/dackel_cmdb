@@ -12,13 +12,14 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Getter
 @Setter
+@Builder
 class EntityDataModelDB {
   
   @Id
   @Column(name = "id")
   Long id;
 
-  @OneToOne
+  @OneToOne(cascade = CascadeType.ALL)
   @MapsId
   private MetaDataModelDB metaData;
 
