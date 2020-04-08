@@ -5,7 +5,6 @@ import io.vavr.control.Option;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 
-import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
