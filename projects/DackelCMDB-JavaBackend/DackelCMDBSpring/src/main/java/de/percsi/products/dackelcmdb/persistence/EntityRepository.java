@@ -12,6 +12,8 @@ public interface EntityRepository {
 
   Option<Entity> readEntityById(Long id);
 
+  Option<Entity> readEntityByEntity(Entity entity);
+
   Set<Entity> readEntitiesByType(TypeOfEntity typeOfEntity);
 
   Option<Entity> updateNameOfEntity(String nameOfEntity);

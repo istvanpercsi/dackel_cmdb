@@ -58,4 +58,22 @@ public class EntityRepositoryImplTest {
     Option<MetaDataModelDB> metaDataModelDBOption = Option.ofOptional(metaDataRepository.findById(id));
     assertFalse(metaDataModelDBOption.isDefined());
   }
+
+  @Test
+  public void readEntityById() {
+    //arrange
+    Entity entity = Entity.builder().name("Test name").systemName("test_name").build();
+    Option<Entity> createResult = entityRepository.createEntity(entity);
+    assertTrue(createResult.isDefined());
+    assertTrue(createResult.get().getId().isDefined());
+    long id = createResult.get().getId().get();
+
+    //act
+    Option<Entity> testResult = entityRepository.readEntityById(id);
+
+    //assert
+    assertTrue(testResult.isDefined());
+    assertEquals(createResult,testResult);
+
+  }
 }

@@ -2,6 +2,7 @@ package de.percsi.products.dackelcmdb.persistence;
 
 import de.percsi.products.dackelcmdb.model.Entity;
 import de.percsi.products.dackelcmdb.model.TypeOfEntity;
+import de.percsi.products.dackelcmdb.persistence_alt.model.EntityModelDB;
 import io.vavr.collection.Set;
 import io.vavr.control.Option;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,32 +29,21 @@ public class EntityRepositoryImpl implements EntityRepository {
   @Override
   public Option<Entity> createEntity(Entity entity) {
 
-      MetaDataModelDB metaDataModelDB = MetaDataModelDB.builder()
-          .createUser("test")
-          .createDate(new Date())
-          .modifyUser("test")
-          .modifyDate(new Date())
-          .deleted(false)
-          .build();
+    MetaDataModelDB metaDataModelDB = MetaDataModelDB.builder()
+        .createUser("test")
+        .createDate(new Date())
+        .modifyUser("test")
+        .modifyDate(new Date())
+        .deleted(false)
+        .build();
 
-      EntityDataModelDB entityDataModelDB = EntityDataModelDB.builder()
-          .displayName(entity.getName())
-          .systemName(entity.getSystemName())
-          .type(EntityDataType.ENTITY)
-          .metaData(metaDataModelDB)
-          .build();
+    EntityDataModelDB entityDataModelDB = EntityMapper.MAPPER.mapInternalToDb(entity);
+    entityDataModelDB.setMetaData(metaDataModelDB);
 
     try {
       entityDataModelDB = this.entityDataRepository.save(entityDataModelDB);
 
-      return Option.of(Entity.builder().id(Option.of(entityDataModelDB.getId()))
-          .name(entityDataModelDB.getDisplayName())
-          .systemName(entityDataModelDB.getSystemName())
-          .createUser(entityDataModelDB.getMetaData().getCreateUser())
-          .createDateTime(entityDataModelDB.getMetaData().getCreateDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime())
-          .modifyUser(entityDataModelDB.getMetaData().getModifyUser())
-          .modifyDateTime(entityDataModelDB.getMetaData().getModifyDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime())
-          .build());
+      return Option.of(EntityMapper.MAPPER.mapDBtoInternal(entityDataModelDB));
     } catch (Exception e) {
       return Option.none();
     }
@@ -61,6 +51,16 @@ public class EntityRepositoryImpl implements EntityRepository {
 
   @Override
   public Option<Entity> readEntityById(Long id) {
+    try {
+      Option<EntityDataModelDB> entityDataModelDBOption = Option.ofOptional(this.entityDataRepository.findById(id));
+      return (entityDataModelDBOption.isDefined()) ? Option.of(EntityMapper.MAPPER.mapDBtoInternal(entityDataModelDBOption.get())) : Option.none();
+    } catch (Exception e) {
+      return Option.none();
+    }
+  }
+
+  @Override
+  public Option<Entity> readEntityByEntity(Entity entity) {
     return null;
   }
 

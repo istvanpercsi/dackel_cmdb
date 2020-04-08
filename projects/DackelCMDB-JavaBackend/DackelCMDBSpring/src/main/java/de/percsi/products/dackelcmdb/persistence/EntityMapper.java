@@ -15,8 +15,6 @@ interface EntityMapper {
 
   EntityMapper MAPPER = Mappers.getMapper(EntityMapper.class);
 
-
-
   @Mappings({
       @Mapping(source = "id", target = "id", qualifiedByName = "optionIdToId"),
       @Mapping(source = "name", target = "displayName"),
@@ -52,28 +50,5 @@ interface EntityMapper {
   default LocalDateTime dateToLocalDateTime(Date date) {
     return date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
   }
-//  EntityModelDB mapJsonToDb(EntityModelJson entityModelJson);
-//
-//  @Mappings({
-//      @Mapping(target = "propertyAndValueOfEntityModelJson", ignore = true)
-//  })
-//  EntityModelJson mapDbToJsonWithoutProperties(EntityModelDB entityModelDB);
-//
-//  @Mappings({
-//      @Mapping(source = "entityModelDB.valueOfPropertyOfEntityModelDBS", target = "propertyAndValueOfEntityModelJson", qualifiedByName = "propertyValueGenerator")
-//  })
-//  EntityModelJson mapDbToJsonWithProperties(EntityModelDB entityModelDB);
-//
-//  @Named("propertyValueGenerator")
-//  default List<PropertyAndValueOfEntityModelJson> propertyValueGenerator(Set<ValueOfPropertyOfEntityModelDB> valueOfPropertyOfEntityModelDBS) {
-//    //TODO - mapper for Property and for value
-//    return HashSet.ofAll(valueOfPropertyOfEntityModelDBS).map(e-> PropertyAndValueOfEntityModelJson.builder()
-//        .propertyOfEntityModelJson(PropertyOfEntityMapper.MAPPER.mapDbToJson(e.getProperty()))
-//        .valueOfPropertyOfEntityModelJson(ValueOfPropertyOfEntityMapper.MAPPER.mapDbToJson(e,e.getProperty().getType()))
-//        .build()).toJavaList();
-//  }
-
-
-
 
 }
