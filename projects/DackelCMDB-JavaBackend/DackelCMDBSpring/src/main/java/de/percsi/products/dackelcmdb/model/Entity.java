@@ -11,7 +11,8 @@ import java.time.LocalDateTime;
 @Builder
 public class Entity {
 
-  Option<Long> id;
+  @Builder.Default
+  Option<Long> id = Option.none();
 
   String name;
 
