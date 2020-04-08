@@ -3,7 +3,7 @@ package de.percsi.products.dackelcmdb.services;
 import de.percsi.products.dackelcmdb.api.json.messages.OperationalMessagesEnum;
 import de.percsi.products.dackelcmdb.api.json.model.EntityModelJson;
 import de.percsi.products.dackelcmdb.exceptions.RecordNotFoundDBException;
-import de.percsi.products.dackelcmdb.mapper.EntityModelMapper;
+
 import de.percsi.products.dackelcmdb.persistence_alt.model.base.TablesConst;
 import de.percsi.products.dackelcmdb.persistence_alt.repositories.ConnectorOfEntityPropertyValueRepository;
 import de.percsi.products.dackelcmdb.persistence_alt.repositories.EntityRepository;
@@ -42,11 +42,12 @@ public class EntityServiceImpl implements EntityService {
 
   @Override
   public EntityModelJson readEntityWithProperties(Long id) {
-    return Option.ofOptional(entityRepository.findFirstByIdWithProperties(id))
-        .map(EntityModelMapper.MAPPER::mapDbToJsonWithProperties)
-        .getOrElseThrow(() -> new RecordNotFoundDBException(
-            OperationalMessagesEnum.RECORD_NOT_FOUND_TABLE_ID.getMessage(TablesConst.ENTITIES,id.toString())
-        ));
+//    return Option.ofOptional(entityRepository.findFirstByIdWithProperties(id))
+//        .map(EntityMapper.MAPPER::mapDbToJsonWithProperties)
+//        .getOrElseThrow(() -> new RecordNotFoundDBException(
+//            OperationalMessagesEnum.RECORD_NOT_FOUND_TABLE_ID.getMessage(TablesConst.ENTITIES,id.toString())
+//        ));
+    return null;
   }
 
   @Override
