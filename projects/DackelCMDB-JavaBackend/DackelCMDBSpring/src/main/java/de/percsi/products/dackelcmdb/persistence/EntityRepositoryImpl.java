@@ -3,6 +3,7 @@ package de.percsi.products.dackelcmdb.persistence;
 import de.percsi.products.dackelcmdb.model.Entity;
 import de.percsi.products.dackelcmdb.model.TypeOfEntity;
 import de.percsi.products.dackelcmdb.persistence_alt.model.EntityModelDB;
+import io.vavr.collection.HashSet;
 import io.vavr.collection.Set;
 import io.vavr.control.Option;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,22 +62,41 @@ public class EntityRepositoryImpl implements EntityRepository {
 
   @Override
   public Option<Entity> readEntityByEntity(Entity entity) {
-    return null;
+    if (entity.getId().isDefined()) {
+      return readEntityById(entity.getId().get());
+    }
+    return Option.none();
   }
 
   @Override
   public Set<Entity> readEntitiesByType(TypeOfEntity typeOfEntity) {
-    return null;
+    return HashSet.empty();
   }
 
   @Override
-  public Option<Entity> updateNameOfEntity(String nameOfEntity) {
-    return null;
+  public Option<Entity> updateNameOfEntity(Long id, String nameOfEntity) {
+    Option<EntityDataModelDB> entityDataModelDBOption = Option.ofOptional(entityDataRepository.findById(id));
+    if (!entityDataModelDBOption.isDefined()) {
+      return Option.none();
+    }
+    EntityDataModelDB entityDataModelDB = entityDataModelDBOption.get();
+    entityDataModelDB.setDisplayName(nameOfEntity);
+    entityDataModelDB.getMetaData().setModifyDate(new Date());
+    try {
+      return Option.of(EntityMapper.MAPPER.mapDBtoInternal(entityDataRepository.save(entityDataModelDB)));
+    } catch (Exception e) {
+      return Option.none();
+    }
   }
 
   @Override
-  public Option<Entity> updateTypeOfEntity(TypeOfEntity typeOfEntity) {
-    return null;
+  public Option<Entity> updateTypeOfEntity(Long id, TypeOfEntity typeOfEntity) {
+    return Option.none();
+  }
+
+  @Override
+  public Option<Entity> updateEntity(Entity entity) {
+    return Option.none();
   }
 
   @Override

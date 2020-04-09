@@ -1,6 +1,7 @@
 package de.percsi.products.dackelcmdb.persistence;
 
 import de.percsi.products.dackelcmdb.model.Entity;
+import de.percsi.products.dackelcmdb.persistence_alt.model.EntityModelDB;
 import io.vavr.control.Option;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -74,6 +75,47 @@ public class EntityRepositoryImplTest {
     //assert
     assertTrue(testResult.isDefined());
     assertEquals(createResult,testResult);
+
+  }
+
+  @Test
+  public void readEntityByEntity() {
+    //arrange
+    Entity entity = Entity.builder().name("Test name").systemName("test_name").build();
+    Option<Entity> createResult = entityRepository.createEntity(entity);
+    assertTrue(createResult.isDefined());
+
+    //act
+    Option<Entity> testResult = entityRepository.readEntityByEntity(createResult.get());
+
+    //assert
+    assertTrue(testResult.isDefined());
+    assertEquals(createResult, testResult);
+
+  }
+
+  @Test
+  public void updateNameOfEntity() {
+    //arrange
+    String originalName = "Test name";
+    String modifiedName = "Test2 name2";
+    Entity entity = Entity.builder().name(originalName).systemName("test_name").build();
+    Option<Entity> createResult = entityRepository.createEntity(entity);
+    assertTrue(createResult.isDefined());
+    assertTrue(createResult.get().getId().isDefined());
+    Long id = createResult.get().getId().get();
+    
+    //act
+    Option<Entity> testResult = entityRepository.updateNameOfEntity(id, modifiedName);
+
+    //assert
+    assertTrue(testResult.isDefined());
+    Option<EntityDataModelDB> entityModelDBOption = Option.ofOptional(entityDataRepository.findById(id));
+    assertTrue(entityModelDBOption.isDefined());
+    assertEquals(modifiedName,entityModelDBOption.get().getDisplayName());
+    Option<MetaDataModelDB> metaDataModelDBOption = Option.ofOptional(metaDataRepository.findById(id));
+    assertTrue(metaDataModelDBOption.isDefined());
+    assertTrue(metaDataModelDBOption.get().getCreateDate().compareTo(metaDataModelDBOption.get().getModifyDate()) < 0);
 
   }
 }

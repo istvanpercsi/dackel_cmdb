@@ -16,9 +16,11 @@ public interface EntityRepository {
 
   Set<Entity> readEntitiesByType(TypeOfEntity typeOfEntity);
 
-  Option<Entity> updateNameOfEntity(String nameOfEntity);
+  Option<Entity> updateEntity(Entity entity);
 
-  Option<Entity> updateTypeOfEntity(TypeOfEntity typeOfEntity);
+  Option<Entity> updateNameOfEntity(Long id, String name);
+
+  Option<Entity> updateTypeOfEntity(Long id, TypeOfEntity typeOfEntity);
 
   void deleteEntity(Entity entity);
 
