@@ -1,5 +1,6 @@
 package de.percsi.products.dackelcmdb.model;
 
+import io.vavr.collection.HashSet;
 import io.vavr.collection.Set;
 import io.vavr.control.Option;
 import lombok.Builder;
@@ -14,6 +15,8 @@ public class Entity {
   @Builder.Default
   Option<Long> id = Option.none();
 
+  TypeOfEntity typeOfEntity;
+
   String name;
 
   String systemName;
@@ -26,6 +29,6 @@ public class Entity {
 
   String modifyUser;
 
-  Set<PropertyValueOfEntity> propertyValueSet;
+  Set<PropertyValueOfEntity> propertyValueSet = HashSet.empty();
 
 }

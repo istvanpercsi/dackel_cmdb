@@ -16,7 +16,7 @@ class ValueSTR {
   @OneToOne(fetch = FetchType.LAZY)
   @MapsId
   @JoinColumn(name = "id", nullable = false)
-  EntityPropertyValueConnectorModelDB entityPropertyValueConnectorModelDB;
+  ConnectorEntityPropertyValueModelDB connectorEntityPropertyValueModelDB;
 
   @Column(name = "value")
   private String value;

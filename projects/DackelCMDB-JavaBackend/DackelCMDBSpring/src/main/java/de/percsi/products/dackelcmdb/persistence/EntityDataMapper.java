@@ -10,19 +10,21 @@ import java.time.ZoneId;
 import java.util.Date;
 
 
-@Mapper
-interface EntityMapper {
-
-  EntityMapper MAPPER = Mappers.getMapper(EntityMapper.class);
+@Mapper(componentModel = "spring")
+interface EntityDataMapper {
 
   @Mappings({
-      @Mapping(source = "id", target = "id", qualifiedByName = "optionIdToId"),
-      @Mapping(source = "name", target = "displayName"),
-      @Mapping(source = "systemName", target = "systemName"),
-      @Mapping(target = "type", defaultValue = EntityDataType.Constants.ENTITY),
-      @Mapping(target = "metaData", ignore = true)
+      @Mapping(source = "entity.id", target = "id", qualifiedByName = "optionIdToId"),
+      @Mapping(source = "entity.name", target = "displayName"),
+      @Mapping(source = "entity.systemName", target = "systemName"),
+      @Mapping(source = "entityDataType", target = "type"),
+      @Mapping(source = "entity.createUser", target = "metaData.createUser"),
+      @Mapping(source = "entity.createDateTime", target = "metaData.createDate"),
+      @Mapping(source = "entity.modifyUser", target = "metaData.modifyUser"),
+      @Mapping(source = "entity.modifyDateTime", target = "metaData.modifyDate"),
+      @Mapping(source = "entity.id", target = "metaData.id", qualifiedByName = "optionIdToId")
   })
-  EntityDataModelDB mapInternalToDb(Entity entity);
+  EntityDataModelDB mapInternalToDb(Entity entity, EntityDataType entityDataType);
 
   @Named("optionIdToId")
   default Long optionIdToId(Option<Long> id) {
@@ -37,7 +39,7 @@ interface EntityMapper {
       @Mapping(source = "metaData.createDate", target = "createDateTime", qualifiedByName = "dateToLocalDateTime"),
       @Mapping(source = "metaData.modifyUser", target = "modifyUser"),
       @Mapping(source = "metaData.modifyDate", target = "modifyDateTime", qualifiedByName = "dateToLocalDateTime"),
-      @Mapping(target = "propertyValueSet", ignore = true)
+      //@Mapping(target = "propertyValueSet", ignore = true)
   })
   Entity mapDBtoInternal(EntityDataModelDB entityDataModelDB);
 

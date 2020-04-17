@@ -4,10 +4,10 @@ import lombok.Data;
 
 import javax.persistence.*;
 
-@Entity(name = Tables.ENTITY_PROPERTY_VALUE_CONNECTOR)
-@Table(name = Tables.ENTITY_PROPERTY_VALUE_CONNECTOR)
+@Entity(name = Tables.CONNECTOR_ENTITY_PROPERTY_VALUE)
+@Table(name = Tables.CONNECTOR_ENTITY_PROPERTY_VALUE)
 @Data
-public class EntityPropertyValueConnectorModelDB {
+public class ConnectorEntityPropertyValueModelDB {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)

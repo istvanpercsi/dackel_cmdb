@@ -2,14 +2,12 @@ package de.percsi.products.dackelcmdb.persistence;
 
 import de.percsi.products.dackelcmdb.model.Entity;
 import de.percsi.products.dackelcmdb.model.TypeOfEntity;
-import de.percsi.products.dackelcmdb.persistence_alt.model.EntityModelDB;
 import io.vavr.collection.HashSet;
 import io.vavr.collection.Set;
 import io.vavr.control.Option;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.time.ZoneId;
 import java.util.Date;
 
 @Repository
@@ -19,11 +17,15 @@ public class EntityRepositoryImpl implements EntityRepository {
 
   private EntityDataRepository entityDataRepository;
 
+  private EntityDataMapper entityDataMapper;
+
   @Autowired
   public EntityRepositoryImpl(MetaDataRepository metaDataRepository,
-                              EntityDataRepository entityDataRepository) {
+                              EntityDataRepository entityDataRepository,
+                              EntityDataMapper entityDataMapper) {
     this.metaDataRepository = metaDataRepository;
     this.entityDataRepository = entityDataRepository;
+    this.entityDataMapper = entityDataMapper;
   }
 
 
@@ -38,13 +40,13 @@ public class EntityRepositoryImpl implements EntityRepository {
         .deleted(false)
         .build();
 
-    EntityDataModelDB entityDataModelDB = EntityMapper.MAPPER.mapInternalToDb(entity);
+    EntityDataModelDB entityDataModelDB = this.entityDataMapper.mapInternalToDb(entity,EntityDataType.ENTITY);
     entityDataModelDB.setMetaData(metaDataModelDB);
 
     try {
       entityDataModelDB = this.entityDataRepository.save(entityDataModelDB);
 
-      return Option.of(EntityMapper.MAPPER.mapDBtoInternal(entityDataModelDB));
+      return Option.of(this.entityDataMapper.mapDBtoInternal(entityDataModelDB));
     } catch (Exception e) {
       return Option.none();
     }
@@ -54,7 +56,7 @@ public class EntityRepositoryImpl implements EntityRepository {
   public Option<Entity> readEntityById(Long id) {
     try {
       Option<EntityDataModelDB> entityDataModelDBOption = Option.ofOptional(this.entityDataRepository.findById(id));
-      return (entityDataModelDBOption.isDefined()) ? Option.of(EntityMapper.MAPPER.mapDBtoInternal(entityDataModelDBOption.get())) : Option.none();
+      return (entityDataModelDBOption.isDefined()) ? Option.of(this.entityDataMapper.mapDBtoInternal(entityDataModelDBOption.get())) : Option.none();
     } catch (Exception e) {
       return Option.none();
     }
@@ -82,11 +84,8 @@ public class EntityRepositoryImpl implements EntityRepository {
     EntityDataModelDB entityDataModelDB = entityDataModelDBOption.get();
     entityDataModelDB.setDisplayName(nameOfEntity);
     entityDataModelDB.getMetaData().setModifyDate(new Date());
-    try {
-      return Option.of(EntityMapper.MAPPER.mapDBtoInternal(entityDataRepository.save(entityDataModelDB)));
-    } catch (Exception e) {
-      return Option.none();
-    }
+    Entity entity = this.entityDataMapper.mapDBtoInternal(entityDataModelDB);
+    return updateEntity(entity);
   }
 
   @Override
@@ -96,7 +95,11 @@ public class EntityRepositoryImpl implements EntityRepository {
 
   @Override
   public Option<Entity> updateEntity(Entity entity) {
-    return Option.none();
+    try {
+      return Option.of(this.entityDataMapper.mapDBtoInternal(entityDataRepository.save(this.entityDataMapper.mapInternalToDb(entity, EntityDataType.ENTITY))));
+    } catch (Exception e) {
+      return Option.none();
+    }
   }
 
   @Override
