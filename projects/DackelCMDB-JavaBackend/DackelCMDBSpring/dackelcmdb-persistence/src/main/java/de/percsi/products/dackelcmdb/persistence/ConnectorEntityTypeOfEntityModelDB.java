@@ -10,12 +10,12 @@ import javax.persistence.*;
 public class ConnectorEntityTypeOfEntityModelDB {
 
   @Id
-  @Column(name = "id")
+  @Column(name = "entity_id")
   private Long id;
 
   @OneToOne(fetch = FetchType.LAZY)
   @MapsId
-  @JoinColumn(name = "id", nullable = false)
+  @JoinColumn(name = "entity_id", nullable = false)
   EntityDataModelDB entity;
 
   @ManyToOne

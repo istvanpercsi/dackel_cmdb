@@ -1,5 +1,7 @@
 package de.percsi.products.dackelcmdb.service;
 
+import de.percsi.products.dackelcmdb.persistence.ConnectorEntityTypeOfEntityModelDB;
+import de.percsi.products.dackelcmdb.persistence.ConnectorEntityTypeOfEntityRepositroy;
 import de.percsi.products.dackelcmdb.persistence.EntityDataModelDB;
 import de.percsi.products.dackelcmdb.persistence.EntityDataRepository;
 import de.percsi.products.dackelcmdb.service.model.Entity;
@@ -17,11 +19,16 @@ public class EntityServiceImpl implements EntityService {
 
   private EntityDataMapper entityDataMapper;
 
-  //private ConnectorOfEntityPropertyValueRepository connectorOfEntityPropertyValueRepository;
+  private ConnectorEntityTypeOfEntityRepositroy connectorEntityTypeOfEntityRepositroy;
 
   @Autowired
-  public EntityServiceImpl(EntityDataRepository entityRepository) {
+  public EntityServiceImpl(
+      ConnectorEntityTypeOfEntityRepositroy connectorEntityTypeOfEntityRepositroy,
+      EntityDataMapper entityDataMapper,
+      EntityDataRepository entityRepository) {
     this.entityDataRepository = entityRepository;
+    this.connectorEntityTypeOfEntityRepositroy = connectorEntityTypeOfEntityRepositroy;
+    this.entityDataMapper = entityDataMapper;
   }
 
   @Override
@@ -31,9 +38,9 @@ public class EntityServiceImpl implements EntityService {
 
   @Override
   public Option<Entity> readEntity(Long id) {
-    Option<EntityDataModelDB> entityDataModelDB  = Option.ofOptional(entityDataRepository.findById(id));
-    if (entityDataModelDB.isDefined()) {
-      return Option.of(entityDataMapper.mapDbToService(entityDataModelDB.get()));
+    Option<ConnectorEntityTypeOfEntityModelDB> connectorEntityTypeOfEntityModelDB = Option.of(this.connectorEntityTypeOfEntityRepositroy.findByEntityId(id));
+    if (connectorEntityTypeOfEntityModelDB.isDefined()) {
+      return Option.of(entityDataMapper.mapDbToService(connectorEntityTypeOfEntityModelDB.get().getEntity(), connectorEntityTypeOfEntityModelDB.get().getTypeOfEntity()));
     }
     return Option.none();
   }
