@@ -11,7 +11,7 @@ public interface EntityService {
 
   Option<Entity> readEntity(Long id);
 
-  Entity readEntityWithProperties(Long id);
+  Option<Entity> readEntityWithProperties(Long id);
 
   Entity updateEntity(Entity entity);
 

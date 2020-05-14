@@ -26,19 +26,19 @@ public enum OperationalMessagesEnum {
             .messageText("Record deleted.")
             .build()),
 
-    RECORD_ALREADY_EXISTS_TABLE_ID(OperationalMessage.builder()
+    RECORD_ALREADY_EXISTS_WITH_ID(OperationalMessage.builder()
             .messageId(1101)
             .messageClass(OperationalMessageTypesEnum.ERROR)
             .messageText("Record is already exist in table: '%s' with id: '%s'.")
             .build()),
 
-    RECORD_ALREADY_EXISTS_TABLE_SYSTEMNAME(OperationalMessage.builder()
+    RECORD_ALREADY_EXISTS_WITH_SYSTEMNAME(OperationalMessage.builder()
             .messageId(1102)
             .messageClass(OperationalMessageTypesEnum.ERROR)
             .messageText("Record is already exist in table: '%s' with system_name: '%s'.")
             .build()),
 
-    RECORD_NOT_FOUND_TABLE_ID (OperationalMessage.builder()
+    RECORD_NOT_FOUND_WITH_ID(OperationalMessage.builder()
             .messageId(1103)
             .messageClass(OperationalMessageTypesEnum.WARN)
             .messageText("Record cannot be found in table: '%s' with Id '%s'.")

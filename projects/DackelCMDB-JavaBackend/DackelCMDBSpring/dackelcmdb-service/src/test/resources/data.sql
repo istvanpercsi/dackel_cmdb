@@ -13,12 +13,15 @@ INSERT INTO entity_data (`id`, `display_name`,`system_name`, `type`)
 VALUES
        ( 1, 'Computers', 'computers', 'TYPE_OF_ENTITY'),
        ( 2, 'N2452022', 'n2452022', 'ENTITY' ),
-       ( 3, 'N2322022', 'n2322022', 'ENTITY' );
+       ( 3, 'N2322022', 'n2322022', 'ENTITY' ),
+       ( 4, 'Istvan Percsi', 'istvanpercsi', 'ENTITY' ),
+       ( 5, 'Users', 'users', 'TYPE_OF_ENTITY');
 
 -- Test data for table 'connector_entity_type_of_entity'
 INSERT INTO connector_entity_type_of_entity (`entity_id`, `type_of_entity_id`)
 VALUES
        ( 2, 1 ),
+       ( 4, 5 ),
        ( 3, 1 );
 
 --

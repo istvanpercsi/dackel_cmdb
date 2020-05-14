@@ -22,9 +22,10 @@ public class EntityServiceImplTestIT {
   EntityService entityService;
 
   @Test
-  public void readEntityTest() {
+  public void readEntityTest_OK() {
 
     //arrange
+    //database default data via data.sql
 
     //act
     Option<Entity> entity = entityService.readEntity(2L);
@@ -34,4 +35,16 @@ public class EntityServiceImplTestIT {
 
   }
 
+  @Test
+  public void readEntityTest_NOK() {
+    //arrange
+    //h2 database default data via data.sql
+
+    //act
+    Option<Entity> entity = entityService.readEntity(9999999L);
+
+    //assert
+    assertFalse(entity.isDefined());
+
+  }
 }
