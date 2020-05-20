@@ -1,6 +1,7 @@
 package de.percsi.products.dackelcmdb.service.modelmapper;
 
 import de.percsi.products.dackelcmdb.persistence.EntityDataModelDB;
+import de.percsi.products.dackelcmdb.persistence.MetaDataModelDB;
 import de.percsi.products.dackelcmdb.service.model.Entity;
 
 import org.mapstruct.*;
@@ -22,4 +23,13 @@ public interface EntityDataMapper {
   Entity mapDbToService(EntityDataModelDB entity, EntityDataModelDB typeOfEntity );
 
 
+
+  @Mappings({
+      @Mapping(target = "id", source = "metaDataModelDB.id"),
+      @Mapping(target = "displayName", source = "entity.name"),
+      @Mapping(target = "systemName", source = "entity.systemName"),
+      @Mapping(target = "metaData", source = "metaDataModelDB"),
+
+  })
+  EntityDataModelDB mapServiceToDb(Entity entity, MetaDataModelDB metaDataModelDB);
 }

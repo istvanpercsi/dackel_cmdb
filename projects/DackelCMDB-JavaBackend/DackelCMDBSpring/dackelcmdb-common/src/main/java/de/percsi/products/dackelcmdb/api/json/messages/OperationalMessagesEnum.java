@@ -42,7 +42,19 @@ public enum OperationalMessagesEnum {
             .messageId(1103)
             .messageClass(OperationalMessageTypesEnum.WARN)
             .messageText("Record cannot be found in table: '%s' with Id '%s'.")
-            .build());
+            .build()),
+
+    VALUE_CANNOT_BE(OperationalMessage.builder()
+        .messageId(2101)
+        .messageClass(OperationalMessageTypesEnum.ERROR)
+        .messageText("Value of %s cannot be %s")
+        .build()),
+
+    VALUE_MUST_BE(OperationalMessage.builder()
+        .messageId(2102)
+        .messageClass(OperationalMessageTypesEnum.ERROR)
+        .messageText("Value of %s must be %s")
+        .build());
 
 
     private final OperationalMessage OPERATIONAL_MESSAGE;

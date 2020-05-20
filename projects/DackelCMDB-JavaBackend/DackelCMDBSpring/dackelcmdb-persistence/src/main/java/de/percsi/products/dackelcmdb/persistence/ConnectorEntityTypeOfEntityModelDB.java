@@ -1,5 +1,6 @@
 package de.percsi.products.dackelcmdb.persistence;
 
+import lombok.Builder;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -7,6 +8,7 @@ import javax.persistence.*;
 @Entity(name = Tables.CONNECTOR_ENTITY_TYPE_OF_ENTITY)
 @Table(name = Tables.CONNECTOR_ENTITY_TYPE_OF_ENTITY)
 @Data
+@Builder
 public class ConnectorEntityTypeOfEntityModelDB {
 
   @Id

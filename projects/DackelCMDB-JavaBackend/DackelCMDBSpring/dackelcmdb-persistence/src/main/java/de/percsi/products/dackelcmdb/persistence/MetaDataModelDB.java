@@ -3,6 +3,7 @@ package de.percsi.products.dackelcmdb.persistence;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 
@@ -16,7 +17,7 @@ import java.util.Date;
 public class MetaDataModelDB {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "id")
   private Long id;
 

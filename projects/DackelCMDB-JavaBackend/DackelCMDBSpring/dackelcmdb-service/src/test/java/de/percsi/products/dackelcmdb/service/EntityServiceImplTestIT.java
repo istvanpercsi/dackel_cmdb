@@ -3,6 +3,7 @@ package de.percsi.products.dackelcmdb.service;
 import de.percsi.products.dackelcmdb.persistence.ConnectorEntityTypeOfEntityRepositroy;
 import de.percsi.products.dackelcmdb.service.configuration.ServiceConfiguration;
 import de.percsi.products.dackelcmdb.service.model.Entity;
+import de.percsi.products.dackelcmdb.service.model.TypeOfEntity;
 import io.vavr.control.Option;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -45,6 +46,33 @@ public class EntityServiceImplTestIT {
 
     //assert
     assertFalse(entity.isDefined());
+
+  }
+
+  @Test
+  public void createEntity_OK() {
+    //arrange
+    Entity entity = Entity.builder()
+        .id(Option.none())
+        .name("Test name")
+        .systemName("test_name")
+        .typeOfEntity(TypeOfEntity.builder()
+            .id(Option.of(1L))
+            .build())
+        .build();
+    //act
+    Entity created = this.entityService.createEntity(entity);
+
+    //assert
+    assertNotNull(created);
+    assertEquals(entity.getId(),created.getId());
+    assertEquals(entity.getName(),created.getName());
+    assertEquals(entity.getSystemName(),created.getSystemName());
+    assertEquals(entity.getTypeOfEntity().getId(), created.getTypeOfEntity().getId());
+    assertNotNull(entity.getCreateUser());
+    assertNotNull(entity.getCreateDateTime());
+    assertNotNull(entity.getModifyDateTime());
+    assertNotNull(entity.getModifyUser());
 
   }
 }
