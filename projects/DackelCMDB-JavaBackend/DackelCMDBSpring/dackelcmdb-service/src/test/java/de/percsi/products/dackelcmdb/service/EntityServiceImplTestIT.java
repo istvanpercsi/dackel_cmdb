@@ -12,6 +12,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.Objects;
+
 import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
@@ -52,7 +54,7 @@ public class EntityServiceImplTestIT {
   @Test
   public void createEntity_OK() {
     //arrange
-    Entity entity = Entity.builder()
+    Entity basisEntity = Entity.builder()
         .id(Option.none())
         .name("Test name")
         .systemName("test_name")
@@ -61,18 +63,48 @@ public class EntityServiceImplTestIT {
             .build())
         .build();
     //act
-    Entity created = this.entityService.createEntity(entity);
+    Entity createdEntity = this.entityService.createEntity(basisEntity);
 
     //assert
-    assertNotNull(created);
-    assertEquals(entity.getId(),created.getId());
-    assertEquals(entity.getName(),created.getName());
-    assertEquals(entity.getSystemName(),created.getSystemName());
-    assertEquals(entity.getTypeOfEntity().getId(), created.getTypeOfEntity().getId());
-    assertNotNull(entity.getCreateUser());
-    assertNotNull(entity.getCreateDateTime());
-    assertNotNull(entity.getModifyDateTime());
-    assertNotNull(entity.getModifyUser());
+    assertNotNull(createdEntity);
+    assertNotEquals(basisEntity.getId(),createdEntity.getId());
+    assertEquals(basisEntity.getName(),createdEntity.getName());
+    assertEquals(basisEntity.getSystemName(),createdEntity.getSystemName());
+    assertEquals(basisEntity.getTypeOfEntity().getId(), createdEntity.getTypeOfEntity().getId());
+    assertNotNull(createdEntity.getCreateUser());
+    assertNotNull(createdEntity.getCreateDateTime());
+    assertNotNull(createdEntity.getModifyDateTime());
+    assertNotNull(createdEntity.getModifyUser());
+
+  }
+
+  @Test
+  public void updateEntity() {
+    //arrange
+    //default data from resources/data.sql
+    Option<Entity> originalEntityOption = this.entityService.readEntity(2L);
+    assertTrue(originalEntityOption.isDefined());
+    Entity originalEntity = originalEntityOption.get();
+
+    Entity modifiedEntity = Entity.builder()
+        .id(Option.of(2L))
+        .name("test_name")
+        .systemName("test_name")
+        .build();
+
+    //act
+    Entity resultEntity = this.entityService.updateEntity(modifiedEntity);
+
+    //assert
+    assertNotNull(resultEntity);
+    assertEquals(originalEntity.getId(), resultEntity.getId());
+    assertNotEquals(originalEntity.getName(), resultEntity.getName());
+    assertNotEquals(originalEntity.getSystemName(), resultEntity.getSystemName());
+    assertEquals(originalEntity.getCreateDateTime(), resultEntity.getCreateDateTime());
+    assertEquals(originalEntity.getCreateUser(), resultEntity.getCreateUser());
+    assertNotEquals(originalEntity.getModifyUser(), resultEntity.getModifyUser());
+    assertNotEquals(originalEntity.getModifyDateTime(), resultEntity.getModifyDateTime());
+    assertEquals(originalEntity.getTypeOfEntity(), resultEntity.getTypeOfEntity());
 
   }
 }

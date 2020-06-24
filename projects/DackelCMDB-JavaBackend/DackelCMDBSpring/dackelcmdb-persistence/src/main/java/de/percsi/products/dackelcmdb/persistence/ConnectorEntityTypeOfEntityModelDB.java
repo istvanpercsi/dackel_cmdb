@@ -1,13 +1,14 @@
 package de.percsi.products.dackelcmdb.persistence;
 
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity(name = Tables.CONNECTOR_ENTITY_TYPE_OF_ENTITY)
 @Table(name = Tables.CONNECTOR_ENTITY_TYPE_OF_ENTITY)
 @Data
+@NoArgsConstructor(access = AccessLevel.PUBLIC)
+@AllArgsConstructor(access = AccessLevel.PUBLIC)
 @Builder
 public class ConnectorEntityTypeOfEntityModelDB {
 

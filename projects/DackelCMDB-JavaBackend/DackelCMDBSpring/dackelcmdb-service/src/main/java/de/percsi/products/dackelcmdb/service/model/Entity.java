@@ -5,6 +5,7 @@ import io.vavr.collection.Set;
 import io.vavr.control.Option;
 import lombok.Builder;
 import lombok.Value;
+import org.jetbrains.annotations.NotNull;
 
 import java.time.LocalDateTime;
 
@@ -13,6 +14,7 @@ import java.time.LocalDateTime;
 public class Entity {
 
   @Builder.Default
+  @NotNull("'id' cannot be null, use Option.none() instead.")
   Option<Long> id = Option.none();
 
   TypeOfEntity typeOfEntity;
