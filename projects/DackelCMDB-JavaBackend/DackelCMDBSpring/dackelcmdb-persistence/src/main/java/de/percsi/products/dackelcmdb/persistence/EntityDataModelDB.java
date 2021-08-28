@@ -3,7 +3,6 @@ package de.percsi.products.dackelcmdb.persistence;
 
 
 import lombok.*;
-import org.springframework.context.annotation.ComponentScan;
 
 import javax.persistence.*;
 
