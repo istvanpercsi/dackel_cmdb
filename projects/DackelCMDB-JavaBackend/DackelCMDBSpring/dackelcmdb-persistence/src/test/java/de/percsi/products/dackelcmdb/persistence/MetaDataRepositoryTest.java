@@ -42,6 +42,10 @@ public class MetaDataRepositoryTest {
 
     assertTrue(metaDataModelDBRead.isDefined());
     assertEquals(metaDataModelDBRead.get().getCreateDate(), metaDataModelDBMock.getCreateDate());
+    assertEquals(metaDataModelDBRead.get().getModifyDate(), metaDataModelDBMock.getModifyDate());
+    assertEquals(metaDataModelDBRead.get().getCreateUser(), metaDataModelDBMock.getCreateUser());
+    assertEquals(metaDataModelDBRead.get().getModifyUser(), metaDataModelDBMock.getModifyUser());
+    assertEquals(metaDataModelDBRead.get().getDeleted(), metaDataModelDBMock.getDeleted());
 
   }
 
