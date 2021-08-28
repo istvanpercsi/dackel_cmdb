@@ -21,7 +21,6 @@ public class EntityDataModelDB {
 
   @OneToOne(cascade = CascadeType.ALL)
   @MapsId
-  @JoinColumn(name = "id", nullable = false)
   private MetaDataModelDB metaData;
 
   @Column(name = "display_name")
