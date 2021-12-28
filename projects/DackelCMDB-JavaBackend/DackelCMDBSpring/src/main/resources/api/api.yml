@@ -238,43 +238,186 @@ paths:
       tags:
         - entities
     put:
+      summary: Updates a value of property for the entity.
+      description: It updates a value of property for the entity.
+      parameters:
+        - name: uuidOfEntity
+          in: path
+          schema:
+            type: string
+            format: uuid
+        - name: uuidOfProperty
+          in: path
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/simplePropertyValueRequest'
       responses:
         200:
-          description: Returns with the updated property
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/extendedPropertyValueResponse'
+          description: Returns with the saved property value pair, and their meatadata.
+        404:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+          description: Not found, it can happen if entity or property cannot be found with the given uuid.
+        500:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+          description: Internal server error
       tags:
         - entities
   /properties:
     get:
       operationId: getProperties
       summary: List of valid properties
+      description: Lists all of the properties, which are saved in system, and it can be attach to the entity.
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            format: int64
+          description: Page of the result list
+        - name: size
+          in: query
+          schema:
+            type: integer
+            format: int64
+          description: Size of the page of the result list
+        - name: filter
+          in: query
+          schema:
+            type: string
+          description: Filtered value of the entity. Magic character * can be used
       responses:
         200:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/listOfSimplePropertyResponse'
           description: Returns the list of saved property types
+        400:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+          description: Bad request error, it can happen if some of the parameters are wrong, or out of range.
+        500:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+          description: Internal server error happened. Details in error message.
       tags:
         - properties
   /property:
+    post:
+      operationId: saveProperty
+      summary: Saves a new property
+      description: Saves a new property with their settings.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/simplePropertyRequest'
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/extendedPropertyResponse'
+          description: Returns the saved new property
+        409:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+          description: Conflict, it can happen if the property with this name is already saved in system.
+        500:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+          description: Internal server error
+      tags:
+        - properties
+  /property/{uuidOfProperty}:
     get:
       operationId: getProperty
       summary: Get property and its metadata
+      description: It returns detailed informations about selected property.
+      parameters:
+        - name: uuidOfProperty
+          in: path
+          schema:
+            type: string
+            format: uuid
       responses:
         200:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/extendedPropertyResponse'
           description: Returns with the selected property
-      tags:
-        - properties
-    post:
-      operationId: saveProperty
-      summary: Save a new property
-      responses:
-        200:
-          description: Returns the saved new property
+        404:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+          description: Not found, if the given uuid is not exists.
+        500:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+          description: Internal server error happened. Details in error message.
       tags:
         - properties
     put:
       operationId: updateProperty
-      summary: Update property
+      summary: Updates property
+      description: Updates the data of property, it is only possible if the property does not attached to the entity.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/simplePropertyRequest'
       responses:
         200:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/extendedPropertyResponse'
           description: Returns the updated property
+        405:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+          description: Not allowed, it can happen if the property is already in use, also attached to the entity.
+        409:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+          description: Conflict, it can happen if the property with this name is already saved in system.
+        500:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+          description: Internal server error
       tags:
         - properties
 components:
