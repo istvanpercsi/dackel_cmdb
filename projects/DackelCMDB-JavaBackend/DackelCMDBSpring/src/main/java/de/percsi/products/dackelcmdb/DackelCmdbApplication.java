@@ -1,4 +1,4 @@
-package de.percsi.products.dackelcmdb.dackelcmdb;
+package de.percsi.products.dackelcmdb;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

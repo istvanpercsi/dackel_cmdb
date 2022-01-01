@@ -138,7 +138,7 @@ paths:
           schema:
             type: string
             format: uuid
-          required: false
+          required: true
       responses:
         200:
           content:
@@ -172,11 +172,13 @@ paths:
           schema:
             type: string
             format: uuid
+          required: true
         - name: uuidOfProperty
           in: path
           schema:
             type: string
             format: uuid
+          required: true
       responses:
         200:
           content:
@@ -200,11 +202,13 @@ paths:
           schema:
             type: string
             format: uuid
+          required: true
         - name: uuidOfProperty
           in: path
           schema:
             type: string
             format: uuid
+          required: true
       requestBody:
         content:
           application/json:
@@ -238,6 +242,7 @@ paths:
       tags:
         - entities
     put:
+      operationId: updateValueOfPropertyForEntity
       summary: Updates a value of property for the entity.
       description: It updates a value of property for the entity.
       parameters:
@@ -246,11 +251,13 @@ paths:
           schema:
             type: string
             format: uuid
+          required: true
         - name: uuidOfProperty
           in: path
           schema:
             type: string
             format: uuid
+          required: true
       requestBody:
         content:
           application/json:
@@ -363,6 +370,7 @@ paths:
           schema:
             type: string
             format: uuid
+          required: true
       responses:
         200:
           content:
@@ -388,6 +396,13 @@ paths:
       operationId: updateProperty
       summary: Updates property
       description: Updates the data of property, it is only possible if the property does not attached to the entity.
+      parameters:
+        - name: uuidOfProperty
+          in: path
+          schema:
+            type: string
+            format: uuid
+          required: true
       requestBody:
         content:
           application/json:
