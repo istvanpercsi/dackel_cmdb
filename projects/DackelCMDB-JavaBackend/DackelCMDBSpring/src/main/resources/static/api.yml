@@ -4,11 +4,18 @@ info:
   version: 1.0.0
   description: It is an API for Dackel CMDB. (Configruation Management DataBase) It is a lightweight Database, where you
     can store entities and properties, and their connections.
+  contact:
+    name: Istvan Percsi
+    url: https://github.com/istvanpercsi
+    email: istvan@percsi.de
+  license:
+    name: Apache 2.0
 tags:
   - name: entities
-    description: Get entities, crate new entity, update entity
+    description: Get entities, crate new entity, update entity add property to entity with value
   - name: properties
-    description: Get properties, create a new property, delete property
+    description: Get properties, create a new property, delete properties
+
 
 paths:
   /entities:
