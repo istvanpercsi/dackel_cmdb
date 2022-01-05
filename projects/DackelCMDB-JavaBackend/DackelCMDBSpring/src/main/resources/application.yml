@@ -1,1 +1,8 @@
 
+
+
+springdoc:
+  api-docs:
+    enabled: false
+  swagger-ui:
+    url: /api.yml
