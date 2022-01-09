@@ -1,6 +1,6 @@
-package de.percsi.products.dackelcmdb.controller;
+package de.percsi.product.entitymanager.controller;
 
-import de.percsi.products.dackelcmdb.controller.api.EntitiesApi;
+import de.percsi.products.entitymanager.controller.api.EntitiesApi;
 import org.springframework.stereotype.Controller;
 
 @Controller
