@@ -1,4 +1,4 @@
-package de.percsi.product.entitymanager.controller.domain;
+package de.percsi.product.entitymanager.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -11,15 +11,15 @@ import org.springframework.validation.annotation.Validated;
 import java.util.Objects;
 
 /**
- * SimplePropertyValueRequest
+ * SimpleEntityRequest
  */
 @Value
 @AllArgsConstructor(access = AccessLevel.PUBLIC)
 @Builder
-public class SimplePropertyValueRequest   {
+public class SimpleEntityRequest   {
 
-  @JsonProperty("value")
+  @JsonProperty("name")
   @Builder.Default
-  String value = null;
+  String name = null;
 
 }

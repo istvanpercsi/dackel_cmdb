@@ -1,4 +1,4 @@
-package de.percsi.product.entitymanager.controller.domain;
+package de.percsi.product.entitymanager.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -9,30 +9,41 @@ import lombok.Value;
 import org.springframework.validation.annotation.Validated;
 
 import javax.validation.Valid;
+import java.time.OffsetDateTime;
 import java.util.Objects;
+import java.util.UUID;
 
 /**
- * SimplePropertyRequest
+ * ExtendedEntityResponse
  */
+
 @Value
 @AllArgsConstructor(access = AccessLevel.PUBLIC)
 @Builder
-public class SimplePropertyRequest   {
+public class ExtendedEntityResponse   {
+
+  @JsonProperty("id")
+  @Builder.Default
+  UUID id = null;
 
   @JsonProperty("name")
   @Builder.Default
   String name = null;
 
-  @JsonProperty("type")
+  @JsonProperty("createDate")
   @Builder.Default
-  TypeOfProperty type = null;
+  OffsetDateTime createDate = null;
 
-  @JsonProperty("multiplicity")
+  @JsonProperty("modifyDate")
   @Builder.Default
-  MultiplicityOfPropertyEnum multiplicity = null;
+  OffsetDateTime modifyDate = null;
 
-  @JsonProperty("format")
+  @JsonProperty("creator")
   @Builder.Default
-  String format = null;
+  String creator = null;
+
+  @JsonProperty("modifier")
+  @Builder.Default
+  String modifier = null;
 
 }

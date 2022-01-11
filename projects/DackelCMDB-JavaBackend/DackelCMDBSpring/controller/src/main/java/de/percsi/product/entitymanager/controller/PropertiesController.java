@@ -1,9 +1,9 @@
 package de.percsi.product.entitymanager.controller;
 
 import de.percsi.product.entitymanager.configuration.ConfigForSpringDoc;
-import de.percsi.product.entitymanager.controller.domain.Error;
-import de.percsi.product.entitymanager.controller.domain.ListOfSimplePropertyResponse;
-import de.percsi.product.entitymanager.controller.domain.SimplePropertyResponse;
+import de.percsi.product.entitymanager.domain.Error;
+import de.percsi.product.entitymanager.domain.ListOfSimplePropertyResponse;
+import de.percsi.product.entitymanager.domain.SimplePropertyResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;

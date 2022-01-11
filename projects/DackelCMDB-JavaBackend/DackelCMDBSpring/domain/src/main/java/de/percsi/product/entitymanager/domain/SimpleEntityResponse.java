@@ -1,4 +1,4 @@
-package de.percsi.product.entitymanager.controller.domain;
+package de.percsi.product.entitymanager.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -13,23 +13,18 @@ import java.util.Objects;
 import java.util.UUID;
 
 /**
- * SimplePropertyValueResponse
+ * SimpleEntityResponse
  */
 @Value
 @AllArgsConstructor(access = AccessLevel.PUBLIC)
 @Builder
-public class SimplePropertyValueResponse   {
-
+public class SimpleEntityResponse   {
   @JsonProperty("id")
   @Builder.Default
   UUID id = null;
 
-  @JsonProperty("property")
+  @JsonProperty("name")
   @Builder.Default
-  SimplePropertyResponse property = null;
-
-  @JsonProperty("value")
-  @Builder.Default
-  String value = null;
+  String name = null;
 
 }

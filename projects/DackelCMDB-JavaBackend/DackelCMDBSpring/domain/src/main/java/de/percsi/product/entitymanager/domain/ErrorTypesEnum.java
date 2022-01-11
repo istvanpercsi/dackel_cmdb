@@ -1,18 +1,19 @@
-package de.percsi.product.entitymanager.controller.domain;
+package de.percsi.product.entitymanager.domain;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 /**
- * Gets or Sets multiplicityOfProperty
+ * Gets or Sets errorTypesEnum
  */
-public enum MultiplicityOfPropertyEnum {
-  SINGLE("SINGLE"),
-    MULTI("MULTI");
+public enum ErrorTypesEnum {
+  BUSINESS("BUSINESS"),
+    TECHNICAL("TECHNICAL"),
+    INTERNAL("INTERNAL");
 
   private final String value;
 
-  MultiplicityOfPropertyEnum(String value) {
+  ErrorTypesEnum(String value) {
     this.value = value;
   }
 
@@ -23,8 +24,8 @@ public enum MultiplicityOfPropertyEnum {
   }
 
   @JsonCreator
-  public static MultiplicityOfPropertyEnum fromValue(String text) {
-    for (MultiplicityOfPropertyEnum b : MultiplicityOfPropertyEnum.values()) {
+  public static ErrorTypesEnum fromValue(String text) {
+    for (ErrorTypesEnum b : ErrorTypesEnum.values()) {
       if (String.valueOf(b.value).equals(text)) {
         return b;
       }

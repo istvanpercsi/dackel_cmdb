@@ -1,19 +1,20 @@
-package de.percsi.product.entitymanager.controller.domain;
+package de.percsi.product.entitymanager.domain;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 /**
- * Gets or Sets errorTypesEnum
+ * Gets or Sets typeOfProperty
  */
-public enum ErrorTypesEnum {
-  BUSINESS("BUSINESS"),
-    TECHNICAL("TECHNICAL"),
-    INTERNAL("INTERNAL");
+public enum TypeOfProperty {
+  STRING("STRING"),
+    SECRET("SECRET"),
+    TEXT("TEXT"),
+    NUMBER("NUMBER");
 
   private final String value;
 
-  ErrorTypesEnum(String value) {
+  TypeOfProperty(String value) {
     this.value = value;
   }
 
@@ -24,8 +25,8 @@ public enum ErrorTypesEnum {
   }
 
   @JsonCreator
-  public static ErrorTypesEnum fromValue(String text) {
-    for (ErrorTypesEnum b : ErrorTypesEnum.values()) {
+  public static TypeOfProperty fromValue(String text) {
+    for (TypeOfProperty b : TypeOfProperty.values()) {
       if (String.valueOf(b.value).equals(text)) {
         return b;
       }

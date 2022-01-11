@@ -1,4 +1,4 @@
-package de.percsi.product.entitymanager.controller.domain;
+package de.percsi.product.entitymanager.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.vavr.collection.List;
@@ -8,15 +8,15 @@ import lombok.Builder;
 import lombok.Value;
 
 /**
- * ListOfSimplePropertyValueResponse
+ * ListOfSimplePropertyResponse
  */
 @Value
-@AllArgsConstructor(access = AccessLevel.PUBLIC)
 @Builder
-public class ListOfSimplePropertyValueResponse   {
+@AllArgsConstructor(access = AccessLevel.PUBLIC)
+public class ListOfSimplePropertyResponse   {
 
   @JsonProperty("properties")
   @Builder.Default
-  List<SimplePropertyValueResponse> properties = null;
+  List<SimplePropertyResponse> properties = null;
 
 }

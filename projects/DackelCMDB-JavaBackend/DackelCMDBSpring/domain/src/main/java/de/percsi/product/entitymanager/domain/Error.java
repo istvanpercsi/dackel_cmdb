@@ -1,4 +1,4 @@
-package de.percsi.product.entitymanager.controller.domain;
+package de.percsi.product.entitymanager.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AccessLevel;

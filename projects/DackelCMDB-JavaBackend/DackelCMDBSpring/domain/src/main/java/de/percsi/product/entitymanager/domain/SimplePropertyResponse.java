@@ -1,22 +1,27 @@
-package de.percsi.product.entitymanager.controller.domain;
+package de.percsi.product.entitymanager.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import io.vavr.collection.List;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Value;
 
+import java.util.UUID;
+
 /**
- * ListOfSimplePropertyResponse
+ * SimplePropertyResponse
  */
+
 @Value
 @Builder
 @AllArgsConstructor(access = AccessLevel.PUBLIC)
-public class ListOfSimplePropertyResponse   {
-
-  @JsonProperty("properties")
+public class SimplePropertyResponse   {
+  @JsonProperty("id")
   @Builder.Default
-  List<SimplePropertyResponse> properties = null;
+  UUID id = null;
+
+  @JsonProperty("name")
+  @Builder.Default
+  String name = null;
 
 }

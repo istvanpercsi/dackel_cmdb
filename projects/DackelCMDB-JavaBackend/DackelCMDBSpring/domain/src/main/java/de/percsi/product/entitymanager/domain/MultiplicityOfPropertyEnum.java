@@ -1,20 +1,18 @@
-package de.percsi.product.entitymanager.controller.domain;
+package de.percsi.product.entitymanager.domain;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 /**
- * Gets or Sets typeOfProperty
+ * Gets or Sets multiplicityOfProperty
  */
-public enum TypeOfProperty {
-  STRING("STRING"),
-    SECRET("SECRET"),
-    TEXT("TEXT"),
-    NUMBER("NUMBER");
+public enum MultiplicityOfPropertyEnum {
+  SINGLE("SINGLE"),
+    MULTI("MULTI");
 
   private final String value;
 
-  TypeOfProperty(String value) {
+  MultiplicityOfPropertyEnum(String value) {
     this.value = value;
   }
 
@@ -25,8 +23,8 @@ public enum TypeOfProperty {
   }
 
   @JsonCreator
-  public static TypeOfProperty fromValue(String text) {
-    for (TypeOfProperty b : TypeOfProperty.values()) {
+  public static MultiplicityOfPropertyEnum fromValue(String text) {
+    for (MultiplicityOfPropertyEnum b : MultiplicityOfPropertyEnum.values()) {
       if (String.valueOf(b.value).equals(text)) {
         return b;
       }
