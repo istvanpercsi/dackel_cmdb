@@ -53,42 +53,23 @@
             <artifactId>javax.servlet-api</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+
+
+        <dependency>
+            <groupId>io.vavr</groupId>
+            <artifactId>vavr</artifactId>
+            <version>0.10.4</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.vavr</groupId>
+            <artifactId>vavr-jackson</artifactId>
+            <version>0.10.3</version>
+        </dependency>
+
     </dependencies>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>io.swagger.codegen.v3</groupId>
-                <artifactId>swagger-codegen-maven-plugin</artifactId>
-                <version>3.0.30</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>generate</goal>
-                        </goals>
-                        <configuration>
-                            <inputSpec>${project.basedir}/src/main/resources/static/api.yml</inputSpec>
-                            <language>spring</language>
-                            <output>target/generated-sources</output>
-                            <supportingFilesToGenerate>
-                                ApiUtil.java
-                            </supportingFilesToGenerate>
-                            <configOptions>
-                                <modelPackage>de.percsi.products.entitymanager.controller.model</modelPackage>
-                                <apiPackage>de.percsi.products.entitymanager.controller.api</apiPackage>
-                                <dateLibrary>java8</dateLibrary>
-                                <hateoas>true</hateoas>
-                                <useSpringController>true</useSpringController>
-                                <useTags>true</useTags>
-                                <interfaceOnly>true</interfaceOnly>
-                                <!--								<sourceFolder>src/gen/java/main</sourceFolder>-->
-                            </configOptions>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
-
-
 </project>
