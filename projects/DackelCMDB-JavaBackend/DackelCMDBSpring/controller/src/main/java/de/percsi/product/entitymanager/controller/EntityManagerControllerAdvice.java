@@ -22,7 +22,7 @@ public class EntityManagerControllerAdvice extends ResponseEntityExceptionHandle
     Error errorMessage = Error.builder()
         .code("00001")
         .errorType(ErrorTypesEnum.TECHNICAL)
-        .message("Http request '" + request.getDescription(true) + "' reached a method which is not yet implemented: " + ex.getMessage())
+        .message("Http request '" + request.getDescription(false) + "' reached a method which is not yet implemented: " + ex.getMessage())
         .build();
     return handleExceptionInternal(ex, errorMessage, new HttpHeaders(), HttpStatus.NOT_IMPLEMENTED, request);
   }
