@@ -1,0 +1,604 @@
+openapi: 3.0.1
+info:
+  title: Dackel CMDB
+  version: 1.0.0
+  description: It is an API for Dackel CMDB. (Configruation Management DataBase) It is a lightweight Database, where you
+    can store entities and properties, and their connections.
+  contact:
+    name: Istvan Percsi
+    url: https://github.com/istvanpercsi
+    email: istvan@percsi.de
+  license:
+    name: Apache 2.0
+tags:
+  - name: entities
+    description: Get entities, crate new entity, update entity add property to entity with value
+  - name: properties
+    description: Get properties, create a new property, delete properties
+
+
+paths:
+  /entities:
+    get:
+      operationId: getListOfEntities
+      summary: Get the list of entities
+      description: Get list of entities. If there is no parameter defined, then it retunrs the last 20 element.
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            format: int64
+          description: Page of the result list
+        - name: size
+          in: query
+          schema:
+            type: integer
+            format: int64
+          description: Size of the page of the result list
+        - name: filter
+          in: query
+          schema:
+            type: string
+          description: Filtered value of the entity. Magic character * can be used
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/listOfSimpleEntities'
+          description: Retunrs list of entities (id and name of entiy
+        400:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+          description: Bad request error, it can happen if some of the parameters are wrong, or out of range.
+        500:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+          description: Internal server error happened. Details in error message.
+      tags:
+        - entities
+  /entity:
+    post:
+      operationId: saveEntity
+      summary: Save an entity
+      description: Save an entity on a given name. After saving entity, you can add more properties. Name property is a mandatory property. 
+        Name must be uniq.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/simpleEntityRequest'
+      responses:
+        201:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/extendedEntityResponse'
+          description: Returns the saved entity with the given name.
+        400:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+          description: Bad request, it can happen, if the name of the entity is null. Details can be found in error message
+        409:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+          description: Bad request, it can happen, if the name of the entity is the same as an another entity, which is already saved.
+        500:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+          description: Internal server error. if there is some technical problem with saving of data.
+      tags:
+        - entities
+  /entity/{uuidOfEntity}:
+    get:
+      operationId: getEntity
+      summary: Get an entity and its metadata.
+      description: Get an Entity. It returns with the entity metadata (name, uuid, create date, last modified date, creator
+        modifier, etc)
+      parameters:
+        - name: uuidOfEntity
+          in: path
+          schema:
+            type: string
+            format: uuid
+          required: true
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/extendedEntityResponse'
+          description: Returns an Entity with all of the informations, as well as meta infos, added properties, etc.
+        404:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+          description: Entity not found error. If the id of entity does not exist
+        500:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+          description: Internal server error. If there some error happened during the query of the entity. Details in error.
+      tags:
+        - entities
+  /entity/{uuidOfEntity}/properties:
+    get:
+      operationId: getPropertiesOfEntity
+      summary: Get the properties of entity.
+      description: It retruns the property value pairs which belongs to the invoked entity.
+      parameters:
+        - name: uuidOfEntity
+          in: path
+          schema:
+            type: string
+            format: uuid
+          required: true
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/listOfSimplePropertyValueResponse'
+          description: Returns the list of properties
+        404:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+          description: Not found, if the entity is not found in database.
+        500:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+          description: Internal server error, if something wrong happened :)
+      tags:
+        - entities
+  /entity/{uuidOfEntity}/property/{uuidOfProperty}:
+    get:
+      operationId: getPropertyAndItsValueofEntity
+      summary: Get property and its value of entity
+      description: Based on uuid of entity and uuid of property this endpoint returns with full information of the value of the property
+        which belongs to the entity
+      parameters:
+        - name: uuidOfEntity
+          in: path
+          schema:
+            type: string
+            format: uuid
+          required: true
+        - name: uuidOfProperty
+          in: path
+          schema:
+            type: string
+            format: uuid
+          required: true
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/extendedPropertyValueResponse'
+          description: Returns the value of Property of the entity with all of their metadata
+        404:
+          description: Not found, if the entity or the property is not exists with the given uuid.
+        500:
+          description: Internal server error
+      tags:
+        - entities
+    post:
+      operationId: saveValueOfPropertyForEntity
+      summary: Save a value of property for the entity.
+      description: It attaches a property to the entity and saves its value which belongs to entity.
+      parameters:
+        - name: uuidOfEntity
+          in: path
+          schema:
+            type: string
+            format: uuid
+          required: true
+        - name: uuidOfProperty
+          in: path
+          schema:
+            type: string
+            format: uuid
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/simplePropertyValueRequest'
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/extendedPropertyValueResponse'
+          description: Returns with the saved property value pair, and their meatadata.
+        404:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+          description: Not found, it can happen if entity or property cannot be found with the given uuid.
+        409:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+          description: Conflict, it can happen if the property multiplicity is single and it is already added to entity with value.
+        500:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+          description: Internal server error
+      tags:
+        - entities
+    put:
+      operationId: updateValueOfPropertyForEntity
+      summary: Updates a value of property for the entity.
+      description: It updates a value of property for the entity.
+      parameters:
+        - name: uuidOfEntity
+          in: path
+          schema:
+            type: string
+            format: uuid
+          required: true
+        - name: uuidOfProperty
+          in: path
+          schema:
+            type: string
+            format: uuid
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/simplePropertyValueRequest'
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/extendedPropertyValueResponse'
+          description: Returns with the saved property value pair, and their meatadata.
+        404:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+          description: Not found, it can happen if entity or property cannot be found with the given uuid.
+        500:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+          description: Internal server error
+      tags:
+        - entities
+  /properties:
+    get:
+      operationId: getProperties
+      summary: List of valid properties
+      description: Lists all of the properties, which are saved in system, and it can be attach to the entity.
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            format: int64
+          description: Page of the result list
+        - name: size
+          in: query
+          schema:
+            type: integer
+            format: int64
+          description: Size of the page of the result list
+        - name: filter
+          in: query
+          schema:
+            type: string
+          description: Filtered value of the entity. Magic character * can be used
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/listOfSimplePropertyResponse'
+          description: Returns the list of saved property types
+        400:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+          description: Bad request error, it can happen if some of the parameters are wrong, or out of range.
+        500:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+          description: Internal server error happened. Details in error message.
+      tags:
+        - properties
+  /property:
+    post:
+      operationId: saveProperty
+      summary: Saves a new property
+      description: Saves a new property with their settings.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/simplePropertyRequest'
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/extendedPropertyResponse'
+          description: Returns the saved new property
+        409:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+          description: Conflict, it can happen if the property with this name is already saved in system.
+        500:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+          description: Internal server error
+      tags:
+        - properties
+  /property/{uuidOfProperty}:
+    get:
+      operationId: getProperty
+      summary: Get property and its metadata
+      description: It returns detailed informations about selected property.
+      parameters:
+        - name: uuidOfProperty
+          in: path
+          schema:
+            type: string
+            format: uuid
+          required: true
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/extendedPropertyResponse'
+          description: Returns with the selected property
+        404:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+          description: Not found, if the given uuid is not exists.
+        500:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+          description: Internal server error happened. Details in error message.
+      tags:
+        - properties
+    put:
+      operationId: updateProperty
+      summary: Updates property
+      description: Updates the data of property, it is only possible if the property does not attached to the entity.
+      parameters:
+        - name: uuidOfProperty
+          in: path
+          schema:
+            type: string
+            format: uuid
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/simplePropertyRequest'
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/extendedPropertyResponse'
+          description: Returns the updated property
+        405:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+          description: Not allowed, it can happen if the property is already in use, also attached to the entity.
+        409:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+          description: Conflict, it can happen if the property with this name is already saved in system.
+        500:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+          description: Internal server error
+      tags:
+        - properties
+components:
+  schemas:
+    extendedEntityResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          format: 'uuid'
+        name:
+          type: string
+          example: "Name of the Entity"
+        createDate:
+          $ref: '#/components/schemas/date'
+        modifyDate:
+          $ref: '#/components/schemas/date'
+        creator:
+          $ref: '#/components/schemas/user'
+        modifier:
+          $ref: '#/components/schemas/user'
+    simpleEntityResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+          example: "Name of the entity"
+    simpleEntityRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          example: "Name of entity"
+    listOfSimpleEntities:
+      type: object
+      properties:
+        entities:
+          type: array
+          items:
+            $ref: '#/components/schemas/simpleEntityResponse'
+    extendedPropertyResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+          example: "Name of property"
+        type:
+          $ref: '#/components/schemas/typeOfProperty'
+        multiplicity:
+          $ref: '#/components/schemas/multiplicityOfProperty'
+        format:
+          type: string
+          example: format of display -> java text format
+        createDate:
+          $ref: '#/components/schemas/date'
+        modifyDate:
+          $ref: '#/components/schemas/date'
+        creator:
+          $ref: '#/components/schemas/user'
+        modifier:
+          $ref: '#/components/schemas/user'
+    simplePropertyRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          example: "Name of property"
+        type:
+          $ref: '#/components/schemas/typeOfProperty'
+        multiplicity:
+          $ref: '#/components/schemas/multiplicityOfProperty'
+        format:
+          type: string
+          example: format of display -> java text format
+    simplePropertyResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+          example: "Name of property"
+    listOfSimplePropertyResponse:
+      type: object
+      properties:
+        properties:
+          type: array
+          items:
+            $ref: '#/components/schemas/simplePropertyResponse'
+    extendedPropertyValueResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        property:
+          $ref: '#/components/schemas/simplePropertyResponse'
+        value:
+          type: string
+        createDate:
+          $ref: '#/components/schemas/date'
+        modifyDate:
+          $ref: '#/components/schemas/date'
+        creator:
+          $ref: '#/components/schemas/user'
+        modifier:
+          $ref: '#/components/schemas/user'
+    simplePropertyValueRequest:
+      type: object
+      properties:
+        value:
+          type: string
+    simplePropertyValueResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        property:
+          $ref: '#/components/schemas/simplePropertyResponse'
+        value:
+          type: string
+    listOfSimplePropertyValueResponse:
+      type: object
+      properties:
+        properties:
+          type: array
+          items:
+            $ref: '#/components/schemas/simplePropertyValueResponse'
+    error:
+      type: object
+      properties:
+        errorType:
+          $ref: '#/components/schemas/errorTypesEnum'
+        code:
+          type: string
+        message:
+          type: string
+
+# simple types
+    date:
+      type: string
+      format: 'date-time'
+      example: "yyyy-MM-dd'T'HH:mm:ss.SSSXXX — for example, '2000-10-31T01:30:00.000-05:00'"
+    user:
+      type: string
+    typeOfProperty:
+      type: string
+      enum: [ STRING, SECRET, TEXT, NUMBER ]
+    multiplicityOfProperty:
+      type: string
+      enum: [ SINGLE, MULTI ]
+    errorTypesEnum:
+      type: string
+      enum: [BUSINESS, TECHNICAL, INTERNAL]
