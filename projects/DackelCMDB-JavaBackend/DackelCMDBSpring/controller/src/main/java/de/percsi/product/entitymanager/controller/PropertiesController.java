@@ -19,7 +19,36 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.UUID;
 
-public interface PropertiesApi {
+public interface PropertiesController {
+
+  @Operation(summary = "Get property and its metadata",
+      description = "It returns detailed informations about selected property.",
+      tags={ ConfigForSpringDoc.Tags.PROPERTIES })
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "200",
+          description = "Returns with the selected property",
+          content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExtendedPropertyResponse.class))),
+      @ApiResponse(responseCode = "404",
+          description = "Not found, if the given uuid is not exists.",
+          content = @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class))),
+      @ApiResponse(responseCode = "500",
+          description = "Internal server error happened. Details in error message.",
+          content = @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class))),
+      @ApiResponse(responseCode = "501",
+          description = "Endpoint is not implemented",
+          content = @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class)))
+  })
+  @RequestMapping(value = "/property/{uuidOfProperty}",
+          produces = { "application/json" },
+          method = RequestMethod.GET)
+  default ResponseEntity<ExtendedPropertyResponse> getProperty(
+      @Parameter(in = ParameterIn.PATH, description = "UUID Of Property. It is an uniq identifier of property", required=true, schema=@Schema())
+      @Valid
+      @PathVariable("uuidOfProperty") UUID uuidOfProperty) {
+
+    return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+  }
 
   @Operation(summary = "List of valid properties",
       description = "Lists all of the properties, which are saved in system, and it can be attach to the entity.",
@@ -33,7 +62,11 @@ public interface PropertiesApi {
           content = @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class))),
       @ApiResponse(responseCode = "500",
           description = "Internal server error happened. Details in error message.",
-          content = @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class))) })
+          content = @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class))),
+      @ApiResponse(responseCode = "501",
+          description = "Endpoint is not implemented",
+          content = @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class)))
+  })
   @RequestMapping(value = "/properties",
       produces = { "application/json" },
       method = RequestMethod.GET)
@@ -55,31 +88,6 @@ public interface PropertiesApi {
 
   }
 
-  @Operation(summary = "Get property and its metadata",
-      description = "It returns detailed informations about selected property.",
-      tags={ ConfigForSpringDoc.Tags.PROPERTIES })
-  @ApiResponses(value = {
-          @ApiResponse(responseCode = "200",
-              description = "Returns with the selected property",
-              content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExtendedPropertyResponse.class))),
-          @ApiResponse(responseCode = "404",
-              description = "Not found, if the given uuid is not exists.",
-              content = @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class))),
-          @ApiResponse(responseCode = "500",
-              description = "Internal server error happened. Details in error message.",
-              content = @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class))) })
-  @RequestMapping(value = "/property/{uuidOfProperty}",
-          produces = { "application/json" },
-          method = RequestMethod.GET)
-  default ResponseEntity<ExtendedPropertyResponse> getProperty(
-      @Parameter(in = ParameterIn.PATH, description = "UUID Of Property. It is an uniq identifier of property", required=true, schema=@Schema())
-      @Valid
-      @PathVariable("uuidOfProperty") UUID uuidOfProperty) {
-
-    return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-
-  }
-
   @Operation(summary = "Saves a new property",
       description = "Saves a new property with their settings.",
       tags={ ConfigForSpringDoc.Tags.PROPERTIES })
@@ -92,7 +100,11 @@ public interface PropertiesApi {
           content = @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class))),
       @ApiResponse(responseCode = "500",
           description = "Internal server error",
-          content = @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class))) })
+          content = @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class))),
+      @ApiResponse(responseCode = "501",
+          description = "Endpoint is not implemented",
+          content = @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class)))
+  })
   @RequestMapping(value = "/property",
       produces = { "application/json" },
       consumes = { "application/json" },
@@ -121,7 +133,11 @@ public interface PropertiesApi {
           content = @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class))),
       @ApiResponse(responseCode = "500",
           description = "Internal server error",
-          content = @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class))) })
+          content = @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class))),
+      @ApiResponse(responseCode = "501",
+          description = "Endpoint is not implemented",
+          content = @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class)))
+  })
   @RequestMapping(value = "/property/{uuidOfProperty}",
       produces = { "application/json" },
       consumes = { "application/json" },

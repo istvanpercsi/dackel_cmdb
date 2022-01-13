@@ -7,6 +7,7 @@ package de.percsi.product.entitymanager.controller;
 
 import de.percsi.product.entitymanager.configuration.ConfigForSpringDoc;
 import de.percsi.product.entitymanager.domain.*;
+import de.percsi.product.entitymanager.domain.Error;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
@@ -19,12 +20,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.io.IOException;
-import java.lang.Error;
 import java.util.UUID;
 
 
-public interface EntitiesApi {
+public interface EntitiesController {
 
   @Operation(summary = "Get the list of entities",
       description = "Get list of entities. If there is no parameter defined, then it retunrs the last 20 element.",
@@ -38,7 +37,11 @@ public interface EntitiesApi {
           content = @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class))),
       @ApiResponse(responseCode = "500",
           description = "Internal server error happened. Details in error message.",
-          content = @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class))) })
+          content = @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class))),
+      @ApiResponse(responseCode = "501",
+          description = "Endpoint is not implemented",
+          content = @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class)))
+  })
   @RequestMapping(value = "/entities",
       produces = { "application/json" },
       method = RequestMethod.GET)
@@ -69,7 +72,11 @@ public interface EntitiesApi {
           content = @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class))),
       @ApiResponse(responseCode = "500",
           description = "Internal server error. If there some error happened during the query of the entity. Details in error.",
-          content = @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class))) })
+          content = @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class))),
+      @ApiResponse(responseCode = "501",
+          description = "Endpoint is not implemented",
+          content = @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class)))
+  })
   @RequestMapping(value = "/entity/{uuidOfEntity}",
       produces = { "application/json" },
       method = RequestMethod.GET)
@@ -94,7 +101,11 @@ public interface EntitiesApi {
           content = @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class))),
       @ApiResponse(responseCode = "500",
           description = "Internal server error, if something wrong happened :)",
-          content = @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class))) })
+          content = @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class))),
+      @ApiResponse(responseCode = "501",
+          description = "Endpoint is not implemented",
+          content = @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class)))
+  })
   @RequestMapping(value = "/entity/{uuidOfEntity}/properties",
       produces = { "application/json" },
       method = RequestMethod.GET)
@@ -115,15 +126,16 @@ public interface EntitiesApi {
       @ApiResponse(responseCode = "200",
           description = "Returns the value of Property of the entity with all of their metadata",
           content = @Content(mediaType = "application/json", schema = @Schema(implementation = ExtendedPropertyValueResponse.class))),
-
       @ApiResponse(responseCode = "404",
           description = "Not found, if the entity or the property is not exists with the given uuid.",
-          content = @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class))
-      ),
+          content = @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class))),
       @ApiResponse(responseCode = "500",
           description = "Internal server error",
-          content = @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class))
-      ) })
+          content = @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class))),
+      @ApiResponse(responseCode = "501",
+          description = "Endpoint is not implemented",
+          content = @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class)))
+  })
   @RequestMapping(value = "/entity/{uuidOfEntity}/property/{uuidOfProperty}",
       produces = { "application/json" },
       method = RequestMethod.GET)
@@ -155,7 +167,11 @@ public interface EntitiesApi {
           content = @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class))),
       @ApiResponse(responseCode = "500",
           description = "Internal server error. if there is some technical problem with saving of data.",
-          content = @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class))) })
+          content = @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class))),
+      @ApiResponse(responseCode = "501",
+          description = "Endpoint is not implemented",
+          content = @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class)))
+  })
   @RequestMapping(value = "/entity",
       produces = { "application/json" },
       consumes = { "application/json" },
@@ -185,7 +201,11 @@ public interface EntitiesApi {
           content = @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class))),
       @ApiResponse(responseCode = "500",
           description = "Internal server error",
-          content = @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class))) })
+          content = @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class))),
+      @ApiResponse(responseCode = "501",
+          description = "Endpoint is not implemented",
+          content = @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class)))
+  })
   @RequestMapping(value = "/entity/{uuidOfEntity}/property/{uuidOfProperty}",
       produces = { "application/json" },
       consumes = { "application/json" },
@@ -217,7 +237,11 @@ public interface EntitiesApi {
           content = @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class))),
       @ApiResponse(responseCode = "500",
           description = "Internal server error",
-          content = @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class))) })
+          content = @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class))),
+      @ApiResponse(responseCode = "501",
+          description = "Endpoint is not implemented",
+          content = @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class)))
+  })
   @RequestMapping(value = "/entity/{uuidOfEntity}/property/{uuidOfProperty}",
       produces = { "application/json" },
       consumes = { "application/json" },

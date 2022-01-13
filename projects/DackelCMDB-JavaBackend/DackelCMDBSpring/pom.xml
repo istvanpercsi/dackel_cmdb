@@ -9,7 +9,8 @@
 		<module>service</module>
 		<module>persistence</module>
 		<module>domain</module>
-	</modules>
+        <module>api</module>
+    </modules>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
